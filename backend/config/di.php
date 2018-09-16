@@ -31,14 +31,14 @@ $di->debug = !empty($_GET['__debug__']) ? true : $di->config->get('sys.debug');
 $di->logger = new FileLogger(API_ROOT . '/runtime', Logger::LOG_LEVEL_DEBUG | Logger::LOG_LEVEL_INFO | Logger::LOG_LEVEL_ERROR);
 
 // 数据操作 - 基于NotORM
-$di->notorm = new NotORMDatabase($di->config->get('dbs'), $di->debug);
+//$di->notorm = new NotORMDatabase($di->config->get('dbs'), $di->debug);
 
 //强制中文json
 $di->response = new \PhalApi\Response\JsonResponse(JSON_UNESCAPED_UNICODE);
 
 $di->db = new Medoo($di->config->get('myConfig.medoo'));
 
-$di->redis = new \PhalApi\Cache\RedisCache($di->config->get('myConfig.redis'));
+//$di->redis = new \PhalApi\Cache\RedisCache($di->config->get('myConfig.redis'));
 
 /** ---------------- 定制注册 可选服务组件 ---------------- **/
 
