@@ -1,5 +1,51 @@
 [
     {
+        "name": "phalapi/gtcode",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/gongshunkai/phalapi-gtcode.git",
+            "reference": "940555f2b776ae96b13a9a8e8ad6053e1ee14bf7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/gongshunkai/phalapi-gtcode/zipball/940555f2b776ae96b13a9a8e8ad6053e1ee14bf7",
+            "reference": "940555f2b776ae96b13a9a8e8ad6053e1ee14bf7",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "time": "2017-12-26T13:19:37+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "PhalApi\\GTCode\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0+"
+        ],
+        "authors": [
+            {
+                "name": "Dogstar Huang",
+                "email": "chanzonghuang@gmail.com",
+                "homepage": "http://my.oschina.net/dogstar",
+                "role": "Developer"
+            }
+        ],
+        "description": "PhalApi 2.x 扩展类库 - 极验验证码拓展",
+        "homepage": "https://www.phalapi.net/",
+        "keywords": [
+            "gtcode",
+            "phalapi",
+            "phalapi-gtcode"
+        ]
+    },
+    {
         "name": "phalapi/kernal",
         "version": "2.2.3",
         "version_normalized": "2.2.3.0",
