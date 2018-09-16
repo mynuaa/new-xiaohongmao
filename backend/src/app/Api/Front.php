@@ -97,20 +97,25 @@ class Front extends Api {
     
     public function login(){
         
-        $geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->stuid);
+        /*$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->stuid);
         if($geetest !== true){
             throw new Exception('验证码错误', 500);
-        }
+        }*/
         
         $ded = $this->Ded->verify($this->stuid, $this->passwd);
         if($ded === false){
             throw new Exception('密码错误', 403);
         }
+
+        $admin = $this->User->isAdmin($this->stuid);
+        return $this->User->encode($ded['name'], $this->stuid, $admin);
+
         if($this->Ded->binded($this->stuid)){//已经绑定 老用户
             //返回jwt
             $admin = $this->User->isAdmin($this->stuid);
             return $this->User->encode($ded['name'], $this->stuid, $admin);
         }else{
+            // ？是否要激活？
             throw new Exception('请确认绑定', 200);
         }
 
