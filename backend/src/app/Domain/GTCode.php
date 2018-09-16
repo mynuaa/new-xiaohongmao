@@ -81,7 +81,6 @@ class GTCode {
      * @return int code 验证的结果，1表示成功，0表示失败
      */
     public function verifyLoginServlet($challenge, $validate, $seccode, $uid) {
-        $rs = [];
 
         $code = \PhalApi\DI()->gtcode->verifyLoginServlet($challenge, $validate, $seccode, [
             'user_id' => $uid,
@@ -89,9 +88,7 @@ class GTCode {
             'ip_address' => $_SERVER["REMOTE_ADDR"]
         ]);
 
-        $rs['code'] = $code;
-
-        return $rs;
+        return $code;
     }
 
 }

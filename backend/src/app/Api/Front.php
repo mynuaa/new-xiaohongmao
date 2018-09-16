@@ -24,10 +24,19 @@ class Front extends Api {
 	public function getRules() {
         return [
             'index' => [
-                'username' 	=> [
+                'username' => [
                     'name' => 'username', 
                     'default' => 'PhalApi', 
                     'desc' => '用户名'
+                ],
+            ],
+            'beforeLogin' => [
+                'stuid' => [
+                    'name' => 'stuid', 
+                    'desc' => '学号',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
                 ],
             ],
             'login' => [
@@ -95,6 +104,21 @@ class Front extends Api {
         ];
     }
     
+    /**
+     * 登录之前获取chanllenge
+     *
+     * @return strings 挑战id
+     */
+    public function beforeLogin(){
+        return $this->GTCode->startCaptchaServlet($this->stuid);
+    }
+    
+    /**
+     * 登录
+     *
+     * @return void
+     */
+
     public function login(){
         
         /*$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->stuid);
