@@ -4,7 +4,7 @@
 return [
     'medoo' => [
     'database_type' => 'mysql',
-    'database_name' => 'fuckme',
+    'database_name' => 'newvolunteer',
     'server' => 'localhost',
     'username' => 'root',
     'password' => 'root',
