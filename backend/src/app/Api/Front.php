@@ -9,6 +9,8 @@ use function \PhalApi\DI as di;
 
 use App\Domain\Front as DFront;
 use App\Domain\GTCode as DGTCode;
+use App\Domain\Ded as DDed;
+
 /**
  * 默认接口服务类
  *
@@ -20,10 +22,18 @@ class Front extends Api {
     function __construct() {
         $this->Front = new DFront();
         $this->GTCode = new DGTCode();
+        $this->Ded = new DDed();
     }
 	public function getRules() {
         return [
             'index' => [
+                'username' 	=> [
+                    'name' => 'username', 
+                    'default' => 'PhalApi', 
+                    'desc' => '用户名'
+                ],
+            ],
+            'login' => [
                 'username' 	=> [
                     'name' => 'username', 
                     'default' => 'PhalApi', 
@@ -49,5 +59,9 @@ class Front extends Api {
             'version' => PHALAPI_VERSION,
             'time' => $_SERVER['REQUEST_TIME'],
         ];
-	}
+    }
+    
+    public function login(){
+        return $this->Ded->verify(0,0);
+    }
 }

@@ -46,6 +46,44 @@
         ]
     },
     {
+        "name": "phalapi/jwt",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/twodayw/phalapi2-jwt.git",
+            "reference": "45c22a1d7023830831ee167514562f46cff774ae"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/twodayw/phalapi2-jwt/zipball/45c22a1d7023830831ee167514562f46cff774ae",
+            "reference": "45c22a1d7023830831ee167514562f46cff774ae",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2018-04-27T04:38:45+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Phalapi\\JWT\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "twoday",
+                "email": "33392316@qq.com"
+            }
+        ],
+        "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec."
+    },
+    {
         "name": "phalapi/kernal",
         "version": "2.2.3",
         "version_normalized": "2.2.3.0",

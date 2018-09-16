@@ -1,7 +1,7 @@
 <?php
 namespace App\Domain;
 
-class GTCode extends Api {
+class GTCode {
     public function getRules() {
         return [
             'startCaptchaServlet' => [
@@ -68,11 +68,11 @@ class GTCode extends Api {
      * @return int new_captcha 宕机情况下使用，表示验证是 3.0 还是 2.0，3.0 的 sdk 该字段为 true
      */
     public function startCaptchaServlet($uid, $type = 'web') {
-        return \PhalApi\DI()->gtcode->startCaptchaServlet(array(
+        return \PhalApi\DI()->gtcode->startCaptchaServlet([
             'user_id' => $uid,
             'client_type' => $type,
             'ip_address' => $_SERVER["REMOTE_ADDR"]
-        ));
+        ]);
     }
 
     /**
