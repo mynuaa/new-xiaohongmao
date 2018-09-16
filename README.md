@@ -20,6 +20,8 @@
 
 安装最新版本的 vuecli `yarn global add @vue/cli`，然后 `vue ui`启动ui模式，选择载入`/fontend`文件夹即可
 
+也可以直接 `yarn install` 后，`yarn dev`
+
 需要sass，请先换成国内源
 
 ## management
@@ -28,9 +30,9 @@
 
 ### 安装方法
 
-直接 `yarn install` 即可
+直接 `yarn install` 后，`yarn dev` 即可
 
-因为需要 `webpack4`，所以可能与之前版本的表现有所不同
+ps: 因为需要 `webpack4`，所以可能与之前版本的表现有所不同。依赖较多，可能会比较慢
 
 ## 数据mock
 
