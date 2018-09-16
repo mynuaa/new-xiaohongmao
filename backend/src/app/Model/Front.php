@@ -3,7 +3,7 @@ namespace App\Model;
 
 use function \PhalApi\DI as di;
 
-class Imagei{
+class Front{
 
     public function get(){
         $re = di()->redis->get('time');

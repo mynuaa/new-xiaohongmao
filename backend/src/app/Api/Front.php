@@ -6,17 +6,17 @@ use PhalApi\Exception;
 use PhalApi\Exception\BadRequestException;
 
 use function \PhalApi\DI as di;
-use App\Domain\Imagei as DImagei;
+use App\Domain\Front as DFront;
 /**
  * 默认接口服务类
  *
  * @author: dogstar <chanzonghuang@gmail.com> 2014-10-04
  */
 
-class Imagei extends Api {
+class Front extends Api {
 
     function __construct() {
-        $this->DImagei = new DImagei();
+        $this->Front = new DFront();
     }
 	public function getRules() {
         return [
@@ -40,7 +40,7 @@ class Imagei extends Api {
      * @exception 400 非法请求，参数传递错误
 	 */
 	public function index() {
-        return $this->DImagei->index();
+        return $this->Front->index();
         return [
             'title' => 'Hello ' . $this->username,
             'version' => PHALAPI_VERSION,

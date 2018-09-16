@@ -6,6 +6,8 @@
 
 使用 phalApi via PHP7 + mysql + redis
 
+数据库插件使用`medoo`，通过 `di()->db` 拉起
+
 ### 安装方法
 
 * 开启redis
