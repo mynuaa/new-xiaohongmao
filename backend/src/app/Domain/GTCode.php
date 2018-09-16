@@ -80,14 +80,14 @@ class GTCode {
      * @desc 二次验证
      * @return int code 验证的结果，1表示成功，0表示失败
      */
-    public function verifyLoginServlet() {
-        $rs = array();
+    public function verifyLoginServlet($challenge, $validate, $seccode, $uid) {
+        $rs = [];
 
-        $code = \PhalApi\DI()->gtcode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, array(
-            'user_id' => $this->userId,
-            'client_type' => $this->clientType,
+        $code = \PhalApi\DI()->gtcode->verifyLoginServlet($challenge, $validate, $seccode, [
+            'user_id' => $uid,
+            'client_type' => 'web',
             'ip_address' => $_SERVER["REMOTE_ADDR"]
-        ));
+        ]);
 
         $rs['code'] = $code;
 

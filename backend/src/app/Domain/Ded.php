@@ -2,12 +2,12 @@
 namespace App\Domain;
 
 //use App\Model\Examples\CURD as ModelCURD;
-//use App\Model\Ded as MDed;
+use App\Model\Ded as MDed;
 
 class Ded {
 
     function __construct() {
-        // $this->MDed = new MDed();
+        $this->MDed = new MDed();
     }
 
     public function verify($id, $passwd){
@@ -20,13 +20,12 @@ class Ded {
         return $re;
     }
 
-    public function binded($uid){
-        /*
-        if($this->MDed->hasDed($uid) != ''){//如果取出的学号不为空 即已经绑定
+    public function binded($stuid){
+        if($this->MDed->hasDed($stuid) != ''){//如果取出的学号不为空 即已经绑定
             return true;//返回已经绑定
         }else{
             return false;
-        }*/
+        }
     }
 
     public function usrverify($stuid, $password) {

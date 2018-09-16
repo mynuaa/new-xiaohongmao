@@ -2,14 +2,14 @@
 namespace App\Domain;
 
 //use App\Model\Examples\CURD as ModelCURD;
-//use App\Model\Ded as MDed;
+use App\Model\User as MUser;
 
 use function \PhalApi\DI as di;
 
 class User {
 
     function __construct() {
-        // $this->MDed = new MDed();
+        $this->User = new MUser();
     }
 
 
@@ -17,7 +17,7 @@ class User {
         return di()->jwt->decodeJwtByParam($jwt);
     }
 
-    public function encode($uname, $uid, $admin = false){
+    public function encode($uname, $stuid, $admin = false){
         /*
         $admin = {
             level: [int],
@@ -31,8 +31,12 @@ class User {
         */
         return di()->jwt->encodeJwt([
             'uname' => $uname,
-            'uid' => $uid,
+            'stuid' => $stuid,
             'admin' => $admin
         ]);
+    }
+
+    public function isAdmin ($id){
+        return $this->User->isAdmin($id);
     }
 }
