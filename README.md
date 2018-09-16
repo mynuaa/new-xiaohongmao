@@ -14,6 +14,8 @@
 
 ### 安装方法
 
+安装最新版本的 vuecli `yarn global add @vue/cli`，然后 `vue ui`启动ui模式，选择载入`/fontend`文件夹即可
+
 ## management
 
 基于 vueadmin 修改 via vue2
