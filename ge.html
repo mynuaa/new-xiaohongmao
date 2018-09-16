@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="captchaBox"></div>
+</body>
+</html>
+<script src="https://static.geetest.com/static/tools/gt.js"></script>
+<script>
+const te = {
+    "success": 1,
+    "gt": "56c8cb61db7ab5112f9bb40a5f3f9d66",
+    "challenge": "f3a2ac3c641a9a3df0e7abb514dfe13f",
+    "new_captcha": 1,
+    offline: false
+}
+initGeetest({
+    // 省略必须的配置参数
+    ...te,
+    product: 'popup',
+    https: true
+}, function (captchaObj) {
+    captchaObj.appendTo("#captchaBox"); //将验证按钮插入到宿主页面中captchaBox元素内
+    captchaObj.onReady(()=>{
+      //console.log(e)
+    }).onSuccess(()=>{
+        result = captchaObj.getValidate();
+        console.log(result)
+    }).onError(function(e){
+        console.log(e)
+    })
+})
+</script>

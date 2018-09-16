@@ -38,6 +38,10 @@ $di->response = new \PhalApi\Response\JsonResponse(JSON_UNESCAPED_UNICODE);
 
 $di->db = new Medoo($di->config->get('myConfig.medoo'));
 
+$di->gtcode = function() {
+	return new \PhalApi\GTCode\Lite();
+};
+
 //$di->redis = new \PhalApi\Cache\RedisCache($di->config->get('myConfig.redis'));
 
 /** ---------------- 定制注册 可选服务组件 ---------------- **/

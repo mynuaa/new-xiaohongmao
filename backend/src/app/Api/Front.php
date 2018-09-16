@@ -6,7 +6,9 @@ use PhalApi\Exception;
 use PhalApi\Exception\BadRequestException;
 
 use function \PhalApi\DI as di;
+
 use App\Domain\Front as DFront;
+use App\Domain\GTCode as DGTCode;
 /**
  * 默认接口服务类
  *
@@ -17,6 +19,7 @@ class Front extends Api {
 
     function __construct() {
         $this->Front = new DFront();
+        $this->GTCode = new DGTCode();
     }
 	public function getRules() {
         return [

@@ -28,4 +28,8 @@ return array(
     'service_whitelist' => array(
         'Site.Index',
     ),
+    'gtserver' => [
+        'captchaId'   => '56c8cb61db7ab5112f9bb40a5f3f9d66',  //ID
+        'privateKey' => '544b645fd66bdb483e6c7ee4eff47961',  //KEY
+    ]
 );
