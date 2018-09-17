@@ -15,9 +15,11 @@ class ComposerStaticInit6835957bc29912b8a4cd2dd758af2e80
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
+            'Phalapi\\JWT\\' => 12,
             'PhalApi\\Task\\' => 13,
             'PhalApi\\QrCode\\' => 15,
             'PhalApi\\NotORM\\' => 15,
+            'PhalApi\\GTCode\\' => 15,
             'PhalApi\\' => 8,
         ),
         'A' => 
@@ -28,6 +30,10 @@ class ComposerStaticInit6835957bc29912b8a4cd2dd758af2e80
     );
 
     public static $prefixDirsPsr4 = array (
+        'Phalapi\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phalapi/jwt/src',
+        ),
         'PhalApi\\Task\\' => 
         array (
             0 => __DIR__ . '/..' . '/phalapi/task/src',
@@ -39,6 +45,10 @@ class ComposerStaticInit6835957bc29912b8a4cd2dd758af2e80
         'PhalApi\\NotORM\\' => 
         array (
             0 => __DIR__ . '/..' . '/phalapi/notorm/src',
+        ),
+        'PhalApi\\GTCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phalapi/gtcode/src',
         ),
         'PhalApi\\' => 
         array (

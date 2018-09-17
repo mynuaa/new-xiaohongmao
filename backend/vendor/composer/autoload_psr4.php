@@ -6,9 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Phalapi\\JWT\\' => array($vendorDir . '/phalapi/jwt/src'),
     'PhalApi\\Task\\' => array($vendorDir . '/phalapi/task/src'),
     'PhalApi\\QrCode\\' => array($vendorDir . '/phalapi/qrcode/src'),
     'PhalApi\\NotORM\\' => array($vendorDir . '/phalapi/notorm/src'),
+    'PhalApi\\GTCode\\' => array($vendorDir . '/phalapi/gtcode/src'),
     'PhalApi\\' => array($vendorDir . '/phalapi/kernal/src'),
     'App\\' => array($baseDir . '/src/app'),
     'App2\\' => array($baseDir . '/src/app2'),
