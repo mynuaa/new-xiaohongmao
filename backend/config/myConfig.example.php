@@ -13,6 +13,10 @@ return [
 	'prefix' => '',
 	//'socket' => '/tmp/mysql.sock',
     ],
+    'jwt' => [
+		'iss' => 'nuaa.edu.cn',
+		'key' => '1Th1nkNuaaXia0i$g0od!' . date('Ymd',time())
+    ],
     'redis' => [
         'type' => '', //unix
         'socket' => '', //unix对应
