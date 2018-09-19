@@ -76,6 +76,32 @@ export const constantRouterMap = [
     ]
   },
   {
+  path: '/information',
+    component: Layout,
+    redirect: '/information/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/information/index'),
+        name: 'information',
+        meta: { title: '个人信息', icon: 'user', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/table',
+    component: Layout,
+    redirect: '/table/complex-table',
+    children: [
+      {
+        path: 'complex-table',
+        component: () => import('@/views/table/complexTable'),
+        name: 'ComplexTable',
+        meta: { title: 'complexTable',icon: 'list',}
+      }
+    ]
+  },
+  {
     path: '/documentation',
     component: Layout,
     redirect: '/documentation/index',
