@@ -24,5 +24,12 @@ class User{
         return $re;
 
     }
-    
+ 
+    public function getInfo($id){
+        $re = di()->db->get('user', '*', [
+            'stuid' => $id
+        ]);
+        return $re;
+    }
+
 }

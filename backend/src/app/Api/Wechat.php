@@ -84,7 +84,7 @@ class Wechat extends Api {
 
 
     public function timeLong(){
-        $re = $this->Join->get($this->id);
+        $re = $this->Join->getTime($this->id);
         
         return $re;
     }
