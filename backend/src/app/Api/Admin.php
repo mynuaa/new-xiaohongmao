@@ -71,6 +71,132 @@ class Admin extends Api {
                     'type' => 'string',
                 ]
             ],
+            'addActivity' => [
+                'name' => [
+                    'name' => 'name', 
+                    'require' => true,
+                    'type' => 'string',
+                    'format' => 'utf8',       
+                    'desc' => '活动名称'
+                ],
+                'location' => [
+                    'name' => 'location', 
+                    'require' => true,
+                    'type' => 'string',
+                    'format' => 'utf8',       
+                    'desc' => '活动地点'
+                ],
+                'hoster' => [
+                    'name' => 'hoster', 
+                    'require' => true,
+                    'type' => 'int',     
+                    'desc' => '活动地点'
+                ],
+                'title' => [
+                    'name' => 'title', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '标题'
+                ],
+                'summary' => [
+                    'name' => 'summary', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '简介'
+                ],
+                'detail' => [
+                    'name' => 'detail', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '详情'
+                ],
+                'peoplenum' => [
+                    'name' => 'peoplenum', 
+                    'require' => true,
+                    'type' => 'int',
+                    'min' => 1,
+                    'desc' => '人数'
+                ],
+                'alltime' => [
+                    'name' => 'alltime', 
+                    'require' => true,
+                    'type' => 'int',
+                    'min' => 1,
+                    'desc' => '所有时间'
+                ],
+                'contact' => [
+                    'name' => 'contact', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '联系方式'
+                ],
+                'starttime' => [
+                    'name' => 'starttime', 
+                    'require' => true,
+                    'type' => 'int',
+                    'desc' => '开始时间'
+                ],
+                'volunteertimemin' => [
+                    'name' => 'volunteertimemin', 
+                    'require' => true,
+                    'type' => 'float',
+                    'desc' => '最少志愿时间'
+                ],
+                'volunteertimemax' => [
+                    'name' => 'volunteertimemax', 
+                    'require' => true,
+                    'type' => 'float',
+                    'desc' => '最少志愿时间'
+                ],
+                'type' => [
+                    'name' => 'type', 
+                    'require' => false,
+                    'type' => 'int',
+                    'desc' => '类型'
+                ],
+                'serviceConcept' => [
+                    'name' => 'serviceConcept', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '服务信条'
+                ],
+                'workStartTime' => [
+                    'name' => 'workStartTime', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '开门时间'
+                ],
+                'workEndTime' => [
+                    'name' => 'workEndTime', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '停业时间'
+                ],
+                'award' => [
+                    'name' => 'award', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '奖项'
+                ],
+                'address' => [
+                    'name' => 'address', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '地址'
+                ],
+                'note1' => [
+                    'name' => 'note1', 
+                    'require' => false,
+                    'type' => 'string',
+                    'desc' => '文字1'
+                ],
+                'note2' => [
+                    'name' => 'note2', 
+                    'require' => false,
+                    'type' => 'string',
+                    'desc' => '文字2'
+                ],
+            ],
             '*' => [
                 'jwt' => [
                     'name' => 'jwt', 
