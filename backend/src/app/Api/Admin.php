@@ -155,6 +155,20 @@ class Admin extends Api {
                     'desc' => '类型'
                 ]
             ],
+            'allActivity' => [
+                'from' => [
+                    'name' => 'from', 
+                    'desc' => '分页起始',
+                    'type' => 'int',
+                    'default' => 0, 
+                ],
+                'pagenum' => [
+                    'name' => 'pagenum', 
+                    'desc' => '页面大小',
+                    'type' => 'int',
+                    'default' => 20, 
+                ]
+            ],
             '*' => [
                 'jwt' => [
                     'name' => 'jwt', 
@@ -219,8 +233,26 @@ class Admin extends Api {
         //正常的业务逻辑
     }
 
+    /**
+     * 获取所有志愿活动 显示被删除的
+     *
+     * @return void
+     */
+    public function allActivity(){
+        $re = $this->Act->gets($this->from, $this->pagenum, true);
+
+        return $re;
+    }
+
+    /**
+     * 增加活动
+     *
+     * @return void
+     */
     public function addActivity(){
-        return $this;
+        $re = $this->Act->add($this);
+
+        return $re;
     }
 
     private function checkJwt(){

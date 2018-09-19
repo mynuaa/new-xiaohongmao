@@ -5,11 +5,16 @@ use function \PhalApi\DI as di;
 
 class Activity{
 
-    public function gets($from, $num){
-        $re= di()->db->select('activity', '*', [
-            'LIMIT' => [$from, $num],
-            'status[>]' => 0
-        ]);
+    public function gets($from, $num, $all = false){
+        $con =  [
+            'LIMIT' => [$from, $num]
+        ];
+
+        if($all === false){
+            $con['status[>]'] = 0;
+        }
+        
+        $re= di()->db->select('activity', '*', $con);
 
         return $re;
     }
