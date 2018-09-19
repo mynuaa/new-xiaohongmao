@@ -49,6 +49,6 @@ ps: 因为需要 `webpack4`，所以可能与之前版本的表现有所不同�
 
 ## 后端调试
 
-后端的接口以 `https://my.nuaa.edu.cn/xiaohongmao2/api` 开头 ，建议使用时的样例如 `http://my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Front.BeforeLogin`，不要使用调试文档生成的默认地址
+后端的接口以 `https://my.nuaa.edu.cn/xiaohongmao2/api` 开头 ，建议使用时的样例如 `https://my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Admin.BeforeLogin`，不要使用调试文档生成的默认地址
 
-调试文档地址 <https://my.nuaa.edu.cn/xiaohongmao2/docs.php>
+调试文档地址 <http://my.nuaa.edu.cn/xiaohongmao2/docs.php> ps:使用http调试，否则有一个不安全调用问题
