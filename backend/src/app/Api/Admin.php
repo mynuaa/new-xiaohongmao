@@ -71,6 +71,15 @@ class Admin extends Api {
                     'type' => 'string',
                 ]
             ],
+            '*' => [
+                'jwt' => [
+                    'name' => 'jwt', 
+                    'desc' => '凭证',
+                    'format' => 'utf8',                    
+                    'require' => false,
+                    'type' => 'string',
+                ],
+            ]
         ];
 	}
     
@@ -82,7 +91,7 @@ class Admin extends Api {
         $this->Act = new DActivity();
         $this->Join = new DJoin();
     }
-    
+
     /**
      * 登录之前获取chanllenge
      *
@@ -127,8 +136,14 @@ class Admin extends Api {
     }
 
 
-    private function isAdmin(){
+    private function checkJwt(){
         $re = $this->User->decode($this->jwt);
-        
+        if(isset($re['ret']) && $re['ret'] == 401){
+            throw new Exception($re['msg'], 401);
+        }
+        return $re;
+    }
+    public function makejwt(){
+        return $this->User->encode('seiry', '031630226', ['level' => 3]);
     }
 }
