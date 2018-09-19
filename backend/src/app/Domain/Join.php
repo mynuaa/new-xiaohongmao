@@ -19,5 +19,9 @@ class Join {
     public function countMonth(){
         return $this->Join->countMonth();
     }
+
+    public function average(){
+        return $this->Join->average();
+    }
     
 }

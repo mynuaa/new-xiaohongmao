@@ -206,6 +206,7 @@ class Front extends Api {
         $re['allTimeLong'] = $this->Join->countAll();
         $re['mouthLong'] = $this->Join->countMonth();
         $re['allUser'] = $this->User->countAll();
+        $re['averageTimeLong'] = $this->Join->average();
         return $re;
     }
 }

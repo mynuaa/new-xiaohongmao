@@ -34,4 +34,13 @@ class Join{
         return $re;
     }
 
+    public function average(){
+
+        $re= di()->db->avg('join', 'timelong', [
+            'status[>]' => 1
+        ]);
+
+        return $re;        
+
+    }
 }
