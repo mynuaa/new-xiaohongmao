@@ -11,6 +11,7 @@ use App\Domain\Front as DFront;
 use App\Domain\GTCode as DGTCode;
 use App\Domain\Ded as DDed;
 use App\Domain\User as DUser;
+use App\Domain\Activity as DActivity;
 
 /**
  * 默认接口服务类
@@ -76,6 +77,20 @@ class Front extends Api {
                     'type' => 'string',
                 ]
             ],
+            'allActivity' => [
+                'from' => [
+                    'name' => 'from', 
+                    'desc' => '分页起始',
+                    'type' => 'int',
+                    'default' => 0, 
+                ],
+                'pagenum' => [
+                    'name' => 'pagenum', 
+                    'desc' => '页面大小',
+                    'type' => 'int',
+                    'default' => 20, 
+                ]
+            ],
         ];
 	}
     
@@ -84,6 +99,7 @@ class Front extends Api {
         $this->GTCode = new DGTCode();
         $this->Ded = new DDed();
         $this->User = new DUser();
+        $this->Act = new DActivity();
     }
 
 	/**
@@ -145,5 +161,17 @@ class Front extends Api {
 
         //判断是否是新注册
         //正常的业务逻辑
+    }
+
+
+    /**
+     * 获取所有志愿活动
+     *
+     * @return void
+     */
+    public function allActivity(){
+        $re = $this->Act->gets($this->from, $this->pagenum);
+
+        return $re;
     }
 }
