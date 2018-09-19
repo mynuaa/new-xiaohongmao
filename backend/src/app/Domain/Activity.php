@@ -20,4 +20,9 @@ class Activity {
     public function get($id){
         return $this->Act->get($id);
     }
+
+    public function add($args){
+        $re = $this->Act->add($args);
+        return $re;
+    }
 }

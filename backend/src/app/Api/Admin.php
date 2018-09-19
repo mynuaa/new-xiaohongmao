@@ -153,49 +153,7 @@ class Admin extends Api {
                     'require' => false,
                     'type' => 'int',
                     'desc' => '类型'
-                ],
-                'serviceConcept' => [
-                    'name' => 'serviceConcept', 
-                    'require' => true,
-                    'type' => 'string',
-                    'desc' => '服务信条'
-                ],
-                'workStartTime' => [
-                    'name' => 'workStartTime', 
-                    'require' => true,
-                    'type' => 'string',
-                    'desc' => '开门时间'
-                ],
-                'workEndTime' => [
-                    'name' => 'workEndTime', 
-                    'require' => true,
-                    'type' => 'string',
-                    'desc' => '停业时间'
-                ],
-                'award' => [
-                    'name' => 'award', 
-                    'require' => true,
-                    'type' => 'string',
-                    'desc' => '奖项'
-                ],
-                'address' => [
-                    'name' => 'address', 
-                    'require' => true,
-                    'type' => 'string',
-                    'desc' => '地址'
-                ],
-                'note1' => [
-                    'name' => 'note1', 
-                    'require' => false,
-                    'type' => 'string',
-                    'desc' => '文字1'
-                ],
-                'note2' => [
-                    'name' => 'note2', 
-                    'require' => false,
-                    'type' => 'string',
-                    'desc' => '文字2'
-                ],
+                ]
             ],
             '*' => [
                 'jwt' => [
@@ -261,6 +219,9 @@ class Admin extends Api {
         //正常的业务逻辑
     }
 
+    public function addActivity(){
+        return $this;
+    }
 
     private function checkJwt(){
         $re = $this->User->decode($this->jwt);
