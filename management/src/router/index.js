@@ -76,7 +76,7 @@ export const constantRouterMap = [
     ]
   },
   {
-  path: '/information',
+    path: '/information',
     component: Layout,
     redirect: '/information/index',
     children: [
@@ -97,7 +97,7 @@ export const constantRouterMap = [
         path: 'complex-table',
         component: () => import('@/views/table/complexTable'),
         name: 'ComplexTable',
-        meta: { title: 'complexTable',icon: 'list',}
+        meta: { title: 'complexTable', icon: 'list' }
       }
     ]
   },

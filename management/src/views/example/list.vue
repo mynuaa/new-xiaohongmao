@@ -14,7 +14,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column width="120px" align="center" label="发布者"> 
+      <el-table-column width="120px" align="center" label="发布者">
         <template slot-scope="scope">
           <span>{{ scope.row.author }}</span>
         </template>
