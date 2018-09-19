@@ -12,9 +12,14 @@ class Join {
         $this->Join = new MJoin();
     }
 
-    public function get($id){
-        $re['done'] =  (int)$this->Join->get($id, true);
-        $re['undone'] =  (int)$this->Join->get($id, false); //php无法使用短路运算符
+    public function get($stuid){
+        $re = $this->Join->get($stuid);
+
+        return $re;
+    }
+    public function getTime($id){
+        $re['done'] =  (int)$this->Join->getTime($id, true);
+        $re['undone'] =  (int)$this->Join->getTime($id, false); //php无法使用短路运算符
 
         return $re;
     }

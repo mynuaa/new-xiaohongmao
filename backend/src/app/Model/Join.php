@@ -34,7 +34,17 @@ class Join{
         return $re;
     }
     
-    public function get($id, $done = true){
+    public function get($stuid){
+        $re= di()->db->select('join', [
+            '[>]activity' => 'aid'
+        ], '*', [
+            'stuid' => $stuid
+        ]);
+        //todo 查询的列补充
+        return $re;  
+    }
+
+    public function getTime($id, $done = true){
         $con['stuid'] = $id;
         if($done === true){
             $con['status[>]'] = 1;
