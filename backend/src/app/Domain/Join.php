@@ -15,4 +15,9 @@ class Join {
     public function countAll(){
         return $this->Join->countAll();
     }
+
+    public function countMonth(){
+        return $this->Join->countMonth();
+    }
+    
 }

@@ -201,9 +201,11 @@ class Front extends Api {
      *
      * @return void
      */
-    public function allTimeLong(){
-        $re = $this->Join->countAll();
-
+    public function showData(){
+        $re = [];
+        $re['allTimeLong'] = $this->Join->countAll();
+        $re['mouthLong'] = $this->Join->countMonth();
+        $re['allUser'] = $this->User->countAll();
         return $re;
     }
 }
