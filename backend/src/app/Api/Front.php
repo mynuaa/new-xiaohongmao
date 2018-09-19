@@ -12,11 +12,12 @@ use App\Domain\GTCode as DGTCode;
 use App\Domain\Ded as DDed;
 use App\Domain\User as DUser;
 use App\Domain\Activity as DActivity;
+use App\Domain\Join as DJoin;
 
 /**
- * 默认接口服务类
+ * 前端接口
  *
- * @author: dogstar <chanzonghuang@gmail.com> 2014-10-04
+ * @author: Seiry Yu
  */
 
 class Front extends Api {
@@ -108,6 +109,7 @@ class Front extends Api {
         $this->Ded = new DDed();
         $this->User = new DUser();
         $this->Act = new DActivity();
+        $this->Join = new DJoin();
     }
 
 	/**
@@ -183,8 +185,24 @@ class Front extends Api {
         return $re;
     }
 
+    /**
+     * 按id获取活动
+     *
+     * @return void
+     */
     public function getActivity(){
         $re = $this->Act->get($this->id);
+
+        return $re;
+    }
+
+    /**
+     * 获取所有的志愿时长
+     *
+     * @return void
+     */
+    public function allTimeLong(){
+        $re = $this->Join->countAll();
 
         return $re;
     }
