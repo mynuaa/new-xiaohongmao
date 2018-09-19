@@ -5,11 +5,16 @@ use function \PhalApi\DI as di;
 
 class Activity{
 
-    public function gets($from, $num){
-        $re= di()->db->select('activity', '*', [
-            'LIMIT' => [$from, $num],
-            'status[>]' => 0
-        ]);
+    public function gets($from, $num, $all = false){
+        $con =  [
+            'LIMIT' => [$from, $num]
+        ];
+
+        if($all === false){
+            $con['status[>]'] = 0;
+        }
+
+        $re= di()->db->select('activity', '*', $con);
 
         return $re;
     }
@@ -23,4 +28,36 @@ class Activity{
         return $re;      
     }
 
+
+    public function add($args){
+        $re = di()->db->insert('shop', [
+            'name' => $args->name,
+            'location' => $args->location,
+            'hoster' => $args->hoster,
+            'title' => $args->title,
+            'summary' => $args->summary,
+            'detail' => $args->detail,
+            'peoplenum' => $args->peoplenum,
+            'alltime' => $args->alltime,
+            'contact' => $args->contact,
+            'starttime' => $args->starttime,
+            'volunteertimemin' => $args->volunteertimemin,
+            'volunteertimemax' => $args->volunteertimemax,
+            'type' => $args->type,
+            'lastupdate' => time()
+
+        ]);
+        
+
+        if(di()->db->error()[0] == 0){
+            return di()->db->id();
+        }else{
+            return false;
+        }
+    }
+    
+    //todo 更新活动
+    public function update($args){
+
+    }
 }

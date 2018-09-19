@@ -71,6 +71,104 @@ class Admin extends Api {
                     'type' => 'string',
                 ]
             ],
+            'addActivity' => [
+                'name' => [
+                    'name' => 'name', 
+                    'require' => true,
+                    'type' => 'string',
+                    'format' => 'utf8',       
+                    'desc' => '活动名称'
+                ],
+                'location' => [
+                    'name' => 'location', 
+                    'require' => true,
+                    'type' => 'string',
+                    'format' => 'utf8',       
+                    'desc' => '活动地点'
+                ],
+                'hoster' => [
+                    'name' => 'hoster', 
+                    'require' => true,
+                    'type' => 'int',     
+                    'desc' => '活动地点'
+                ],
+                'title' => [
+                    'name' => 'title', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '标题'
+                ],
+                'summary' => [
+                    'name' => 'summary', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '简介'
+                ],
+                'detail' => [
+                    'name' => 'detail', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '详情'
+                ],
+                'peoplenum' => [
+                    'name' => 'peoplenum', 
+                    'require' => true,
+                    'type' => 'int',
+                    'min' => 1,
+                    'desc' => '人数'
+                ],
+                'alltime' => [
+                    'name' => 'alltime', 
+                    'require' => true,
+                    'type' => 'int',
+                    'min' => 1,
+                    'desc' => '所有时间'
+                ],
+                'contact' => [
+                    'name' => 'contact', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '联系方式'
+                ],
+                'starttime' => [
+                    'name' => 'starttime', 
+                    'require' => true,
+                    'type' => 'int',
+                    'desc' => '开始时间'
+                ],
+                'volunteertimemin' => [
+                    'name' => 'volunteertimemin', 
+                    'require' => true,
+                    'type' => 'float',
+                    'desc' => '最少志愿时间'
+                ],
+                'volunteertimemax' => [
+                    'name' => 'volunteertimemax', 
+                    'require' => true,
+                    'type' => 'float',
+                    'desc' => '最少志愿时间'
+                ],
+                'type' => [
+                    'name' => 'type', 
+                    'require' => false,
+                    'type' => 'int',
+                    'desc' => '类型'
+                ]
+            ],
+            'allActivity' => [
+                'from' => [
+                    'name' => 'from', 
+                    'desc' => '分页起始',
+                    'type' => 'int',
+                    'default' => 0, 
+                ],
+                'pagenum' => [
+                    'name' => 'pagenum', 
+                    'desc' => '页面大小',
+                    'type' => 'int',
+                    'default' => 20, 
+                ]
+            ],
             '*' => [
                 'jwt' => [
                     'name' => 'jwt', 
@@ -135,6 +233,27 @@ class Admin extends Api {
         //正常的业务逻辑
     }
 
+    /**
+     * 获取所有志愿活动 显示被删除的
+     *
+     * @return void
+     */
+    public function allActivity(){
+        $re = $this->Act->gets($this->from, $this->pagenum, true);
+
+        return $re;
+    }
+
+    /**
+     * 增加活动
+     *
+     * @return void
+     */
+    public function addActivity(){
+        $re = $this->Act->add($this);
+
+        return $re;
+    }
 
     private function checkJwt(){
         $re = $this->User->decode($this->jwt);

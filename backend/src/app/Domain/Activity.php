@@ -13,11 +13,16 @@ class Activity {
     }
 
 
-    public function gets($from = 0, $num = 20){
-        return $this->Act->gets($from, $num);
+    public function gets($from = 0, $num = 20, $all = false){
+        return $this->Act->gets($from, $num, $all);
     }
 
     public function get($id){
         return $this->Act->get($id);
+    }
+
+    public function add($args){
+        $re = $this->Act->add($args);
+        return $re;
     }
 }
