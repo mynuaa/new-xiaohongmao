@@ -17,4 +17,12 @@ class User{
 
     }
 
+    public function countAll(){
+        $re = di()->db->count('user', [
+            'status[>]' => 0
+        ]);
+        return $re;
+
+    }
+    
 }

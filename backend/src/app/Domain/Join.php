@@ -12,7 +12,23 @@ class Join {
         $this->Join = new MJoin();
     }
 
+    public function get($id){
+        $re['done'] =  (int)$this->Join->get($id, true);
+        $re['undone'] =  (int)$this->Join->get($id, false); //php无法使用短路运算符
+
+        return $re;
+    }
+
     public function countAll(){
         return $this->Join->countAll();
     }
+
+    public function countMonth(){
+        return $this->Join->countMonth();
+    }
+
+    public function average(){
+        return $this->Join->average();
+    }
+    
 }
