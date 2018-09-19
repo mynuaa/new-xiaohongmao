@@ -13,4 +13,12 @@ class Activity{
         return $re;
     }
 
+    public function get($id){
+        $re= di()->db->get('activity', '*', [
+            'aid' => $id
+        ]);
+
+        return $re;      
+    }
+
 }

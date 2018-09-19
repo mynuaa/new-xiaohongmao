@@ -91,6 +91,14 @@ class Front extends Api {
                     'default' => 20, 
                 ]
             ],
+            'getActivity' => [
+                'id' => [
+                    'name' => 'id', 
+                    'desc' => '活动id',
+                    'type' => 'int',
+                    'require' => true,
+                ]
+            ],
         ];
 	}
     
@@ -171,6 +179,12 @@ class Front extends Api {
      */
     public function allActivity(){
         $re = $this->Act->gets($this->from, $this->pagenum);
+
+        return $re;
+    }
+
+    public function getActivity(){
+        $re = $this->Act->get($this->id);
 
         return $re;
     }
