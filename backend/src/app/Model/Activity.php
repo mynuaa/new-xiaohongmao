@@ -13,7 +13,7 @@ class Activity{
         if($all === false){
             $con['status[>]'] = 0;
         }
-        
+
         $re= di()->db->select('activity', '*', $con);
 
         return $re;
@@ -54,5 +54,10 @@ class Activity{
         }else{
             return false;
         }
+    }
+    
+    //todo 更新活动
+    public function update($args){
+
     }
 }
