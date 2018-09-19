@@ -11,11 +11,13 @@ use App\Domain\Front as DFront;
 use App\Domain\GTCode as DGTCode;
 use App\Domain\Ded as DDed;
 use App\Domain\User as DUser;
+use App\Domain\Activity as DActivity;
+use App\Domain\Join as DJoin;
 
 /**
- * 默认接口服务类
+ * 前端接口
  *
- * @author: dogstar <chanzonghuang@gmail.com> 2014-10-04
+ * @author: Seiry Yu
  */
 
 class Front extends Api {
@@ -76,6 +78,28 @@ class Front extends Api {
                     'type' => 'string',
                 ]
             ],
+            'allActivity' => [
+                'from' => [
+                    'name' => 'from', 
+                    'desc' => '分页起始',
+                    'type' => 'int',
+                    'default' => 0, 
+                ],
+                'pagenum' => [
+                    'name' => 'pagenum', 
+                    'desc' => '页面大小',
+                    'type' => 'int',
+                    'default' => 20, 
+                ]
+            ],
+            'getActivity' => [
+                'id' => [
+                    'name' => 'id', 
+                    'desc' => '活动id',
+                    'type' => 'int',
+                    'require' => true,
+                ]
+            ],
         ];
 	}
     
@@ -84,6 +108,8 @@ class Front extends Api {
         $this->GTCode = new DGTCode();
         $this->Ded = new DDed();
         $this->User = new DUser();
+        $this->Act = new DActivity();
+        $this->Join = new DJoin();
     }
 
 	/**
@@ -145,5 +171,39 @@ class Front extends Api {
 
         //判断是否是新注册
         //正常的业务逻辑
+    }
+
+
+    /**
+     * 获取所有志愿活动
+     *
+     * @return void
+     */
+    public function allActivity(){
+        $re = $this->Act->gets($this->from, $this->pagenum);
+
+        return $re;
+    }
+
+    /**
+     * 按id获取活动
+     *
+     * @return void
+     */
+    public function getActivity(){
+        $re = $this->Act->get($this->id);
+
+        return $re;
+    }
+
+    /**
+     * 获取所有的志愿时长
+     *
+     * @return void
+     */
+    public function allTimeLong(){
+        $re = $this->Join->countAll();
+
+        return $re;
     }
 }

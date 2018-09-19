@@ -46,3 +46,9 @@ ps: 因为需要 `webpack4`，所以可能与之前版本的表现有所不同�
 验证码采取geetest方案
 
 前端在登录时，从后台拉取一个challengecode，然后初始化验证码，在前端先校验验证码是否正确。若正确，则允许提交，提交时附带geetest返回的三个认证数据。
+
+## 后端调试
+
+后端的接口以 `https://my.nuaa.edu.cn/xiaohongmao2/api` 开头 ，建议使用时的样例如 `http://my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Front.BeforeLogin`，不要使用调试文档生成的默认地址
+
+调试文档地址 <https://my.nuaa.edu.cn/xiaohongmao2/docs.php>
