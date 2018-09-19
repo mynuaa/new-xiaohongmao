@@ -33,6 +33,18 @@ class Join{
         ]);
         return $re;
     }
+    
+    public function get($id, $done = true){
+        $con['stuid'] = $id;
+        if($done === true){
+            $con['status[>]'] = 1;
+        }else{
+            $con['status'] = 0;
+        }
+        $re = di()->db->sum('join', 'timelong', $con);
+
+        return $re;
+    }
 
     public function average(){
 

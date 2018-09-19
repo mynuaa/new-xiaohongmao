@@ -197,7 +197,7 @@ class Front extends Api {
     }
 
     /**
-     * 获取所有的志愿时长
+     * 获取用于展示的数据
      *
      * @return void
      */
