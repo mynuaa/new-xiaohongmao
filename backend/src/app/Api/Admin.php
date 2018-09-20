@@ -299,7 +299,7 @@ class Admin extends Api {
         
         if($jwt['admin']->level == 1){//院级管理员
             // todo 判断管理员和活动的对应关系
-            if(!$this->Join->judge($jwt['admin']->yuan,$this->aid)){
+            if(!$this->Activity->judge($jwt['admin']->yuan,$this->aid)){
                 throw new Exception("无权限", 403);
             }
         }
@@ -311,9 +311,15 @@ class Admin extends Api {
     public function getActivity(){
         $jwt = $this->checkJwt();
         //todo 管理员归属判断
-
+        if(!$this->Activity->judge($jwt['admin']->yuan,$this->aid)){//和上面的一样
+            throw new Exception("无权限", 403);
+        
         $re = $this->Act->adminDetail($this->aid);
         return $re;
+        }
+        else{
+            return false;
+        }
     }
 
     private function checkJwt(){

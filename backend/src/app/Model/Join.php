@@ -94,13 +94,4 @@ class Join{
         return $re;  
     }
 
-    public function judge($user,$hoster){
-        $user_re=di()->db->select('activity','*',[
-            'aid'=>$hoster
-        ]);
-        if($user==$user_re)
-        {
-            return true;
-        }
-    }
 }

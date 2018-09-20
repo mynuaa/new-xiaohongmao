@@ -34,10 +34,6 @@ class Join {
     public function average(){
         return $this->Join->average();
     }
-    
-    public function judge($user,$hoster){//added by helaji
-        return $this->Join->judge($user,$hoster);
-    }
 
     public function add($uid, $aid, $time, $admin){
         return $this->Join->add($uid, $aid, $time, $admin);

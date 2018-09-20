@@ -75,5 +75,16 @@ class Activity{
         }
     }
 
-
+    public function judge($user,$hoster){
+        $user_re=di()->db->select('activity','*',[
+            'aid'=>$hoster
+        ]);
+        $user_re_re=di()->db->select('admin','*',[
+            'adminid'=>$user_re['hoster']
+        ]);
+        if($user==$user_re_re['yuan'])
+        {
+            return true;
+        }
+    }
 }
