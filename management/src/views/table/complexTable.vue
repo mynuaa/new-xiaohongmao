@@ -133,7 +133,6 @@
 import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
 import waves from '@/directive/waves' // 水波纹指令
 import { parseTime } from '@/utils'
-import axios from 'axios'
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -216,7 +215,7 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity', { })
+      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity', { })
       .then((response) => {
           this.list = response.data.data
           this.total = this.list.length

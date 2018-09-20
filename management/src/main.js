@@ -31,7 +31,7 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
-Vue.axios = axios
+Vue.prototype.axios = axios
 new Vue({
   el: '#app',
   router,

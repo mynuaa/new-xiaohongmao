@@ -14,7 +14,7 @@ export default {
   data() {
     	return {
       		tableData: [{
-        		uname: '666',
+        		uname: null,
         		gender: null,
         		stuid: null
       		}]
