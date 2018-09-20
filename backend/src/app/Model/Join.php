@@ -93,10 +93,26 @@ class Join{
         return $re;  
     }
 
-    public function updateStatus($jid, $status = 1){
-        $re = di()->db->update('join', [
-            'status' => $status
-        ], [
+    public function get($jid){
+        $re = di()->db->get('join', '*', [
+            'jid' => $jid
+        ]);
+
+        return $re;
+    }
+
+    public function updateStatus($jid, $status = 1, $admin = false){
+        $con = [
+            'status' => $status,
+        ];
+        if($admin){
+            $con = array_merge($con, [
+                'optadmin' => $admin,
+                'opttime' => di()->db::raw('NOW()'),
+            ]);
+        }
+
+        $re = di()->db->update('join', $con, [
             'jid' => $jid
         ]);
 
