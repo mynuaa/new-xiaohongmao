@@ -169,6 +169,27 @@ class Admin extends Api {
                     'default' => 20, 
                 ]
             ],
+            'addJoin' => [
+                'stuid' => [
+                    'name' => 'stuid', 
+                    'desc' => '学号',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ],
+                'aid' => [
+                    'name' => 'aid',
+                    'desc' => '活动id',
+                    'type' => 'int',
+                    'require' => true,
+                ],
+                'timelong' => [
+                    'name' => 'timelong',
+                    'desc' => '页面大小',
+                    'require' => true,
+                    'type' => 'float'
+                ]
+            ],
             '*' => [
                 'jwt' => [
                     'name' => 'jwt', 
@@ -271,7 +292,7 @@ class Admin extends Api {
         }
 
         $re = $this->Join->add($this->stuid, $this->aid, $this->timelong, $jwt['stuid']);
-        
+
         return $re;
     }
 
