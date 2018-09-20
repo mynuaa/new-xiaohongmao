@@ -25,7 +25,7 @@ class Activity{
             'status[>]' => 0
         ]);
 
-        return $re;      
+        return $re;
     }
 
     public function add($args){
