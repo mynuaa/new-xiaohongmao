@@ -2,7 +2,7 @@
   <div id="app">
     <div id="img-toutu"></div>
     <div id="nav">
-      <router-link to="/loggedIn">首页</router-link>
+      <router-link to="/">首页</router-link>
       <router-link to="/activity">志愿活动</router-link>
       <router-link to="/announcement">公告&动态</router-link>
       <router-link to="/comments">意见箱</router-link>
