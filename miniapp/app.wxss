@@ -8,6 +8,9 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+page{
+    background: #f9f9f9;
+}
 /*
 16204a475a328e16e6971bceae829200
 */
