@@ -50,6 +50,16 @@ export default {
           label: "南京航空航天大学何惧老俱乐部志愿",
           origin: "何巨佬",
           date: "2014-02-08"
+        },
+        {
+          label: "南京航空航天大学何惧老俱乐部志愿",
+          origin: "何巨佬",
+          date: "2014-02-08"
+        },
+        {
+          label: "南京航空航天大学何惧老俱乐部志愿",
+          origin: "何巨佬",
+          date: "2014-02-08"
         }
       ]
     };
@@ -58,17 +68,20 @@ export default {
 </script>
 
 <style <style lang="scss" scoped>
+#box {
+  border:1px solid #CCCCCC;
+}
 #header {
+  background-color:#CCCCCC;
   letter-spacing: 4px;
   font-weight: 800;
-  height: 20%;
-  line-height: 100%;
-  padding-bottom: 20px;
+  height: 40px;
+  // padding-bottom: 20px;
   text-align: center;
   div {
-    display: inline-block;
+    line-height: 40px;
   }
-  border-bottom: 1px solid #666666;
+  
 }
 #body {
   margin-top: 10px;
@@ -77,6 +90,8 @@ export default {
     margin: 0px;
     padding: 0px;
     li {
+      border-bottom:1px dashed #CCCCCC;
+      margin-left: 4px;
       margin-bottom: 2px;
       text-align: left;
       list-style-type: none;

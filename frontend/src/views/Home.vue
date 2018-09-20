@@ -4,7 +4,8 @@
       <Box class="box-activity"></Box>
     </div>
     <div class="body-right">
-      <!-- <Box  class="box-activity"></Box> -->
+      <div></div>
+      <div></div>
     </div>
     <ul class="bg-bubbles">
     <li  v-for="(item, index) in bubbles" :key="index"></li>
