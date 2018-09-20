@@ -25,4 +25,17 @@ class Activity {
         $re = $this->Act->add($args);
         return $re;
     }
+
+    public function del($id){
+        return $this->Act->setStatus($id, 0);
+    }
+    public function open($id){
+        return $this->Act->setStatus($id, 1);
+    }
+    public function shoutdown($id){
+        return $this->Act->setStatus($id, 2);
+    }
+    public function setStopTime($id, $time){
+        return $this->Act->setStatus($id, $time);
+    }
 }

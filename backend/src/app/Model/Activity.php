@@ -30,7 +30,7 @@ class Activity{
 
 
     public function add($args){
-        $re = di()->db->insert('shop', [
+        $re = di()->db->insert('activity', [
             'name' => $args->name,
             'location' => $args->location,
             'hoster' => $args->hoster,
@@ -59,5 +59,20 @@ class Activity{
     //todo 更新活动
     public function update($args){
 
+    }
+
+
+    public function setStatus($id, $status){
+        $re = di()->db->update('activity', [
+            'status' => $status
+        ], [
+            'aid' => $id
+        ]);
+
+        if(di()->db->error()[0] == 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
