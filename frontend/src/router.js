@@ -6,6 +6,10 @@ import Announcement from './views/Announcement.vue'
 import Comments from './views/Comments.vue'
 import Certification from './views/Certification.vue'
 import Navigate from './views/Navigate.vue'
+import LoggedIn from './views/LoggedIn.vue'
+import VueCarousel from 'vue-carousel'
+ 
+Vue.use(VueCarousel);
 
 Vue.use(Router)
 
@@ -41,5 +45,10 @@ export default new Router({
       name: 'navigate',
       component: Navigate
     },
+    {
+      path: '/loggedIn',
+      name: 'loggedIn',
+      component: LoggedIn
+    }
   ]
 })
