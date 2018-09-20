@@ -75,16 +75,25 @@ class Activity{
         }
     }
 
-    public function judge($user,$hoster){
-        $user_re=di()->db->select('activity','*',[
-            'aid'=>$hoster
+    public function judge($user,$aid){
+       /* $hoster = di()->db->get('activity', 'hoster',[
+            'aid'=>$aid
         ]);
-        $user_re_re=di()->db->select('admin','*',[
-            'adminid'=>$user_re['hoster']
-        ]);
-        if($user==$user_re_re['yuan'])
+        $hosterYuan=di()->db->get('admin','yuan',[
+            'adminid'=>$hoster
+        ]);*/
+
+        $hoster=di()->db->get('activity',[
+            '[>]admin'=>['hoster'=>'adminid']
+        ], 'admin.yuan',[
+            'aid'=>$aid
+        ] );
+
+        if($user==$hoster)
         {
             return true;
+        }else{
+            return false;
         }
     }
 }
