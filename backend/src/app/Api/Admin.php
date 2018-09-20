@@ -169,6 +169,35 @@ class Admin extends Api {
                     'default' => 20, 
                 ]
             ],
+            'addJoin' => [
+                'stuid' => [
+                    'name' => 'stuid', 
+                    'desc' => '学号',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ],
+                'aid' => [
+                    'name' => 'aid',
+                    'desc' => '活动id',
+                    'type' => 'int',
+                    'require' => true,
+                ],
+                'timelong' => [
+                    'name' => 'timelong',
+                    'desc' => '页面大小',
+                    'require' => true,
+                    'type' => 'float'
+                ]
+            ],
+            'getActivity' => [
+                'aid' => [
+                    'name' => 'aid',
+                    'desc' => '活动id',
+                    'type' => 'int',
+                    'require' => true,
+                ]
+            ],
             '*' => [
                 'jwt' => [
                     'name' => 'jwt', 
@@ -206,12 +235,12 @@ class Admin extends Api {
      */
 
     public function login(){
-        
-        /*$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->stuid);
+        /*
+        $geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->stuid);
         if($geetest !== true){
             throw new Exception('验证码错误', 500);
-        }*/
-        
+        }
+        */
         $ded = $this->Ded->verify($this->stuid, $this->passwd);
         if($ded === false){
             throw new Exception('密码错误', 403);
@@ -226,6 +255,7 @@ class Admin extends Api {
             return $this->User->encode($ded['name'], $this->stuid, $admin);
         }else{
             // ？是否要激活？
+            //todo 怎么搞？
             throw new Exception('请确认绑定', 200);
         }
 
@@ -255,6 +285,38 @@ class Admin extends Api {
         return $re;
     }
 
+    /**
+     * 增加参与
+     *
+     * @return void
+     */
+    public function addJoin(){
+        $jwt = $this->checkJwt();
+        
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
+        
+        if($jwt['admin']['level'] == 1){//院级管理员
+            // todo 判断管理员和活动的对应关系
+            if(1){
+                throw new Exception('无权限', 403);
+            }
+        }
+
+        $re = $this->Join->add($this->stuid, $this->aid, $this->timelong, $jwt['stuid']);
+
+        return $re;
+    }
+
+    public function getActivity(){
+        $jwt = $this->checkJwt();
+        //todo 管理员归属判断
+
+        $re = $this->Act->adminDetail($this->aid);
+        return $re;
+    }
+
     private function checkJwt(){
         $re = $this->User->decode($this->jwt);
         if(isset($re['ret']) && $re['ret'] == 401){
@@ -262,6 +324,12 @@ class Admin extends Api {
         }
         return $re;
     }
+
+/**
+ * 生成测试使用的jwt
+ *
+ * @return void
+ */
     public function makejwt(){
         return $this->User->encode('seiry', '031630226', ['level' => 3]);
     }

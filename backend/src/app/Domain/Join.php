@@ -1,7 +1,6 @@
 <?php
 namespace App\Domain;
 
-//use App\Model\Examples\CURD as ModelCURD;
 use App\Model\Join as MJoin;
 
 use function \PhalApi\DI as di;
@@ -12,8 +11,8 @@ class Join {
         $this->Join = new MJoin();
     }
 
-    public function get($stuid){
-        $re = $this->Join->get($stuid);
+    public function getByStuid($stuid){
+        $re = $this->Join->getByStuid($stuid);
 
         return $re;
     }
@@ -36,4 +35,7 @@ class Join {
         return $this->Join->average();
     }
     
+    public function add($uid, $aid, $time, $admin){
+        return $this->Join->add($uid, $aid, $time, $admin);
+    }
 }

@@ -34,7 +34,8 @@ class Join{
         return $re;
     }
     
-    public function get($stuid){
+    public function getByStuid($stuid){
+        //todo 联合查询名字 个人信息
         $re= di()->db->select('join', [
             '[>]activity' => 'aid'
         ], '*', [
@@ -64,5 +65,31 @@ class Join{
 
         return $re;        
 
+    }
+
+    public function add($uid, $aid, $time, $opt){
+        $re = di()->db->insert('join', [
+            'stuid' => $uid,
+            'aid' => $aid,
+            'timelong' => $time,
+            'optadmin' => $opt,
+            'opttime' => di()->db::raw('NOW()'),
+            'status' => 0
+
+        ]);
+        
+
+        if(di()->db->error()[0] == 0){
+            return di()->db->id();
+        }else{
+            return false;
+        }
+    }
+
+    public function getByAid($aid){
+        $re= di()->db->select('join', '*', [
+            'aid' => $aid
+        ]);
+        return $re;  
     }
 }
