@@ -27,23 +27,23 @@
       style="width: 100%;">
       <el-table-column :label="$t('table.id')" align="center" width="65">
         <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
+          <span>{{ scope.row.aid }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.date')" width="150px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ scope.row.starttime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.title')" min-width="150px">
         <template slot-scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.title }}</span>
+          <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.name }}</span>
           <el-tag>{{ scope.row.type | typeFilter }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.author')" width="110px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+          <span>{{ scope.row.hoster }}</span>
         </template>
       </el-table-column>
       <el-table-column v-if="showReviewer" :label="$t('table.reviewer')" width="110px" align="center">
@@ -53,7 +53,7 @@
       </el-table-column>
       <el-table-column :label="$t('table.importance')" width="80px">
         <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.importance" :key="n" icon-class="star" class="meta-item__icon"/>
+          <svg-icon v-for="n in +scope.row.status" :key="n" icon-class="star" class="meta-item__icon"/>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.readings')" align="center" width="95">
@@ -133,6 +133,7 @@
 import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
 import waves from '@/directive/waves' // 水波纹指令
 import { parseTime } from '@/utils'
+import axios from 'axios'
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -215,15 +216,17 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+      axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity', { })
+      .then((response) => {
+          this.list = response.data.data
+          this.total = this.list.length
+      })
 
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
         }, 1.5 * 1000)
-      })
+      
     },
     handleFilter() {
       this.listQuery.page = 1
@@ -267,7 +270,7 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'vue-element-admin'
+          this.temp.hoster = 'vue-element-admin'
           createArticle(this.temp).then(() => {
             this.list.unshift(this.temp)
             this.dialogFormVisible = false

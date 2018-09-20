@@ -25,11 +25,12 @@ export default {
 	  },
   methods: {
     fetchData() {
-      axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetInfo', {
-      		'jwt': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6M319.EZrwdqZRItLmiGrq6wAbPjtZXgVlX5NnvKfYCB4gx4I'
-    		})
-    		.then((response) => {
-          this.tableData = response.data
+    		axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetInfo', {
+            'jwt': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6M319.EZrwdqZRItLmiGrq6wAbPjtZXgVlX5NnvKfYCB4gx4I'
+        })
+        .then((response) => {
+          this.tableData=[]
+          this.tableData.push(response.data.data)
     		})
     }
   }

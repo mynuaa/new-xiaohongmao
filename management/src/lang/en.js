@@ -40,7 +40,7 @@ export default {
     dynamicTable: 'Dynamic Table',
     dragTable: 'Drag Table',
     inlineEditTable: 'Inline Edit',
-    complexTable: 'Complex Table',
+    complexTable: '活动列表',
     treeTable: 'Tree Table',
     customTreeTable: 'Custom TreeTable',
     tab: 'Tab',

@@ -5,7 +5,7 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import axios from 'axios'
 import '@/styles/index.scss' // global css
 
 import App from './App'
@@ -31,7 +31,7 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
-
+Vue.axios = axios
 new Vue({
   el: '#app',
   router,
