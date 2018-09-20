@@ -1,12 +1,8 @@
 <template>
   <div class="createPost-container">
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
-      <sticky :class-name="'sub-navbar '+postForm.status">
-        <CommentDropdown v-model="postForm.comment_disabled" />
-        <PlatformDropdown v-model="postForm.platforms" />
-        <SourceUrlDropdown v-model="postForm.source_uri" />
-        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">发布
-        </el-button>
+      <sticky :class-name="'sub-navbar '+postForm.status"  zIndex="5000">
+        <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">发布</el-button>
       </sticky>
 
       <div class="createPost-main-container">
@@ -138,10 +134,10 @@ export default {
     }
     return {
       form:{
-        peoplenum : 0,
-        alltime: 0,
-        volunteertimemax: 0,
-        volunteertimemin: 0,
+        peoplenum : 1,
+        alltime: 1,
+        volunteertimemax: 1,
+        volunteertimemin: 1,
         contact: ' ',
         title: ' ',
         hoster: ' ',
@@ -188,11 +184,10 @@ export default {
       })
     },
     submitForm() {
-      alert(typeof(this.form.starttime))
+      this.form.starttime = Date.parse(this.form.starttime)/1e3
       this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity',this.form)
-      this.postForm.display_time = parseInt(this.display_time / 1000)
-      this.$refs.postForm.validate(valid => {
-        if (valid) {
+      .then(response => {
+        if (response.data.ret==200) {
           this.loading = true
           this.$notify({
             title: '成功',
@@ -200,11 +195,13 @@ export default {
             type: 'success',
             duration: 2000
           })
-          this.postForm.status = 'published'
-          this.loading = false
         } else {
-          console.log('error submit!!')
-          return false
+          this.$notify({
+            title: '失败',
+            message: response.data.msg,
+            type: 'fail',
+            duration: 2000
+          })
         }
       })
     },
@@ -266,5 +263,8 @@ export default {
     right: -10px;
     top: 0px;
   }
+}
+sub-navbar{
+  z-index: 5000 !important;
 }
 </style>
