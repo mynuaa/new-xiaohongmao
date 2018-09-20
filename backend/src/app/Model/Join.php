@@ -65,4 +65,23 @@ class Join{
         return $re;        
 
     }
+
+    public function add($uid, $aid, $time, $opt){
+        $re = di()->db->insert('join', [
+            'stuid' => $uid,
+            'aid' => $aid,
+            'timelong' => $time,
+            'optadmin' => $opt,
+            'opttime' => di()->db::raw('NOW()'),
+            'status' => 0
+
+        ]);
+        
+
+        if(di()->db->error()[0] == 0){
+            return di()->db->id();
+        }else{
+            return false;
+        }
+    }
 }

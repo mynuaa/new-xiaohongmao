@@ -255,6 +255,26 @@ class Admin extends Api {
         return $re;
     }
 
+    public function addJoin(){
+        $jwt = $this->checkJwt();
+        
+        
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
+        
+        if($jwt['admin']['level'] == 1){//院级管理员
+            // todo 判断管理员和活动的对应关系
+            if(1){
+                throw new Exception('无权限', 403);
+            }
+        }
+
+        $re = $this->Join->add($this->stuid, $this->aid, $this->timelong, $jwt['stuid']);
+        
+        return $re;
+    }
+
     private function checkJwt(){
         $re = $this->User->decode($this->jwt);
         if(isset($re['ret']) && $re['ret'] == 401){
@@ -262,6 +282,8 @@ class Admin extends Api {
         }
         return $re;
     }
+
+
     public function makejwt(){
         return $this->User->encode('seiry', '031630226', ['level' => 3]);
     }
