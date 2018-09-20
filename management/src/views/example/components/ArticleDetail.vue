@@ -13,48 +13,44 @@
         <el-row>
           <el-col :span="24">
             <el-form-item style="margin-bottom: 20px;" prop="title1">
-              <MDinput v-model="postForm.title" :maxlength="100" name="name" required>
+              <MDinput v-model="form.title" :maxlength="100" name="name" required>
                 活动名称
               </MDinput>
             </el-form-item>
             <el-form-item style="margin-bottom: 40px;" prop="title1">
-              <MDinput v-model="postForm.title" :maxlength="100" name="name" required>
+              <MDinput v-model="form.location" :maxlength="100" name="name" required>
                 活动地点
               </MDinput>
             </el-form-item>
 
             <el-form-item label-width="120px" label="人数:" class="postInfo-container-item">
-              <el-slider v-model="value8"  show-input max=1000></el-slider>
+              <el-slider v-model="form.peoplenum"  show-input max=1000></el-slider>
             </el-form-item>
 
             <el-form-item label-width="120px" label="总时长:" class="postInfo-container-item">
-              <el-slider v-model="value9"  show-input max=1000></el-slider>
+              <el-slider v-model="form.alltime"  show-input max=1000></el-slider>
             </el-form-item>
 
             <el-form-item label-width="120px" label="最多志愿时长:" class="postInfo-container-item">
-              <el-slider v-model="value2"  show-input max=100></el-slider>
+              <el-slider v-model="form.volunteertimemax"  show-input max=100></el-slider>
             </el-form-item>
             
             <el-form-item label-width="120px" label="最少志愿时长:" class="postInfo-container-item">
-              <el-slider v-model="value1"  show-input max=100></el-slider>
+              <el-slider v-model="form.volunteertimemin"  show-input max=100></el-slider>
             </el-form-item>
 
             <el-form-item label-width="120px" label="联系方式:" class="postInfo-container-item">
-                <el-input v-model="input" placeholder="鳄鱼" width='90px'></el-input>
-              </el-form-item>
+              <el-input v-model="form.contact" placeholder="鳄鱼" width='90px'></el-input>
+            </el-form-item>
             <div class="postInfo-container">
               <el-row>
-                <el-col :span="8">
-                  <el-form-item label-width="120px" label="作者:" class="postInfo-container-item">
-                    <el-select v-model="postForm.author" :remote-method="getRemoteUserList" filterable remote placeholder="搜索用户">
-                      <el-option v-for="(item,index) in userListOptions" :key="item+index" :label="item" :value="item"/>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
+                <el-form-item label-width="120px" label="发布者:" class="postInfo-container-item">
+                  <el-input v-model="form.hoster" placeholder=" " width='90px'></el-input>
+                </el-form-item>
 
                 <el-col :span="10">
                   <el-form-item label-width="80px" label="发布时间:" class="postInfo-container-item">
-                    <el-date-picker v-model="postForm.display_time" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间"/>
+                    <el-date-picker v-model="form.starttime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间"/>
                   </el-form-item>
                 </el-col>
                 
@@ -65,12 +61,12 @@
         </el-row>
 
         <el-form-item style="margin-bottom: 40px;" label-width="120px" label="摘要:">
-          <el-input :rows="1" v-model="postForm.content_short" type="textarea" class="article-textarea" autosize placeholder="请输入内容"/>
+          <el-input :rows="1" v-model="form.summary" type="textarea" class="article-textarea" autosize placeholder="请输入内容"/>
           <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}字</span>
         </el-form-item>
 
         <div class="editor-container">
-          <Tinymce ref="editor" :height="400" v-model="postForm.content" />
+          <Tinymce ref="editor" :height="400" v-model="form.detail" />
         </div>
 
       </div>
@@ -141,11 +137,21 @@ export default {
       }
     }
     return {
-      input: ' ',
-      value8 : 0,
-      value9: 0,
-      value1: 0,
-      value2: 0,
+      form:{
+        peoplenum : 0,
+        alltime: 0,
+        volunteertimemax: 0,
+        volunteertimemin: 0,
+        contact: ' ',
+        title: ' ',
+        hoster: ' ',
+        location:' ',
+        starttime:'',
+        summary:'',
+        detail:'',
+        type:'test',
+        name:'name'
+      },
       postForm: Object.assign({}, defaultForm),
       loading: false,
       userListOptions: [],
@@ -182,8 +188,9 @@ export default {
       })
     },
     submitForm() {
+      alert(typeof(this.form.starttime))
+      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity',this.form)
       this.postForm.display_time = parseInt(this.display_time / 1000)
-      console.log(this.postForm)
       this.$refs.postForm.validate(valid => {
         if (valid) {
           this.loading = true
