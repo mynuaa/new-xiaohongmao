@@ -7,7 +7,8 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    stuid: ''
   },
   //事件处理函数
   bindViewTap: function() {
@@ -16,6 +17,13 @@ Page({
     })
   },
   onLoad: function () {
+    const updateManager = wx.getUpdateManager()
+    updateManager.onCheckForUpdate(function (res) {
+
+    })
+    updateManager.onUpdateReady(function () {
+        updateManager.applyUpdate()
+    })
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -43,6 +51,17 @@ Page({
       })
     }
   },
+    bindKeyInput: function (e) {
+        this.setData({
+            stuid: e.detail.detail.value
+        })
+    },
+    go: function(){
+        console.log(this.data.stuid)
+        wx.navigateTo({
+            url: '../timelong/timelong?stuid=' + this.data.stuid,
+        })
+    },
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo

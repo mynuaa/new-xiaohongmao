@@ -6,8 +6,8 @@
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+  </view>  
+  
+    <i-input title="学号" mode="wrapped" type="text" bind:change="bindKeyInput" maxlength="9"></i-input>
+    <i-button type="primary" bind:click="go">查询志愿时长</i-button>
 </view>
