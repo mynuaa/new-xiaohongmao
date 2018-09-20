@@ -227,12 +227,12 @@ class Admin extends Api {
      */
 
     public function login(){
-        
-        /*$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->stuid);
+        /*
+        $geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->stuid);
         if($geetest !== true){
             throw new Exception('验证码错误', 500);
-        }*/
-        
+        }
+        */
         $ded = $this->Ded->verify($this->stuid, $this->passwd);
         if($ded === false){
             throw new Exception('密码错误', 403);
@@ -247,6 +247,7 @@ class Admin extends Api {
             return $this->User->encode($ded['name'], $this->stuid, $admin);
         }else{
             // ？是否要激活？
+            //todo 怎么搞？
             throw new Exception('请确认绑定', 200);
         }
 
@@ -276,6 +277,11 @@ class Admin extends Api {
         return $re;
     }
 
+    /**
+     * 增加参与
+     *
+     * @return void
+     */
     public function addJoin(){
         $jwt = $this->checkJwt();
         
@@ -304,7 +310,11 @@ class Admin extends Api {
         return $re;
     }
 
-
+/**
+ * 生成测试使用的jwt
+ *
+ * @return void
+ */
     public function makejwt(){
         return $this->User->encode('seiry', '031630226', ['level' => 3]);
     }
