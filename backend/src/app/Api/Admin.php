@@ -297,13 +297,12 @@ class Admin extends Api {
             throw new Exception('无权限', 403);
         }
         
-        if($jwt['admin']['level'] == 1){//院级管理员
+        if($jwt['admin']->level == 1){//院级管理员
             // todo 判断管理员和活动的对应关系
-            if(1){
-                throw new Exception('无权限', 403);
+            if(!$this->Join->judge($jwt['admin']->yuan,$this->aid)){
+                throw new Exception("无权限", 403);
             }
         }
-
         $re = $this->Join->add($this->stuid, $this->aid, $this->timelong, $jwt['stuid']);
 
         return $re;
