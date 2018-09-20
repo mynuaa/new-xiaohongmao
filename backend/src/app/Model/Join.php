@@ -35,6 +35,7 @@ class Join{
     }
     
     public function getByStuid($stuid){
+        //todo 联合查询名字 个人信息
         $re= di()->db->select('join', [
             '[>]activity' => 'aid'
         ], '*', [
