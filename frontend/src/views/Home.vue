@@ -1,10 +1,10 @@
 <template>
   <div class="home">
     <div class="body-left">
-      <Box  class="box-activity"></Box>
+      <Box class="box-activity"></Box>
     </div>
     <div class="body-right">
-      <Box  class="box-activity"></Box>
+      <!-- <Box  class="box-activity"></Box> -->
     </div>
     <ul class="bg-bubbles">
     <li  v-for="(item, index) in bubbles" :key="index"></li>
@@ -36,6 +36,7 @@ export default {
 }
 .body-left {
   width: 40%;
+  padding-left: 10%
 }
 .body-right {
   width: 40%;
@@ -47,12 +48,12 @@ export default {
     // 使气泡背景充满整个屏幕
     bottom: 0px;
     left: 0;
-    width: 100%;
+    width: 90%;
     // height: 300px;
     li {
       position: absolute;
       // bottom 的设置是为了营造出气泡从页面底部冒出的效果；
-      bottom: 0px;
+      bottom: 10px;
       // 默认的气泡大小；
       width: 40px;
       height: 40px;
@@ -89,15 +90,15 @@ export default {
       }
       &:nth-child(6) {
         left: 80%;
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
         animation-delay: 3s;
         background-color: rgba(255, 255, 255, 0.2);
       }
       &:nth-child(7) {
         left: 32%;
-        width: 160px;
-        height: 160px;
+        width: 100px;
+        height: 100px;
         animation-delay: 2s;
       }
       &:nth-child(8) {
@@ -116,9 +117,9 @@ export default {
         background-color: rgba(255, 255, 255, 0.3);
       }
       &:nth-child(10) {
-        left: 85%;
-        width: 100px;
-        height: 100px;
+        left: 80%;
+        width: 90px;
+        height: 90px;
         animation-delay: 5s;
       }
     }
