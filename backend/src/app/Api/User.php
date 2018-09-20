@@ -58,7 +58,7 @@ class User extends Api {
     public function getJoin(){
         $re = $this->checkJwt();
         $stuid = $re['stuid'];
-        $join = $this->Join->get($stuid);
+        $join = $this->Join->getByStuid($stuid);
 
         return $join;
     }

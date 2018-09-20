@@ -28,7 +28,6 @@ class Activity{
         return $re;      
     }
 
-
     public function add($args){
         $re = di()->db->insert('activity', [
             'name' => $args->name,
@@ -75,4 +74,6 @@ class Activity{
             return false;
         }
     }
+
+
 }

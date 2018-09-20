@@ -1,8 +1,8 @@
 <?php
 namespace App\Domain;
 
-//use App\Model\Examples\CURD as ModelCURD;
 use App\Model\Activity as MActivity;
+use App\Model\Join as MJoin;
 
 use function \PhalApi\DI as di;
 
@@ -10,6 +10,7 @@ class Activity {
 
     function __construct() {
         $this->Act = new MActivity();
+        $this->Join = new MJoin();
     }
 
 
@@ -23,6 +24,13 @@ class Activity {
 
     public function add($args){
         $re = $this->Act->add($args);
+        return $re;
+    }
+
+    public function adminDetail($aid){
+        $re['activity'] =  $this->Act->get($aid);
+        $re['join'] = $this->Join->getByAid($aid);
+
         return $re;
     }
 

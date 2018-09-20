@@ -190,6 +190,14 @@ class Admin extends Api {
                     'type' => 'float'
                 ]
             ],
+            'getActivity' => [
+                'aid' => [
+                    'name' => 'aid',
+                    'desc' => '活动id',
+                    'type' => 'int',
+                    'require' => true,
+                ]
+            ],
             '*' => [
                 'jwt' => [
                     'name' => 'jwt', 
@@ -285,7 +293,6 @@ class Admin extends Api {
     public function addJoin(){
         $jwt = $this->checkJwt();
         
-        
         if($jwt['admin'] == false){
             throw new Exception('无权限', 403);
         }
@@ -299,6 +306,14 @@ class Admin extends Api {
 
         $re = $this->Join->add($this->stuid, $this->aid, $this->timelong, $jwt['stuid']);
 
+        return $re;
+    }
+
+    public function getActivity(){
+        $jwt = $this->checkJwt();
+        //todo 管理员归属判断
+
+        $re = $this->Act->adminDetail($this->aid);
         return $re;
     }
 

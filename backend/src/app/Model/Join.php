@@ -34,7 +34,7 @@ class Join{
         return $re;
     }
     
-    public function get($stuid){
+    public function getByStuid($stuid){
         $re= di()->db->select('join', [
             '[>]activity' => 'aid'
         ], '*', [
@@ -83,5 +83,12 @@ class Join{
         }else{
             return false;
         }
+    }
+
+    public function getByAid($aid){
+        $re= di()->db->select('join', '*', [
+            'aid' => $aid
+        ]);
+        return $re;  
     }
 }
