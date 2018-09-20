@@ -1,0 +1,4 @@
+<!--pages/timelong.wxml-->
+
+<text>已认证的时长: {{time.done}}</text>
+<text>未认证时长: {{time.undone}}</text>
