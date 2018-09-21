@@ -21,7 +21,7 @@
       :key="tableKey"
       :data="list"
       border
-      fit 
+      fit
       highlight-current-row
       style="width: 100%;">
       <el-table-column :label="$t('table.id')" align="center" width="65">
@@ -35,7 +35,7 @@
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.title')" width="260px" min-width="100px">
-        <template slot-scope="scope"> 
+        <template slot-scope="scope">
           <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.title }}</span>
         </template>
       </el-table-column>
@@ -208,16 +208,15 @@ export default {
     getList() {
       this.listLoading = true
       this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity', { })
-      .then((response) => {
+        .then((response) => {
           this.list = response.data.data
           this.total = this.list.length
-      })
+        })
 
         // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 0.5 * 1000)
-      
+      setTimeout(() => {
+        this.listLoading = false
+      }, 0.5 * 1000)
     },
     handleFilter() {
       this.listQuery.page = 1

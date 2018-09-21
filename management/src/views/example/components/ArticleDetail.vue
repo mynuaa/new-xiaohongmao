@@ -1,7 +1,7 @@
 <template>
   <div class="createPost-container">
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
-      <sticky :class-name="'sub-navbar '+postForm.status"  zIndex="5000">
+      <sticky :class-name="'sub-navbar '+postForm.status" z-index="5000">
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">发布</el-button>
       </sticky>
       <div class="createPost-main-container">
@@ -18,24 +18,24 @@
               </MDinput>
             </el-form-item>
             <el-form-item label-width="120px" label="人数:" class="postInfo-container-item">
-              <el-slider v-model="form.peoplenum"  show-input min="1" max="1000"></el-slider>
+              <el-slider v-model="form.peoplenum" show-input min="1" max="1000"/>
             </el-form-item>
             <el-form-item label-width="120px" label="总时长:" class="postInfo-container-item">
-              <el-slider v-model="form.alltime"  show-input min="1" max="1000"></el-slider>
+              <el-slider v-model="form.alltime" show-input min="1" max="1000"/>
             </el-form-item>
             <el-form-item label-width="120px" label="最多志愿时长:" class="postInfo-container-item">
-              <el-slider v-model="form.volunteertimemax"  show-input min="1" max="100"></el-slider>
+              <el-slider v-model="form.volunteertimemax" show-input min="1" max="100"/>
             </el-form-item>
             <el-form-item label-width="120px" label="最少志愿时长:" class="postInfo-container-item">
-              <el-slider v-model="form.volunteertimemin"  show-input min="1" max="100"></el-slider>
+              <el-slider v-model="form.volunteertimemin" show-input min="1" max="100"/>
             </el-form-item>
             <el-form-item label-width="120px" label="联系方式:" class="postInfo-container-item">
-              <el-input v-model="form.contact" placeholder="鳄鱼" width='90px'></el-input>
+              <el-input v-model="form.contact" placeholder="鳄鱼" width="90px"/>
             </el-form-item>
             <div class="postInfo-container">
               <el-row>
                 <el-form-item label-width="120px" label="发布者:" class="postInfo-container-item">
-                  <el-input v-model="form.hoster" placeholder=" " width='90px'></el-input>
+                  <el-input v-model="form.hoster" placeholder=" " width="90px"/>
                 </el-form-item>
                 <el-col :span="10">
                   <el-form-item label-width="80px" label="发布时间:" class="postInfo-container-item">
@@ -82,7 +82,7 @@ const defaultForm = {
 
 export default {
   name: 'ArticleDetail',
-  components: { Tinymce, MDinput, Upload, Sticky,},
+  components: { Tinymce, MDinput, Upload, Sticky },
   props: {
     isEdit: {
       type: Boolean,
@@ -117,20 +117,20 @@ export default {
       }
     }
     return {
-      form:{
-        peoplenum : 1,
+      form: {
+        peoplenum: 1,
         alltime: 1,
         volunteertimemax: 1,
         volunteertimemin: 1,
         contact: ' ',
         title: ' ',
         hoster: ' ',
-        location:' ',
-        starttime:'',
-        summary:'',
-        detail:'',
-        type:'test',
-        name:'name'
+        location: ' ',
+        starttime: '',
+        summary: '',
+        detail: '',
+        type: 'test',
+        name: 'name'
       },
       postForm: Object.assign({}, defaultForm),
       loading: false,
@@ -163,27 +163,27 @@ export default {
       })
     },
     submitForm() {
-      this.form.starttime = Date.parse(this.form.starttime)/1e3
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity',this.form)
-      .then(response => {
-        if (response.data.ret==200) {
-          this.loading = true
-          this.$notify({
-            title: '成功',
-            message: '发布文章成功',
-            type: 'success',
-            duration: 2000
-          })
-        } else {
-          this.$notify({
-            title: '失败',
-            message: response.data.msg,
-            type: 'fail',
-            duration: 2000
-          })
-        }
-      })
-    },
+      this.form.starttime = Date.parse(this.form.starttime) / 1e3
+      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity', this.form)
+        .then(response => {
+          if (response.data.ret == 200) {
+            this.loading = true
+            this.$notify({
+              title: '成功',
+              message: '发布文章成功',
+              type: 'success',
+              duration: 2000
+            })
+          } else {
+            this.$notify({
+              title: '失败',
+              message: response.data.msg,
+              type: 'fail',
+              duration: 2000
+            })
+          }
+        })
+    }
   }
 }
 </script>

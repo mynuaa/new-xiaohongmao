@@ -24,6 +24,14 @@ class User extends Api {
 
 	public function getRules() {
         return [
+            'validJoin' => [
+                'jid' => [
+                    'name' => 'jid', 
+                    'desc' => '参与的id',       
+                    'require' => true,
+                    'type' => 'int',
+                ]
+            ],
             '*' => [
                 'jwt' => [
                     'name' => 'jwt', 
@@ -61,6 +69,21 @@ class User extends Api {
         $join = $this->Join->getByStuid($stuid);
 
         return $join;
+    }
+
+    public function validJoin(){
+        $re = $this->checkJwt();
+        $stuid = $re['stuid'];
+        $check = $this->Join->checkStuOwn($stuid, $this->jid);
+        if($check === false){
+            throw new Exception('查无此飞机~', 404);
+        }
+        if($check !== true){
+            throw new Exception('已经认证过了哦...', 203);
+        }
+
+        return $this->Join->validJid($stuid, $this->jid);
+
     }
 
     private function checkJwt(){

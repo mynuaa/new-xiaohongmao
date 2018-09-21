@@ -51,7 +51,7 @@ class Join{
         if($done === true){
             $con['status[>]'] = 1;
         }else{
-            $con['status'] = 0;
+            $con['status'] = 1;
         }
         $re = di()->db->sum('join', 'timelong', $con);
 
@@ -88,10 +88,39 @@ class Join{
     }
 
     public function getByAid($aid){
-        $re= di()->db->select('join', '*', [
+        $re = di()->db->select('join', '*', [
             'aid' => $aid
         ]);
         return $re;  
     }
 
+    public function get($jid){
+        $re = di()->db->get('join', '*', [
+            'jid' => $jid
+        ]);
+
+        return $re;
+    }
+
+    public function updateStatus($jid, $status = 1, $admin = false){
+        $con = [
+            'status' => $status,
+        ];
+        if($admin){
+            $con = array_merge($con, [
+                'optadmin' => $admin,
+                'opttime' => di()->db::raw('NOW()'),
+            ]);
+        }
+
+        $re = di()->db->update('join', $con, [
+            'jid' => $jid
+        ]);
+
+        if(di()->db->error()[0] == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
