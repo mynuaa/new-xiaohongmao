@@ -90,7 +90,7 @@ class Admin extends Api {
                     'name' => 'hoster', 
                     'require' => true,
                     'type' => 'int',     
-                    'desc' => '活动地点'
+                    'desc' => '活动举办者'
                 ],
                 'title' => [
                     'name' => 'title', 
