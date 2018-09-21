@@ -288,9 +288,19 @@ class Admin extends Api {
      * @return void
      */
     public function addActivity(){
-        //todo 权限判断(院/校)
-        //todo 级别判断
-        
+
+        $jwt = $this->checkJwt();
+
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
+
+        if($jwt['admin']->level == 1){//院级管理员
+            if($jwt['admin']->yuan != $this->hoster || $this->level == 1){//无权发布他院活动 无权发布校级活动
+                throw new Exception("没这么高的权限", 403);
+            }
+        }
+
         $re = $this->Act->add($this);
 
         return $re;
