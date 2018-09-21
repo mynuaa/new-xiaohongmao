@@ -9,14 +9,7 @@
     "build:prod": "cross-env NODE_ENV=production env_config=prod node build/build.js",
     "build:sit": "cross-env NODE_ENV=production env_config=sit node build/build.js",
     "lint": "eslint --ext .js,.vue src",
-    "test": "npm run lint",
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "src/**/*.{js,vue}": [
-      "eslint --fix",
-      "git add"
-    ]
+    "test": "npm run lint"
   },
   "keywords": [
     "vue",
@@ -65,7 +58,6 @@
   "devDependencies": {
     "autoprefixer": "8.5.0",
     "babel-core": "6.26.3",
-    "babel-eslint": "8.2.6",
     "babel-helper-vue-jsx-merge-props": "2.0.3",
     "babel-loader": "7.1.5",
     "babel-plugin-dynamic-import-node": "2.0.0",
@@ -78,10 +70,6 @@
     "copy-webpack-plugin": "4.5.2",
     "cross-env": "5.2.0",
     "css-loader": "1.0.0",
-    "eslint": "4.19.1",
-    "eslint-friendly-formatter": "4.0.1",
-    "eslint-loader": "2.0.0",
-    "eslint-plugin-vue": "4.7.1",
     "file-loader": "1.1.11",
     "friendly-errors-webpack-plugin": "1.7.0",
     "hash-sum": "1.0.2",
