@@ -1,12 +1,15 @@
 {
   "name": "fontend_of_new_xiaohongmao",
   "version": "0.1.0",
+  "description": "新版本小红帽的前台前端",
+  "author": "todo",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "echarts": "^4.2.0-rc.1",
     "vue": "^2.5.17",
     "vue-carousel": "^0.14.0",

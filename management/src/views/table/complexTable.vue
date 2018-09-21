@@ -182,13 +182,12 @@ export default {
       .then((response) => {
           this.list = response.data.data
           this.total = this.list.length
-      })
+        })
 
         // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 0.5 * 1000)
-      
+      setTimeout(() => {
+        this.listLoading = false
+      }, 0.5 * 1000)
     },
     handleFilter() {
       this.listQuery.page = 1

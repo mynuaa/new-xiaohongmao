@@ -6,7 +6,8 @@ Page({
    */
   data: {
       time: {
-
+      },
+      join: {
       }
   },
 
@@ -14,15 +15,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
     onLoad: function (options) {
-        const stuid = options.stuid
+        const stuid = options.stuid || '031630226'
         wx.request({
-            url: 'https://my.nuaa.edu.cn/xiaohongmao2/api/?s=Wechat.TimeLong',
+            url: 'https://my.nuaa.edu.cn/xiaohongmao2/api/?s=Wechat.GetJoin',
             data: {
                 stuid: stuid
             },
             success: (re) => {
                 this.setData({
-                    time: re.data.data
+                    time: re.data.data.time,
+                    join: re.data.data.join
                 })
             }
         })

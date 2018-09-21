@@ -31,7 +31,8 @@ export default {
     var myChart = echarts.init(document.getElementById("myChart"));
     myChart.setOption({
       title: {
-        text: ""
+        text: "南航各院志愿时长统计",
+        left: "center"
       },
       tooltip: {},
       legend: {

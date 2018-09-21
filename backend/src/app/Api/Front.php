@@ -164,6 +164,12 @@ class Front extends Api {
         $re['allUser'] = $this->User->countAll();
         $re['averageTimeLong'] = $this->Join->average();
 
+        $yuan = [];
+        for ($i=1; $i < 17; $i++) { 
+            $yuan[$i] = $this->Join->countByYuan($i);
+        }
+        
+        $re['yuan'] = $yuan;
         return $re;
     }
 }

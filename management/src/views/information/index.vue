@@ -25,19 +25,18 @@ export default {
   methods: {
     fetchData() {
     		this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetInfo', {
-            'jwt': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6M319.CvX-pKXjAyht6BRADUWYKpM8sDkCh5OkMEqlnd-sAR8'
-        })
+        'jwt': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6M319.CvX-pKXjAyht6BRADUWYKpM8sDkCh5OkMEqlnd-sAR8'
+      })
         .then((response) => {
-          if(response.data.ret==200){
-            this.tableData=[]
+          if (response.data.ret == 200) {
+            this.tableData = []
             this.tableData.push(response.data.data)
-          }
-          else{
+          } else {
             this.$notify({
               title: '获取失败',
               message: '您的个人信息获取失败，请尝试重新登陆',
               duration: 5000
-        });
+            })
           }
     		})
     }

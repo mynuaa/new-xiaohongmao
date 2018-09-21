@@ -2,6 +2,8 @@
 namespace App\Domain;
 
 use App\Model\Activity as MActivity;
+use App\Model\Hoster as MHoster;
+use App\Model\Type as MType;
 use App\Model\Join as MJoin;
 
 use function \PhalApi\DI as di;
@@ -11,6 +13,8 @@ class Activity {
     function __construct() {
         $this->Act = new MActivity();
         $this->Join = new MJoin();
+        $this->Hoster = new MHoster();
+        $this->Type = new MType();
     }
 
 
@@ -34,6 +38,14 @@ class Activity {
         return $re;
     }
 
+    public function allHoster(){
+        return $this->Hoster->getAll();
+
+    }
+    public function allType(){
+        return $this->Type->getAll();
+    }
+
     public function del($id){
         return $this->Act->setStatus($id, 0);
     }
@@ -46,7 +58,8 @@ class Activity {
     public function setStopTime($id, $time){
         return $this->Act->setStatus($id, $time);
     }
+
     public function judge($user,$hoster){//added by helaji
-        return $this->Activity->judge($user,$hoster);
+        return $this->Act->judge($user, $hoster);
     }
 }
