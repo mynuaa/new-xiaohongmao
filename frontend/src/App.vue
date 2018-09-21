@@ -9,6 +9,7 @@
       <li><router-link to="/comments">意见箱</router-link></li>
       <li><router-link to="/certification">服务认证</router-link></li>
       <li><router-link to="/navigate">导航</router-link></li>
+      <li><router-link to="/loggedIn">个人详情</router-link></li>
       </ul>
     </div>
     <router-view/>
