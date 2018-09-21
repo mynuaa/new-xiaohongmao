@@ -82,7 +82,31 @@ class Activity{
     
     //todo 更新活动
     public function update($args){
-        
+        $re=di()->db->update('activity',[
+            'name' => $args->name,
+            'location' => $args->location,
+            'hoster' => $args->hoster,
+            'title' => $args->title,
+            'summary' => $args->summary,
+            'detail' => $args->detail,
+            'peoplenum' => $args->peoplenum,
+            'alltime' => $args->alltime,
+            'contact' => $args->contact,
+            'starttime' => $args->starttime,
+            'volunteertimemin' => $args->volunteertimemin,
+            'volunteertimemax' => $args->volunteertimemax,
+            'type' => $args->type,
+            'level' => $args->level,
+            'lastupdate' => time(),
+        ],[
+            'hoster' => $args->hoster
+        ]);
+        if(di()->db->error()[0] == 0){
+            return di()->db->id();
+        }else{
+            return false;
+        }
+        return $re;
     }
 
 

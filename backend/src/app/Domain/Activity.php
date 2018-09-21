@@ -62,4 +62,9 @@ class Activity {
     public function judge($user,$hoster){//added by helaji
         return $this->Act->judge($user, $hoster);
     }
+     
+    public function update($args)
+    {
+        return $this->Act->update($args);
+    }
 }
