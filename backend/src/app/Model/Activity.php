@@ -4,6 +4,30 @@ namespace App\Model;
 use function \PhalApi\DI as di;
 
 class Activity{
+    private $unionRelation =  [
+        '[>]hoster' => ['hoster' => 'hid'],
+        '[>]type' => ['type' => 'typeid']
+    ];
+    private $unionColumn = [
+        'activity.aid',
+        'activity.name',
+        'activity.location',
+        'activity.hoster',
+        'activity.title',
+        'activity.summary',
+        'activity.detail',
+        'activity.alltime',
+        'activity.contact',
+        'activity.status',
+        'activity.starttime',
+        'activity.volunteertimemin',
+        'activity.level',
+        'activity.lastupdate',
+        'hoster.hostname',
+        'hoster.hostnickname',
+        'activity.type',
+        'type.typename'
+    ];
 
     public function gets($from, $num, $all = false){
         $con =  [
@@ -11,18 +35,18 @@ class Activity{
         ];
 
         if($all === false){
-            $con['status[>]'] = 0;
+            $con['activity.status[>]'] = 0;
         }
 
-        $re= di()->db->select('activity', '*', $con);
+        $re= di()->db->select('activity', $this->unionRelation, $this->unionColumn, $con);
 
         return $re;
     }
 
     public function get($id){
-        $re= di()->db->get('activity', '*', [
+        $re= di()->db->get('activity', $this->unionRelation, $this->unionColumn, [
             'aid' => $id,
-            'status[>]' => 0
+            'activity.status[>]' => 0
         ]);
 
         return $re;
@@ -43,6 +67,7 @@ class Activity{
             'volunteertimemin' => $args->volunteertimemin,
             'volunteertimemax' => $args->volunteertimemax,
             'type' => $args->type,
+            'level' => $args->level,
             'lastupdate' => time()
 
         ]);
@@ -83,14 +108,11 @@ class Activity{
             'adminid'=>$hoster
         ]);*/
 
-        $hoster=di()->db->get('activity',[
-            '[>]admin'=>['hoster'=>'adminid']
-        ], 'admin.yuan',[
+        $hoster = di()->db->get('activity', 'hoster',[
             'aid'=>$aid
         ] );
 
-        if($user==$hoster)
-        {
+        if($user == $hoster){
             return true;
         }else{
             return false;
