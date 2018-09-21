@@ -322,6 +322,16 @@ class Admin extends Api {
         }
     }
 
+    /**
+     * 获取所有活动举办者
+     *
+     * @return void
+     */
+    public function allHoster(){
+        $re = $this->Act->allHoster();
+        return $re;
+    }
+
     private function checkJwt(){
         $re = $this->User->decode($this->jwt);
         if(isset($re['ret']) && $re['ret'] == 401){

@@ -18,6 +18,7 @@ class Hoster {
 
         return $re;
     }
+    
     public function add($name, $nickname){
         $re = di()->db->insert('hoster', [
             'hostname' => $name,
