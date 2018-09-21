@@ -40,7 +40,8 @@ class Join{
             '[>]activity' => 'aid'
         ], '*', [
             'stuid' => $stuid
-        ]);
+        ]
+        );
         //todo 查询的列补充
         return $re;  
     }

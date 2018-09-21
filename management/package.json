@@ -33,7 +33,7 @@
     "url": "https://github.com/PanJiaChen/vue-element-admin/issues"
   },
   "dependencies": {
-    "axios": "0.18.0",
+    "axios": "^0.18.0",
     "clipboard": "1.7.1",
     "codemirror": "5.39.2",
     "connect": "3.6.6",
@@ -86,7 +86,6 @@
     "friendly-errors-webpack-plugin": "1.7.0",
     "hash-sum": "1.0.2",
     "html-webpack-plugin": "4.0.0-alpha",
-    "husky": "0.14.3",
     "lint-staged": "7.2.2",
     "mini-css-extract-plugin": "0.4.1",
     "node-notifier": "5.2.1",
