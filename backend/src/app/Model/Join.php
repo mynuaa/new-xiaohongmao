@@ -5,6 +5,18 @@ use function \PhalApi\DI as di;
 
 class Join{
 
+    private $col = [
+        'join.jid',
+        'join.aid',
+        'join.timelong',
+        'join.status',
+        'activity.title',
+        'activity.level',
+        'activity.hoster',
+        'hoster.hostname',
+        'hoster.hostnickname'
+    ];
+    
     public function countAll(){
         $re= di()->db->sum('join', 'timelong', [
             'status[>]' => 1
@@ -35,13 +47,14 @@ class Join{
     }
     
     public function getByStuid($stuid){
-        //todo 联合查询名字 个人信息
+
         $re= di()->db->select('join', [
-            '[>]activity' => 'aid'
-        ], '*', [
+            '[>]activity' => 'aid',
+            '[>]hoster' => ['activity.hoster' => 'hid']
+        ], $this->col, [
             'stuid' => $stuid
-        ]
-        );
+        ]);
+
         //todo 查询的列补充
         return $re;  
     }
