@@ -1,9 +1,9 @@
 {
-  "name": "vue-element-admin",
-  "version": "3.8.1",
-  "description": "A magical vue admin. Typical templates for enterprise applications. Newest development stack of vue. Lots of awesome features",
-  "author": "Pan <panfree23@gmail.com>",
-  "license": "MIT",
+  "name": "xiaohongmao-admin",
+  "version": "0.1.0",
+  "description": "新版本小红帽的后台系统",
+  "author": "todo",
+  "license": "none",
   "scripts": {
     "dev": "cross-env BABEL_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "build:prod": "cross-env NODE_ENV=production env_config=prod node build/build.js",
@@ -13,18 +13,8 @@
   },
   "keywords": [
     "vue",
-    "element-ui",
-    "admin",
-    "management-system",
-    "admin-template"
+    "mynuaa"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PanJiaChen/vue-element-admin.git"
-  },
-  "bugs": {
-    "url": "https://github.com/PanJiaChen/vue-element-admin/issues"
-  },
   "dependencies": {
     "axios": "^0.18.0",
     "clipboard": "1.7.1",
