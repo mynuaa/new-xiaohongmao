@@ -55,6 +55,6 @@ class Activity {
     }
 
     public function judge($user,$hoster){//added by helaji
-        return $this->Activity->judge($user,$hoster);
+        return $this->Act->judge($user, $hoster);
     }
 }

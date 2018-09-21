@@ -84,14 +84,11 @@ class Activity{
             'adminid'=>$hoster
         ]);*/
 
-        $hoster=di()->db->get('activity',[
-            '[>]admin'=>['hoster'=>'adminid']
-        ], 'admin.yuan',[
+        $hoster = di()->db->get('activity', 'hoster',[
             'aid'=>$aid
         ] );
 
-        if($user==$hoster)
-        {
+        if($user == $hoster){
             return true;
         }else{
             return false;
