@@ -150,10 +150,18 @@ class Admin extends Api {
                 ],
                 'type' => [
                     'name' => 'type', 
-                    'require' => false,
+                    'require' => true,
                     'type' => 'int',
-                    'desc' => '类型'
-                ]
+                    'desc' => '类型 先获取所有的type，如果不存在则先进行添加'
+                ],
+                'level' => [
+                    'name' => 'level', 
+                    'require' => true,
+                    'type' => 'int',
+                    'desc' => '级别，0为院级，1为校级',
+                    'min' => 0,
+                    'max' => 1
+                ],
             ],
             'allActivity' => [
                 'from' => [
@@ -280,6 +288,9 @@ class Admin extends Api {
      * @return void
      */
     public function addActivity(){
+        //todo 权限判断(院/校)
+        //todo 级别判断
+        
         $re = $this->Act->add($this);
 
         return $re;

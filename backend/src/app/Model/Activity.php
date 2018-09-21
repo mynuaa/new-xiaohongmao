@@ -43,6 +43,7 @@ class Activity{
             'volunteertimemin' => $args->volunteertimemin,
             'volunteertimemax' => $args->volunteertimemax,
             'type' => $args->type,
+            'level' => $args->level,
             'lastupdate' => time()
 
         ]);
