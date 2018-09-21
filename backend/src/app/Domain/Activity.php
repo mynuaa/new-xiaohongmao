@@ -46,4 +46,7 @@ class Activity {
     public function setStopTime($id, $time){
         return $this->Act->setStatus($id, $time);
     }
+    public function judge($user,$hoster){//added by helaji
+        return $this->Activity->judge($user,$hoster);
+    }
 }

@@ -34,7 +34,7 @@ class Join {
     public function average(){
         return $this->Join->average();
     }
-    
+
     public function add($uid, $aid, $time, $admin){
         return $this->Join->add($uid, $aid, $time, $admin);
     }
