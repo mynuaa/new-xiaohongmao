@@ -1,8 +1,9 @@
 {
     "pages": [
+        "pages/timelong/timelong",
         "pages/index/index",
-        "pages/logs/logs",
-        "pages/timelong/timelong"
+        "pages/logs/logs"
+
     ],
     "window": {
         "backgroundTextStyle": "light",

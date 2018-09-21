@@ -136,4 +136,23 @@ class Join{
             return false;
         }
     }
+
+    public function countByYuan($yuan){
+        $yuan = $this->padding2($yuan);
+
+        $re = di()->db->sum('join', 'timelong', [
+            'stuid[~]' => "{$yuan}%" //todo 暂时通过学号判断
+        ]);
+        
+        return $re;
+    }
+
+    private function padding2($yuan){
+        if((int)$yuan < 10){
+            return '0' . $yuan;
+        }else{
+            return (string)$yuan;
+        }
+
+    }
 }
