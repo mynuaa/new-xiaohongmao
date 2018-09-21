@@ -1,6 +1,8 @@
 {
   "name": "fontend_of_new_xiaohongmao",
   "version": "0.1.0",
+  "description": "新版本小红帽的前台前端",
+  "author": "todo",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
