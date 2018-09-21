@@ -41,6 +41,7 @@ export default {
     dragTable: 'Drag Table',
     inlineEditTable: 'Inline Edit',
     complexTable: '活动列表',
+    time: 'time',
     treeTable: 'Tree Table',
     customTreeTable: 'Custom TreeTable',
     tab: 'Tab',
