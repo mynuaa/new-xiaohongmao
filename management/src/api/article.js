@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-
+import axios from 'axios'
 export function fetchList(query) {
   return request({
     url: '/article/list',
@@ -38,4 +38,13 @@ export function updateArticle(data) {
     method: 'post',
     data
   })
+}
+
+export function getArticle(id){
+  axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.GetActivity', {
+      'id': id
+    })
+    .then((response)=>{
+      return response
+    })
 }
