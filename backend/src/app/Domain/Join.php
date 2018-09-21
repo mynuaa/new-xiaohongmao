@@ -30,6 +30,10 @@ class Join {
         return $this->Join->countMonth();
     }
 
+    public function countByYuan($yuan){
+        return (float)$this->Join->countByYuan($yuan);
+    }
+
     public function average(){
         return $this->Join->average();
     }
