@@ -1,7 +1,7 @@
 <template>
     <div id="box">
         <div id="header">
-            <div>活动总览</div>
+            <div>近期活动</div>
         </div>
         <div id="body">
           <ul>
@@ -12,7 +12,7 @@
             </li>
           </ul>
         </div>
-        <div id="footer"><a href='#'>more</a></div>
+        <div id="footer"><a href='#' @click="routeractivity">more</a></div>
     </div>
 </template>
 
@@ -82,6 +82,11 @@ export default {
       }
     }
   },
+  methods :{
+    routeractivity () {
+      this.$router.push('/activity');
+    }
+  }
 };
 </script>
 
