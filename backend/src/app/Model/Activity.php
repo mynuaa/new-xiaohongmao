@@ -4,6 +4,26 @@ namespace App\Model;
 use function \PhalApi\DI as di;
 
 class Activity{
+    private $unionAct = [
+        'activity.aid',
+        'activity.name',
+        'activity.location',
+        'activity.hoster',
+        'activity.title',
+        'activity.summary',
+        'activity.detail',
+        'activity.alltime',
+        'activity.contact',
+        'activity.status',
+        'activity.starttime',
+        'activity.volunteertimemin',
+        'activity.level',
+        'activity.lastupdate',
+        'hoster.hostname',
+        'hoster.hostnickname',
+        'activity.type',
+        'type.typename'
+    ];
 
     public function gets($from, $num, $all = false){
         $con =  [
@@ -14,7 +34,10 @@ class Activity{
             $con['status[>]'] = 0;
         }
 
-        $re= di()->db->select('activity', '*', $con);
+        $re= di()->db->select('activity', [
+            '[>]hoster' => ['hoster' => 'hid'],
+            '[>]type' => ['type' => 'typeid']
+        ], $this->unionAct, $con);
 
         return $re;
     }
