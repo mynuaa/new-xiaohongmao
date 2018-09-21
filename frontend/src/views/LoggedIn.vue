@@ -1,37 +1,43 @@
 <template>
   <div id="LoggedIn">
     <div class="basicInfo">
-        <div class="userInfo">
-        <div>
-            <img src="../assets/logo.png" alt="avater" class="avater">
+        <div class="userInfo" @mouseover="showEdit" @mouseout="hideEdit">
+            <div class="editBox">
+                <img src="../assets/edit.png" class="editIcon" id="editIcon" alt="edit" @click="turnToEdit">
+            </div>
+            <div class="infoTable">
+                <div>
+                    <img src="../assets/logo.png" alt="avater" class="avater">
+                </div>
+                <div>
+                    <div class="userInfos">{{username}}</div>
+                    <div class="userInfos">{{userid}}</div>
+                </div>
+            </div>
+            
         </div>
-        <div>
-            <div class="username">{{username}}</div>
-            <div class="userid">{{userid}}</div>
+        <div class="activities">
+            <table class="activityTable">
+                <thead>
+                    <tr>
+                        <th>活动标题</th>
+                        <th>主办方</th>
+                        <th>志愿时长</th>
+                        <th>活动时间</th>
+                        <th>状态</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in activityList" :key="item.a-id">
+                        <td width="40%">{{item.activity | activity}}</td>
+                        <td width="15%" >{{item.host | host}}</td>
+                        <td width="15%" >{{item.time}}</td>
+                        <td width="15%">{{item.date}}</td>
+                        <td width="15%">{{item.state}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
-    <div class="activities">
-        <table class="activityTable">
-            <thead>
-                <tr>
-                    <th>活动标题</th>
-                    <th>主办方</th>
-                    <th>志愿时长</th>
-                    <th>活动时间</th>
-                    <th>状态</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in activityList" :key="item.a-id">
-                    <td width="40%">{{item.activity}}</td>
-                    <td width="15%" >{{item.host}}</td>
-                    <td width="15%" >{{item.time}}</td>
-                    <td width="15%">{{item.date}}</td>
-                    <td width="15%">{{item.state}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
     </div>
     
     <div class="achivement">
@@ -61,19 +67,67 @@ export default {
   },
   data(){
       return{
-        username:'user',
-        userid:'id',
+        time:{},
+        averageTime:['', 20, 36, 10, 10],
+        username:'一个人',
+        userid:'123456789',
         activityList:[
-            {activity:'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',host:'zfj',time:'1.1.1',date:'10',state:'1'},
+            {activity:'随便什么凑够十五个字还差一点够了',host:'纸飞机啦啦啦',time:'10',date:'1.1.1',state:'1'},
         
         ]
           
       }
   },
+  filters: {
+    activity: function (value) {
+      if (value.length >= 15){
+        return value.substring(0, 15) + ' ...';
+      }
+      else {
+        return value;
+      }
+    },
+    host: function (value) {
+      if (value.length >= 5){
+        return value.substring(0, 5) + ' ...';
+      }
+      else {
+        return value;
+      }
+    }
+  },
+    methods: {
+      getInfo(){
+          this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
+              service: 'Wechat.TimeLong',
+              stuid: '031630226'
+          }).then(re => {
+              if(re.data.ret != 200){
+
+              }else{
+                  this.averageTime[0] = re.data.data
+              }
+          })
+      },
+      showEdit(){
+          document.getElementById("editIcon").style.display = 'block';
+      },
+      hideEdit(){
+          document.getElementById("editIcon").style.display = 'none';
+      },
+      turnToEdit(){
+          
+      }
+  },
+  created() {
+      
+  },
   mounted() {
-      var myChart = echarts.init(document.getElementById('myChart'));
-      myChart.setOption({
-          title: {
+        this.getInfo()
+        var myChart = echarts.init(document.getElementById('myChart'));
+        var averageTime = this.averageTime;
+        myChart.setOption({
+            title: {
                 text: ''
             },
             tooltip: {},
@@ -87,7 +141,7 @@ export default {
             series: [{
                 name: '志愿时长',
                 type: 'bar',
-                data: [5, 20, 36, 10, 10]//aaaaaaaaaaaaaaaaaaa抓数据
+                data: averageTime,
             }]
       });
   },
@@ -112,8 +166,6 @@ export default {
     }
   }
 }
-#loggedIn{
-}
 .basicInfo{
     display: inline-flex;
     width: 100%;
@@ -122,23 +174,47 @@ export default {
     flex-flow: row nowrap;
 }
 .userInfo{
-    width: 15%;
-    font-size: 28px;
+    width: 14%;
+    font-size: 20px;
+    padding-bottom: 20px;
+    box-shadow: 2px 2px 5px grey;
+}
+.editIcon{
+    width: 32px;
+    position: relative;
+    float: right;
+    display: none;
+}
+.userInfos{
+    margin: 15px 0;
+    text-align: center;
+}
+.editBox{
+    position: relative;
+    width: 100%;
+    height: 32px;
+}
+.infoTable{
+    position: relative;
+    width: 100%;
+    top: -15px;
 }
 .avater{
+    position: relative;
     width: 120px;
     border-radius: 100%;
 }
 .activities{
     text-align: center;
     
-    width: 70%;
+    width: 60%;
 }
 .activityTable{
     display: inline-block;
-    font-size: 20px;
-    width: 70%;
-
+    font-size: 18px;
+    width: 90%;
+    padding: 5px 20px;
+    box-shadow: 2px 2px 5px grey;
 }
 .charts{
     display: inline-block;
