@@ -4,7 +4,6 @@
       <sticky :class-name="'sub-navbar '+postForm.status"  zIndex="5000">
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">发布</el-button>
       </sticky>
-
       <div class="createPost-main-container">
         <el-row>
           <el-col :span="24">
@@ -18,23 +17,18 @@
                 活动地点
               </MDinput>
             </el-form-item>
-
             <el-form-item label-width="120px" label="人数:" class="postInfo-container-item">
-              <el-slider v-model="form.peoplenum"  show-input max=1000></el-slider>
+              <el-slider v-model="form.peoplenum"  show-input min="1" max="1000"></el-slider>
             </el-form-item>
-
             <el-form-item label-width="120px" label="总时长:" class="postInfo-container-item">
-              <el-slider v-model="form.alltime"  show-input max=1000></el-slider>
+              <el-slider v-model="form.alltime"  show-input min="1" max="1000"></el-slider>
             </el-form-item>
-
             <el-form-item label-width="120px" label="最多志愿时长:" class="postInfo-container-item">
-              <el-slider v-model="form.volunteertimemax"  show-input max=100></el-slider>
+              <el-slider v-model="form.volunteertimemax"  show-input min="1" max="100"></el-slider>
             </el-form-item>
-            
             <el-form-item label-width="120px" label="最少志愿时长:" class="postInfo-container-item">
-              <el-slider v-model="form.volunteertimemin"  show-input max=100></el-slider>
+              <el-slider v-model="form.volunteertimemin"  show-input min="1" max="100"></el-slider>
             </el-form-item>
-
             <el-form-item label-width="120px" label="联系方式:" class="postInfo-container-item">
               <el-input v-model="form.contact" placeholder="鳄鱼" width='90px'></el-input>
             </el-form-item>
@@ -43,31 +37,23 @@
                 <el-form-item label-width="120px" label="发布者:" class="postInfo-container-item">
                   <el-input v-model="form.hoster" placeholder=" " width='90px'></el-input>
                 </el-form-item>
-
                 <el-col :span="10">
                   <el-form-item label-width="80px" label="发布时间:" class="postInfo-container-item">
                     <el-date-picker v-model="form.starttime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间"/>
                   </el-form-item>
                 </el-col>
-                
-                
               </el-row>
             </div>
           </el-col>
         </el-row>
-
         <el-form-item style="margin-bottom: 40px;" label-width="120px" label="摘要:">
           <el-input :rows="1" v-model="form.summary" type="textarea" class="article-textarea" autosize placeholder="请输入内容"/>
-          <span v-show="contentShortLength" class="word-counter">{{ contentShortLength }}字</span>
         </el-form-item>
-
         <div class="editor-container">
           <Tinymce ref="editor" :height="400" v-model="form.detail" />
         </div>
-
       </div>
     </el-form>
-
   </div>
 </template>
 
@@ -79,8 +65,6 @@ import Sticky from '@/components/Sticky' // 粘性header组件
 import { validateURL } from '@/utils/validate'
 import { fetchArticle } from '@/api/article'
 import { userSearch } from '@/api/remoteSearch'
-import Warning from './Warning'
-import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown'
 
 const defaultForm = {
   status: 'draft',
@@ -98,7 +82,7 @@ const defaultForm = {
 
 export default {
   name: 'ArticleDetail',
-  components: { Tinymce, MDinput, Upload, Sticky, Warning, CommentDropdown, PlatformDropdown, SourceUrlDropdown },
+  components: { Tinymce, MDinput, Upload, Sticky,},
   props: {
     isEdit: {
       type: Boolean,
@@ -159,11 +143,6 @@ export default {
       }
     }
   },
-  computed: {
-    contentShortLength() {
-      return this.postForm.content_short.length
-    }
-  },
   created() {
     if (this.isEdit) {
       const id = this.$route.params && this.$route.params.id
@@ -205,28 +184,6 @@ export default {
         }
       })
     },
-    draftForm() {
-      if (this.postForm.content.length === 0 || this.postForm.title.length === 0) {
-        this.$message({
-          message: '请填写必要的标题和内容',
-          type: 'warning'
-        })
-        return
-      }
-      this.$message({
-        message: '保存成功',
-        type: 'success',
-        showClose: true,
-        duration: 1000
-      })
-      this.postForm.status = 'draft'
-    },
-    getRemoteUserList(query) {
-      userSearch(query).then(response => {
-        if (!response.data.items) return
-        this.userListOptions = response.data.items.map(v => v.name)
-      })
-    }
   }
 }
 </script>
@@ -263,8 +220,5 @@ export default {
     right: -10px;
     top: 0px;
   }
-}
-sub-navbar{
-  z-index: 5000 !important;
 }
 </style>
