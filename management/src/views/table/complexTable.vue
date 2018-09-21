@@ -11,10 +11,9 @@
       <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
         <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key"/>
       </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @cxlick="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
-      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">{{ $t('table.reviewer') }}</el-checkbox>
     </div>
 
     <el-table
@@ -22,7 +21,7 @@
       :key="tableKey"
       :data="list"
       border
-      fit
+      fit 
       highlight-current-row
       style="width: 100%;">
       <el-table-column :label="$t('table.id')" align="center" width="65">
@@ -32,13 +31,12 @@
       </el-table-column>
       <el-table-column :label="$t('table.date')" width="150px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.starttime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ scope.row.starttime | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.title')" min-width="150px">
-        <template slot-scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.name }}</span>
-          <el-tag>{{ scope.row.type | typeFilter }}</el-tag>
+      <el-table-column :label="$t('table.title')" width="260px" min-width="100px">
+        <template slot-scope="scope"> 
+          <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.title }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.author')" width="110px" align="center">
@@ -46,20 +44,14 @@
           <span>{{ scope.row.hoster }}</span>
         </template>
       </el-table-column>
-      <el-table-column v-if="showReviewer" :label="$t('table.reviewer')" width="110px" align="center">
-        <template slot-scope="scope">
-          <span style="color:red;">{{ scope.row.reviewer }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column :label="$t('table.importance')" width="80px">
-        <template slot-scope="scope">
-          <svg-icon v-for="n in +scope.row.status" :key="n" icon-class="star" class="meta-item__icon"/>
-        </template>
-      </el-table-column>
       <el-table-column :label="$t('table.readings')" align="center" width="95">
         <template slot-scope="scope">
-          <span v-if="scope.row.pageviews" class="link-type" @click="handleFetchPv(scope.row.pageviews)">{{ scope.row.pageviews }}</span>
-          <span v-else>0</span>
+          <span>{{ scope.row.peoplenum }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('活动时长')" align="center" width="95">
+        <template slot-scope="scope">
+          <span>{{ scope.row.volunteertimemin }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.status')" class-name="status-col" width="100">
@@ -224,7 +216,7 @@ export default {
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
-        }, 1.5 * 1000)
+        }, 0.5 * 1000)
       
     },
     handleFilter() {
