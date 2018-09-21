@@ -18,19 +18,19 @@
               </MDinput>
             </el-form-item>
             <el-form-item label-width="120px" label="人数:" class="postInfo-container-item">
-              <el-slider v-model="form.peoplenum"  show-input min="1" max="1000"></el-slider>
+              <el-slider v-model="form.peoplenum"  show-input  max="1000"></el-slider>
             </el-form-item>
             <el-form-item label-width="120px" label="总时长:" class="postInfo-container-item">
-              <el-slider v-model="form.alltime"  show-input min="1" max="1000"></el-slider>
+              <el-slider v-model="form.alltime"  show-input  max="1000"></el-slider>
             </el-form-item>
             <el-form-item label-width="120px" label="最多志愿时长:" class="postInfo-container-item">
-              <el-slider v-model="form.volunteertimemax"  show-input min="1" max="100"></el-slider>
+              <el-slider v-model="form.volunteertimemax"  show-input  max="100"></el-slider>
             </el-form-item>
             <el-form-item label-width="120px" label="最少志愿时长:" class="postInfo-container-item">
-              <el-slider v-model="form.volunteertimemin"  show-input min="1" max="100"></el-slider>
+              <el-slider v-model="form.volunteertimemin"  show-input  max="100"></el-slider>
             </el-form-item>
             <el-form-item label-width="120px" label="联系方式:" class="postInfo-container-item">
-              <el-input v-model="form.contact" placeholder="鳄鱼" width='90px'></el-input>
+              <el-input v-model="form.contact" placeholder="联系方式" width='90px'></el-input>
             </el-form-item>
             <div class="postInfo-container">
               <el-row>
@@ -130,7 +130,8 @@ export default {
         summary:'',
         detail:'',
         type:'test',
-        name:'name'
+        name:'name',
+        level: '0'
       },
       postForm: Object.assign({}, defaultForm),
       loading: false,
