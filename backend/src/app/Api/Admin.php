@@ -313,10 +313,14 @@ class Admin extends Api {
                 throw new Exception("无权限", 403);
             }
         }
-        //todo 去重
+        // 去重通过硬件写死数据库实现
         $re = $this->Join->add($this->stuid, $this->aid, $this->timelong, $jwt['stuid']);
 
-        return $re;
+        if($re){
+            return true;
+        }else{
+            throw new Exception("出错，请检查是否重复", 503);
+        }
     }
 
     public function getActivity(){
