@@ -16,14 +16,7 @@
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
     </div>
 
-    <el-table
-      v-loading="listLoading"
-      :key="tableKey"
-      :data="list"
-      border
-      fit
-      highlight-current-row
-      style="width: 100%;">
+    <el-table v-loading="listLoading" :key="tableKey" :data="list" border fit highlight-current-row style="width: 100%;">
       <el-table-column :label="$t('table.id')" align="center" width="65">
         <template slot-scope="scope">
           <span>{{ scope.row.aid }}</span>
@@ -34,9 +27,9 @@
           <span>{{ scope.row.starttime | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.title')" width="260px" min-width="100px">
+      <el-table-column :label="$t('table.title')" width="200px" min-width="100px">
         <template slot-scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{ scope.row.title }}</span>
+          <span class="link-type" @click="showArticle(scope.row)">{{ scope.row.title }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.author')" width="110px" align="center">
@@ -59,9 +52,9 @@
           <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('table.actions')" align="center" width="310" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+          <el-button type="primary" size="mini" @click="showArticle(scope.row)">{{ $t('table.edit') }}</el-button>
           <el-button v-if="scope.row.status!='published'" size="mini" type="success" @click="handleModifyStatus(scope.row,'published')">{{ $t('table.publish') }}
           </el-button>
           <el-button v-if="scope.row.status!='draft'" size="mini" @click="handleModifyStatus(scope.row,'draft')">{{ $t('table.draft') }}
@@ -76,35 +69,12 @@
       <el-pagination v-show="total>0" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" :total="total" background layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
     </div>
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item :label="$t('table.type')" prop="type">
-          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('table.date')" prop="timestamp">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date"/>
-        </el-form-item>
-        <el-form-item :label="$t('table.title')" prop="title">
-          <el-input v-model="temp.title"/>
-        </el-form-item>
-        <el-form-item :label="$t('table.status')">
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('table.importance')">
-          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;"/>
-        </el-form-item>
-        <el-form-item :label="$t('table.remark')">
-          <el-input :autosize="{ minRows: 2, maxRows: 4}" v-model="temp.remark" type="textarea" placeholder="Please input"/>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{ $t('table.confirm') }}</el-button>
-        <el-button v-else type="primary" @click="updateData">{{ $t('table.confirm') }}</el-button>
+    <el-dialog title="活动详情" :visible.sync="dialogFormVisible">
+      <div class="name">
+        <label>活动名称：</label><span>{{temp.name}}</span>
+      </div>
+      <div class="location">
+        <label>活动地点：</label><span>{{temp.location}}</span>
       </div>
     </el-dialog>
 
@@ -125,6 +95,7 @@
 import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
 import waves from '@/directive/waves' // 水波纹指令
 import { parseTime } from '@/utils'
+import {getArticle} from '@/api/article'
 
 const calendarTypeOptions = [
   { key: 'CN', display_name: 'China' },
@@ -207,8 +178,8 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity', { })
-        .then((response) => {
+      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',)
+      .then((response) => {
           this.list = response.data.data
           this.total = this.list.length
         })
@@ -225,6 +196,13 @@ export default {
     handleSizeChange(val) {
       this.listQuery.limit = val
       this.getList()
+    },
+    showArticle(row){
+      this.dialogFormVisible = true
+      this.temp = Object.assign({}, row)
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
     },
     handleCurrentChange(val) {
       this.listQuery.page = val
@@ -275,37 +253,7 @@ export default {
       })
     },
     handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
-      this.temp.timestamp = new Date(this.temp.timestamp)
-      this.dialogStatus = 'update'
       this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
-    },
-    updateData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateArticle(tempData).then(() => {
-            for (const v of this.list) {
-              if (v.id === this.temp.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
-                break
-              }
-            }
-            this.dialogFormVisible = false
-            this.$notify({
-              title: '成功',
-              message: '更新成功',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        }
-      })
     },
     handleDelete(row) {
       this.$notify({
@@ -349,3 +297,11 @@ export default {
   }
 }
 </script>
+<style>
+.name{
+  display: inline-block;
+}
+.location{
+  padding-top: 20px;
+}
+</style>
