@@ -4,7 +4,11 @@ namespace App\Model;
 use function \PhalApi\DI as di;
 
 class Activity{
-    private $unionAct = [
+    private $unionRelation =  [
+        '[>]hoster' => ['hoster' => 'hid'],
+        '[>]type' => ['type' => 'typeid']
+    ];
+    private $unionColumn = [
         'activity.aid',
         'activity.name',
         'activity.location',
@@ -31,21 +35,18 @@ class Activity{
         ];
 
         if($all === false){
-            $con['status[>]'] = 0;
+            $con['activity.status[>]'] = 0;
         }
 
-        $re= di()->db->select('activity', [
-            '[>]hoster' => ['hoster' => 'hid'],
-            '[>]type' => ['type' => 'typeid']
-        ], $this->unionAct, $con);
+        $re= di()->db->select('activity', $this->unionRelation, $this->unionColumn, $con);
 
         return $re;
     }
 
     public function get($id){
-        $re= di()->db->get('activity', '*', [
+        $re= di()->db->get('activity', $this->unionRelation, $this->unionColumn, [
             'aid' => $id,
-            'status[>]' => 0
+            'activity.status[>]' => 0
         ]);
 
         return $re;
