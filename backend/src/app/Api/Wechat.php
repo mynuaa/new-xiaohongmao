@@ -25,7 +25,7 @@ class Wechat extends Api {
 
 	public function getRules() {
         return [
-            'timeLong' => [
+            'getJoin' => [
                 'id' => [
                     'name' => 'stuid', 
                     'desc' => '学号',
@@ -83,8 +83,9 @@ class Wechat extends Api {
     }
 
 
-    public function timeLong(){
-        $re = $this->Join->getTime($this->id);
+    public function getJoin(){
+        $re['time'] = $this->Join->getTime($this->id);
+        $re['join'] = $this->Join->getByStuid($this->id);
         
         return $re;
     }
