@@ -9,6 +9,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "echarts": "^4.2.0-rc.1",
     "vue": "^2.5.17",
     "vue-carousel": "^0.14.0",
