@@ -109,7 +109,7 @@ class Join{
         if($admin){
             $con = array_merge($con, [
                 'optadmin' => $admin,
-                'opttime' => di()->db::raw('NOW()'),
+                'opttime' => di()->db::raw('NOW()'),//生成人看的时间
             ]);
         }
 

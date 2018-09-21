@@ -90,7 +90,7 @@ class Admin extends Api {
                     'name' => 'hoster', 
                     'require' => true,
                     'type' => 'int',     
-                    'desc' => '活动举办者'
+                    'desc' => '活动地点'
                 ],
                 'title' => [
                     'name' => 'title', 
@@ -150,18 +150,10 @@ class Admin extends Api {
                 ],
                 'type' => [
                     'name' => 'type', 
-                    'require' => true,
+                    'require' => false,
                     'type' => 'int',
-                    'desc' => '类型 先获取所有的type，如果不存在则先进行添加'
-                ],
-                'level' => [
-                    'name' => 'level', 
-                    'require' => true,
-                    'type' => 'int',
-                    'desc' => '级别，0为院级，1为校级',
-                    'min' => 0,
-                    'max' => 1
-                ],
+                    'desc' => '类型'
+                ]
             ],
             'allActivity' => [
                 'from' => [
@@ -193,7 +185,7 @@ class Admin extends Api {
                 ],
                 'timelong' => [
                     'name' => 'timelong',
-                    'desc' => '时长',
+                    'desc' => '页面大小',
                     'require' => true,
                     'type' => 'float'
                 ]
@@ -214,6 +206,43 @@ class Admin extends Api {
                     'require' => false,
                     'type' => 'string',
                 ],
+            ],
+            'bindUser'=>[
+                'stuid' => [
+                    'name' => 'stuid', 
+                    'desc' => '学号',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ],
+                'passwd' => [
+                    'name' => 'passwd', 
+                    'desc' => '学号',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ],
+                'challenge' => [
+                    'name' => 'challenge', 
+                    'desc' => '验证码',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ],
+                'validate' => [
+                    'name' => 'validate', 
+                    'desc' => '验证码',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ],
+                'seccode' => [
+                    'name' => 'seccode', 
+                    'desc' => '验证码',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ]
             ]
         ];
 	}
@@ -255,13 +284,14 @@ class Admin extends Api {
         }
 
         $admin = $this->User->isAdmin($this->stuid);
-        return $this->User->encode($ded['name'], $this->stuid, $admin);
+        return $this->User->encode($ded['name'], $this->stuid, $admin);//
 
         if($this->Ded->binded($this->stuid)){//已经绑定 老用户
             //返回jwt
             $admin = $this->User->isAdmin($this->stuid);
             return $this->User->encode($ded['name'], $this->stuid, $admin);
         }else{
+            
             // ？是否要激活？
             //todo 怎么搞？
             throw new Exception('请确认绑定', 200);
@@ -281,30 +311,37 @@ class Admin extends Api {
 
         return $re;
     }
-
     /**
      * 增加活动
      *
      * @return void
      */
     public function addActivity(){
-
-        $jwt = $this->checkJwt();
-
-        if($jwt['admin'] == false){
-            throw new Exception('无权限', 403);
-        }
-
-        if($jwt['admin']->level == 1){//院级管理员
-            if($jwt['admin']->yuan != $this->hoster || $this->level == 1){//无权发布他院活动 无权发布校级活动
-                throw new Exception("没这么高的权限", 403);
-            }
-        }
-
         $re = $this->Act->add($this);
 
         return $re;
     }
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function bindUser(){//绑定用户
+        $ded = $this->Ded->verify($this->stuid, $this->passwd);
+        if($ded === false){
+            throw new Exception('密码错误', 403);
+        }else{
+           $re= $this->User->bindUser($this->stuid,$ded);
+           if($re)
+           {
+            throw new Exception('成功', 100);
+           }else{
+            throw new Exception('失败', 403);
+           }
+        }
+    }/**
+     * 绑定新用户
+     */
 
     /**
      * 增加参与
@@ -317,57 +354,30 @@ class Admin extends Api {
         if($jwt['admin'] == false){
             throw new Exception('无权限', 403);
         }
-
+        
         if($jwt['admin']->level == 1){//院级管理员
-            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)){
+            //  判断管理员和活动的对应关系
+            if(!$this->Act->judge($jwt['admin']->yuan,$this->aid)){
                 throw new Exception("无权限", 403);
             }
         }
-        // 去重通过硬件写死数据库实现
         $re = $this->Join->add($this->stuid, $this->aid, $this->timelong, $jwt['stuid']);
 
-        if($re){
-            return true;
-        }else{
-            throw new Exception("出错，请检查是否重复", 503);
-        }
+        return $re;
     }
 
     public function getActivity(){
         $jwt = $this->checkJwt();
-
-        if($jwt['admin'] == false){
-            throw new Exception('无权限', 403);
-        }
-
-        if($jwt['admin']->level == 1){//院级管理员
-            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)){
-                throw new Exception("无权限", 403);
-            }
-        }
-   
+        //to do 管理员归属判断
+        if(!$this->Act>judge($jwt['admin']->yuan,$this->aid)){//和上面的一样
+            throw new Exception("无权限", 403);
+        
         $re = $this->Act->adminDetail($this->aid);
         return $re;
-    }
-
-    /**
-     * 获取所有活动举办者
-     *
-     * @return void
-     */
-    public function allHoster(){
-        $re = $this->Act->allHoster();
-        return $re;
-    }
-
-    /**
-     * 获取所有的活动类型
-     *
-     * @return void
-     */
-    public function allType(){
-        $re = $this->Act->allType();
-        return $re;
+        }
+        else{
+            return false;
+        }
     }
 
     private function checkJwt(){
@@ -384,7 +394,6 @@ class Admin extends Api {
  * @return void
  */
     public function makejwt(){
-        //return $this->User->encode('seiry', '031630226', ['level' => 1, 'yuan' => 3]);
         return $this->User->encode('seiry', '031630226', ['level' => 3]);
     }
 }

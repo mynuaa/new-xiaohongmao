@@ -32,4 +32,14 @@ class User{
         return $re;
     }
 
+    public function bindUser($stuid,$ded){
+        $re=di()->db->insert('user',[
+            "stuid"=>$stuid,
+            "uname"=>$ded['name'],
+            "gender"=>$ded['gender'],
+            "status"=>1,
+            "updatetime"=>di()->db::raw('NOW()')
+        ]);
+        return $re;
+    }
 }
