@@ -75,5 +75,25 @@ class Activity{
         }
     }
 
+    public function judge($user,$aid){
+       /* $hoster = di()->db->get('activity', 'hoster',[
+            'aid'=>$aid
+        ]);
+        $hosterYuan=di()->db->get('admin','yuan',[
+            'adminid'=>$hoster
+        ]);*/
 
+        $hoster=di()->db->get('activity',[
+            '[>]admin'=>['hoster'=>'adminid']
+        ], 'admin.yuan',[
+            'aid'=>$aid
+        ] );
+
+        if($user==$hoster)
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
