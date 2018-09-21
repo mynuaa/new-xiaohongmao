@@ -350,6 +350,16 @@ class Admin extends Api {
         return $re;
     }
 
+    /**
+     * 获取所有的活动类型
+     *
+     * @return void
+     */
+    public function allType(){
+        $re = $this->Act->allType();
+        return $re;
+    }
+
     private function checkJwt(){
         $re = $this->User->decode($this->jwt);
         if(isset($re['ret']) && $re['ret'] == 401){

@@ -3,6 +3,7 @@ namespace App\Domain;
 
 use App\Model\Activity as MActivity;
 use App\Model\Hoster as MHoster;
+use App\Model\Type as MType;
 use App\Model\Join as MJoin;
 
 use function \PhalApi\DI as di;
@@ -13,6 +14,7 @@ class Activity {
         $this->Act = new MActivity();
         $this->Join = new MJoin();
         $this->Hoster = new MHoster();
+        $this->Type = new MType();
     }
 
 
@@ -39,6 +41,9 @@ class Activity {
     public function allHoster(){
         return $this->Hoster->getAll();
 
+    }
+    public function allType(){
+        return $this->Type->getAll();
     }
 
     public function del($id){
