@@ -6,8 +6,8 @@
         <div id="body">
           <ul>
             <li v-for="item in items">
-              <div class="label" style="font-weight:550;">{{item.label}}</div>
-              <div class="origin">{{item.origin}}</div>
+              <div class="label" style="font-weight:550;">{{item.label | label}}</div>
+              <div class="origin">{{item.origin | origin}}</div>
               <div class="date">{{item.date}}</div>
             </li>
           </ul>
@@ -57,13 +57,31 @@ export default {
           date: "2014-02-08"
         },
         {
-          label: "南京航空航天大学何惧老俱乐部志愿",
+          label: "南京航空航天大学何惧老俱乐部志",
           origin: "何巨佬",
           date: "2014-02-08"
         }
       ]
     };
-  }
+  },
+  filters: {
+    label: function (value) {
+      if (value.length >= 15){
+        return value.substring(0, 15) + ' ...';
+      }
+      else {
+        return value;
+      }
+    },
+    origin: function (value) {
+      if (value.length >= 5){
+        return value.substring(0, 5) + ' ...';
+      }
+      else {
+        return value;
+      }
+    }
+  },
 };
 </script>
 
@@ -98,11 +116,11 @@ export default {
       text-decoration: none;
       .label {
         display: inline-block;
-        width: 60%;
+        width: 55%;
       }
       .origin {
         display: inline-block;
-        width: 20%;
+        width: 25%;
       }
       .date {
         display: inline-block;
