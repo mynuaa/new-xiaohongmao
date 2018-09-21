@@ -275,7 +275,7 @@ class Admin extends Api {
         /*
         $geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->stuid);
         if($geetest !== true){
-            throw new Exception('验证码错误', 500);
+            throw new Exception('验证码错误', 500);//验证码部分
         }
         */
         $ded = $this->Ded->verify($this->stuid, $this->passwd);
@@ -283,8 +283,8 @@ class Admin extends Api {
             throw new Exception('密码错误', 403);
         }
 
-        $admin = $this->User->isAdmin($this->stuid);
-        return $this->User->encode($ded['name'], $this->stuid, $admin);//
+       // $admin = $this->User->isAdmin($this->stuid);//测试·代码
+       // return $this->User->encode($ded['name'], $this->stuid, $admin);//
 
         if($this->Ded->binded($this->stuid)){//已经绑定 老用户
             //返回jwt
@@ -293,7 +293,7 @@ class Admin extends Api {
         }else{
             
             // ？是否要激活？
-            //todo 怎么搞？
+            //to do 怎么搞？
             throw new Exception('请确认绑定', 200);
         }
 
@@ -322,8 +322,8 @@ class Admin extends Api {
         return $re;
     }
     /**
-     * Undocumented function
-     *
+     * 绑定新用户
+     * 
      * @return void
      */
     public function bindUser(){//绑定用户
@@ -339,9 +339,7 @@ class Admin extends Api {
             throw new Exception('失败', 403);
            }
         }
-    }/**
-     * 绑定新用户
-     */
+    }
 
     /**
      * 增加参与
