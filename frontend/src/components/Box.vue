@@ -1,7 +1,7 @@
 <template>
     <div id="box">
         <div id="header">
-            <div>活动总览</div>
+            <div>近期活动</div>
         </div>
         <div id="body">
           <ul>
