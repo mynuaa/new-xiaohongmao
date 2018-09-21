@@ -1,0 +1,9 @@
+<!--pages/timelong.wxml-->
+
+<i-panel title="时长" hide-border="{{ true }}">
+    <text>已认证:{{time.done}}小时 未认证:{{time.undone}}</text>
+</i-panel>
+
+<i-panel title="参与活动">
+    <text>todo...</text>
+</i-panel>

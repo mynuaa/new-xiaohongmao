@@ -17,4 +17,19 @@ class User{
 
     }
 
+    public function countAll(){
+        $re = di()->db->count('user', [
+            'status[>]' => 0
+        ]);
+        return $re;
+
+    }
+ 
+    public function getInfo($id){
+        $re = di()->db->get('user', '*', [
+            'stuid' => $id
+        ]);
+        return $re;
+    }
+
 }

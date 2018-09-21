@@ -11,11 +11,13 @@ use App\Domain\Front as DFront;
 use App\Domain\GTCode as DGTCode;
 use App\Domain\Ded as DDed;
 use App\Domain\User as DUser;
+use App\Domain\Activity as DActivity;
+use App\Domain\Join as DJoin;
 
 /**
- * 默认接口服务类
+ * 前端接口
  *
- * @author: dogstar <chanzonghuang@gmail.com> 2014-10-04
+ * @author: Seiry Yu
  */
 
 class Front extends Api {
@@ -76,6 +78,28 @@ class Front extends Api {
                     'type' => 'string',
                 ]
             ],
+            'allActivity' => [
+                'from' => [
+                    'name' => 'from', 
+                    'desc' => '分页起始',
+                    'type' => 'int',
+                    'default' => 0, 
+                ],
+                'pagenum' => [
+                    'name' => 'pagenum', 
+                    'desc' => '页面大小',
+                    'type' => 'int',
+                    'default' => 20, 
+                ]
+            ],
+            'getActivity' => [
+                'id' => [
+                    'name' => 'id', 
+                    'desc' => '活动id',
+                    'type' => 'int',
+                    'require' => true,
+                ]
+            ],
         ];
 	}
     
@@ -84,6 +108,8 @@ class Front extends Api {
         $this->GTCode = new DGTCode();
         $this->Ded = new DDed();
         $this->User = new DUser();
+        $this->Act = new DActivity();
+        $this->Join = new DJoin();
     }
 
 	/**
@@ -105,45 +131,39 @@ class Front extends Api {
     }
     
     /**
-     * 登录之前获取chanllenge
-     *
-     * @return strings 挑战id
-     */
-    public function beforeLogin(){
-        return $this->GTCode->startCaptchaServlet($this->stuid);
-    }
-    
-    /**
-     * 登录
+     * 获取所有志愿活动
      *
      * @return void
      */
+    public function allActivity(){
+        $re = $this->Act->gets($this->from, $this->pagenum);
 
-    public function login(){
-        
-        /*$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->stuid);
-        if($geetest !== true){
-            throw new Exception('验证码错误', 500);
-        }*/
-        
-        $ded = $this->Ded->verify($this->stuid, $this->passwd);
-        if($ded === false){
-            throw new Exception('密码错误', 403);
-        }
+        return $re;
+    }
 
-        $admin = $this->User->isAdmin($this->stuid);
-        return $this->User->encode($ded['name'], $this->stuid, $admin);
+    /**
+     * 按id获取活动
+     *
+     * @return void
+     */
+    public function getActivity(){
+        $re = $this->Act->get($this->id);
 
-        if($this->Ded->binded($this->stuid)){//已经绑定 老用户
-            //返回jwt
-            $admin = $this->User->isAdmin($this->stuid);
-            return $this->User->encode($ded['name'], $this->stuid, $admin);
-        }else{
-            // ？是否要激活？
-            throw new Exception('请确认绑定', 200);
-        }
+        return $re;
+    }
 
-        //判断是否是新注册
-        //正常的业务逻辑
+    /**
+     * 获取用于展示的数据
+     *
+     * @return array
+     */
+    public function showData(){
+        $re = [];
+        $re['allTimeLong'] = $this->Join->countAll();
+        $re['mouthLong'] = $this->Join->countMonth();
+        $re['allUser'] = $this->User->countAll();
+        $re['averageTimeLong'] = $this->Join->average();
+
+        return $re;
     }
 }

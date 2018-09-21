@@ -36,6 +36,13 @@ class User {
         ]);
     }
 
+    public function getInfo($id){
+        return $this->User->getInfo($id);
+    }
+
+    public function countAll(){
+        return $this->User->countAll();
+    }
     public function isAdmin ($id){
         return $this->User->isAdmin($id);
     }
