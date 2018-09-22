@@ -206,6 +206,43 @@ class Admin extends Api {
                     'require' => true,
                 ]
             ],
+            'bindUser'=>[
+                'stuid' => [
+                    'name' => 'stuid', 
+                    'desc' => '学号',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ],
+                'passwd' => [
+                    'name' => 'passwd', 
+                    'desc' => '学号',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ],
+                'challenge' => [
+                    'name' => 'challenge', 
+                    'desc' => '验证码',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ],
+                'validate' => [
+                    'name' => 'validate', 
+                    'desc' => '验证码',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ],
+                'seccode' => [
+                    'name' => 'seccode', 
+                    'desc' => '验证码',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ]  
+                ],
             '*' => [
                 'jwt' => [
                     'name' => 'jwt', 
@@ -254,8 +291,8 @@ class Admin extends Api {
             throw new Exception('密码错误', 403);
         }
 
-        $admin = $this->User->isAdmin($this->stuid);
-        return $this->User->encode($ded['name'], $this->stuid, $admin);
+      //  $admin = $this->User->isAdmin($this->stuid);
+       // return $this->User->encode($ded['name'], $this->stuid, $admin);//注释掉测试代码
 
         if($this->Ded->binded($this->stuid)){//已经绑定 老用户
             //返回jwt
@@ -263,7 +300,7 @@ class Admin extends Api {
             return $this->User->encode($ded['name'], $this->stuid, $admin);
         }else{
             // ？是否要激活？
-            //todo 怎么搞？
+            //to do 怎么搞？
             throw new Exception('请确认绑定', 200);
         }
 
@@ -377,7 +414,25 @@ class Admin extends Api {
         }
         return $re;
     }
-
+ /**
+     * 绑定新用户
+     * 
+     * @return void
+     */
+    public function bindUser(){//绑定用户
+        $ded = $this->Ded->verify($this->stuid, $this->passwd);
+        if($ded === false){
+            throw new Exception('密码错误', 403);
+        }else{
+           $re= $this->User->bindUser($this->stuid,$ded);
+           if($re)
+           {
+            throw new Exception('成功', 100);
+           }else{
+            throw new Exception('失败', 403);
+           }
+        }
+    }
 /**
  * 生成测试使用的jwt
  *
