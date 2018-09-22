@@ -31,32 +31,27 @@ $re = $old->select('join', [
 ], [
     'join_id(jid)',
     'aid',
-    'group_name',
-    'type',
-    'place(location)',
-    'time_last(volunteertimemin)',
-    'time_last(volunteertimemax)',
-    'title',
-    'title(summary)',
-    'content(detail)',
-    'update(lastupdate)',
-    'time_beg(starttime)',
-], [
-    'LIMIT' => 2
+    'time_last(timelong)',
+    'sub_time',
+    'status',
+    'stu_num(stuid)'
 ]);
 
-foreach ($re as $v) {
-    $v['hoster'] = changeHoster($v['hoster']);
-    if($v['hoster'] == 0){
-        $v['level'] = 1;
-    }else{
-        $v['level'] = 0;
+
+foreach ($re as $j) {
+    if($j['status'] == 5){//没有审核通过
+        $j['status'] = 0; //兼容状态
+    }else{//不需要兼容
+        if($j['status'] == 1){//已经审核通过
+            $j['status'] = $j['sub_time'];
+        }else{//暂时没有审核呢
+            $j['status'] = 1;
+        }
     }
-    $v['peoplenum'] = 10;
-    $v['alltime'] = $v['peoplenum'] * $v['volunteertimemin'];
-    $v['contact'] = 'qq 2269871810 微信公众号 nuaazfj';
+    unset($j['sub_time']);
+    $j['optadmin'] = 'trans';
     
-    $new->insert('activity',$v);
+    $new->insert('join',$j);
     var_dump($new->error());
 }
 
