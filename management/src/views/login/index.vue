@@ -183,6 +183,11 @@ export default {
         challenge: this.gtResult.geetest_challenge,
         seccode: this.gtResult.geetest_seccode,
         validate: this.gtResult.geetest_validate
+      }).then(re => {
+        re = re.data
+        if(re.ret != 200 ){
+          alert(re.msg)
+        }
       })
 
     },
