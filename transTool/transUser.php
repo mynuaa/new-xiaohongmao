@@ -1,8 +1,5 @@
 <?php
 
-require_once './Medoo.php';
-
-use Medoo\Medoo;
 
 require_once './pass.php';
 

@@ -1,8 +1,5 @@
 <?php
-
-require_once './Medoo.php';
 require_once './pass.php';
-use Medoo\Medoo;
 
 $re = $old->select('activities', [
     '[>]activite_group' => ['act_group_id']
@@ -74,7 +71,9 @@ foreach ($re as $v) {
     $v['contact'] = 'qq 2269871810 微信公众号 nuaazfj';
 
     $new->insert('activity',$v);
-    var_dump($new->error());
+    if($new->error()[0] != 0){
+        var_dump($new->error()[2]);
+    }
 }
 
 echo 0;

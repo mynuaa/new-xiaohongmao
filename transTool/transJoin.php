@@ -1,9 +1,5 @@
 <?php
 
-require_once './Medoo.php';
-
-use Medoo\Medoo;
-
 require_once './pass.php';
 
 $re = $old->select('join', [
@@ -32,7 +28,9 @@ foreach ($re as $j) {
     $j['optadmin'] = 'trans';
     
     $new->insert('join',$j);
-    var_dump($new->error());
+    if($new->error()[0] != 0){
+        var_dump($new->error()[2]);
+    }
 }
 
 echo 0;
