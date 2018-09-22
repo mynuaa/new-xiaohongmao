@@ -155,6 +155,12 @@ class Admin extends Api {
                     'min' => 0,
                     'max' => 1
                 ],
+                'group_name'=>[
+                    'name' => 'group_name', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '组名'
+                ]
             ],
             'allActivity' => [
                 'from' => [
@@ -436,8 +442,12 @@ class Admin extends Api {
             throw new Exception('无权限', 403);
         }
 
+        if($jwt['admin']->level == 0){
+            throw new Exception('无权限', 403);
+        }
+
         if($jwt['admin']->level == 1){//院级管理员
-            if($jwt['admin']->yuan != $this->hoster || $this->level == 1){//无权发布他院活动 无权发布校级活动
+            if($jwt['admin']->yuan != $this->hoster && $this->level == 1){//无权发布他院活动 无权发布校级活动
                 throw new Exception("没这么高的权限", 403);
             }
         }
@@ -568,6 +578,6 @@ class Admin extends Api {
  */
     public function makejwt(){
         //return $this->User->encode('seiry', '031630226', ['level' => 1, 'yuan' => 3]);
-        return $this->User->encode('seiry', '031630226', ['level' => 3]);
+        return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
     }
 }
