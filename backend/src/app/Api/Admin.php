@@ -291,8 +291,8 @@ class Admin extends Api {
             throw new Exception('密码错误', 403);
         }
 
-        $admin = $this->User->isAdmin($this->stuid);
-        return $this->User->encode($ded['name'], $this->stuid, $admin);
+      //  $admin = $this->User->isAdmin($this->stuid);
+       // return $this->User->encode($ded['name'], $this->stuid, $admin);//注释掉测试代码
 
         if($this->Ded->binded($this->stuid)){//已经绑定 老用户
             //返回jwt
@@ -300,7 +300,7 @@ class Admin extends Api {
             return $this->User->encode($ded['name'], $this->stuid, $admin);
         }else{
             // ？是否要激活？
-            //todo 怎么搞？
+            //to do 怎么搞？
             throw new Exception('请确认绑定', 200);
         }
 
