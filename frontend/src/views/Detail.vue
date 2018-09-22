@@ -6,19 +6,19 @@
 
 	<div class="header">
         <a href="#">{{this.item.hostname}}</a>
-		<span class="little-label" >{{this.item.typename}}</span>
-		&nbsp;&nbsp; 时长：<span class="red">{{this.item.volunteertimemin}}</span>小时 
+		<span class="little-label" style="color:#666666;">[{{this.item.typename}}]</span>
+		&nbsp;&nbsp; 时长：<span style="color:red;">{{this.item.volunteertimemin}}</span>小时 
         &nbsp;&nbsp;&nbsp;日期：2016-11-15 - 2019-01-13
         <div class="xiugai">
-			<span>【上次修改: <span style="color:gray;">2016-11-16 11:38:12</span>】</span>
+			<div >【上次修改: <span style="color:gray;">2016-11-16 11:38:12</span>】</div>
 	    </div>
 	</div>
 	
 	<div class="detail">
-		<p活动地点：</p>
-		<span style="text-indent:85px;height:30px;line-height:30px;" >{{this.item.location}}</span>
+		<p>活动地点：</p>
+		<span>{{this.item.location}}</span>
         <p>活动简介：</p>
-	    <div style="width:50%;float:left;margin:10px auto 20px 0;height:30px;" v-html="this.item.detail"></div>
+	    <div class="detail-detail" v-html="this.item.detail" style="height:fit-content;"></div>
 	</div>
 </div>
 </template>
@@ -58,25 +58,47 @@ export default {
 
 <style lang="scss" scoped>
 #content {
+  width: 80%;
+  margin-left: 10%;
   text-align: center;
-  border:1px solid #CCCCCC;
+  border: 1px solid #cccccc;
+}
+.title-cont {
+  margin: 10px auto;
 }
 .header {
   text-align: center;
-  margin: 10px auto;
-  font-size:14px;
-  .xiugai{
-      width:500px;
-      text-align:center;
-      span{
-          color:gray;
-      }
+  font-size: 14px;
+  a {
+    font-weight: 400;
+    color: black;
+    text-decoration: none;
+  }
+  .xiugai {
+    width: 100%;
+    text-align: center;
+    span {
+      color: gray;
+    }
   }
 }
 
 .detail {
-    p{
-        background:#ceffbb;height:30px;line-height:30px;text-indent:20px;font-weight:bold;
-    }
+    padding: 10px 20px 20px 20px;
+  p {
+    background: #ceffbb;
+    height: 30px;
+    line-height: 30px;
+    font-weight: bold;
+  }
+  span {
+    height: 30px;
+    line-height: 30px;
+  }
+  .detail-detail {
+    text-align: center;
+    margin: 10px auto 20px 0;
+    height: 30px;
+  }
 }
 </style>
