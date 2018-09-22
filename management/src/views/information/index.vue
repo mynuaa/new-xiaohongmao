@@ -25,7 +25,7 @@ export default {
   methods: {
     fetchData() {
     		this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetInfo', {
-        'jwt': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6M319.CvX-pKXjAyht6BRADUWYKpM8sDkCh5OkMEqlnd-sAR8'
+        'jwt': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6M319.siQ7SLRJWHzGFmOVbYNSZfYvJFDVBfID4iehYDvQhxg'
       })
         .then((response) => {
           if (response.data.ret == 200) {

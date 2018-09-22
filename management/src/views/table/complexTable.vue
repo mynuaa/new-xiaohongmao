@@ -70,14 +70,22 @@
     </div>
 
     <el-dialog title="活动详情" :visible.sync="dialogFormVisible">
-      <div class="name">
+      <div class="activity">
         <label>活动名称：</label><span>{{temp.name}}</span>
       </div>
-      <div class="location">
-        <label>活动地点：</label><span>{{temp.location}}</span>
+      <div class="activity">
+        <label>活动地点：</label><span class="content">{{temp.location}}</span>
+      </div>
+      <div class="activity">
+        <label>主办方：</label><span class="content">{{temp.hostname}}</span>
+      </div>
+      <div class="activity">
+        <label>活动时长：</label><span class="content">{{temp.volunteertimemin}} 小时</span>
+      </div>
+      <div class="activity">
+        <label>活动内容：</label><span v-html="temp.detail"></span>
       </div>
     </el-dialog>
-
     <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
       <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
         <el-table-column prop="key" label="Channel"/>
@@ -200,7 +208,7 @@ export default {
     showArticle(row){
       this.dialogFormVisible = true
       this.temp = Object.assign({}, row)
-      this.$nextTick(() => {
+      this.$nextTick(() => { 
         this.$refs['dataForm'].clearValidate()
       })
     },
@@ -301,7 +309,10 @@ export default {
 .name{
   display: inline-block;
 }
-.location{
-  padding-top: 20px;
+.activity{
+  padding-top: 30px;
+}
+.content{
+  padding-left:20px;
 }
 </style>
