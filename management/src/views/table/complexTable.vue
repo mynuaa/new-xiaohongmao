@@ -58,10 +58,9 @@
           </el-button>
           <el-button type="success" size="small" @click="up(scope.row)">{{ $t('table.apply') }}
           </el-button>
-          <router-link :to="'/example/edit/'+scope.row.id">
-          <el-button size="small" type="danger" @click="uploadTime(scope.aid)">{{ $t('table.upload') }}
-          </el-button>
-          </router-link>    
+            <router-link :to="'/up/'+scope.row.aid">
+            <el-button type="primary" size="small" icon="el-icon-edit">up</el-button>
+          </router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -250,7 +249,13 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
-    uploadTime(){
+    upload(id){
+      this.$router.push({
+        name: 'excel',
+          params: {
+            id: id
+          }
+        })
     },
     createData() {
       this.$refs['dataForm'].validate((valid) => {
