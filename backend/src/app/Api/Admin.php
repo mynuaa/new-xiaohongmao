@@ -72,13 +72,6 @@ class Admin extends Api {
                 ]
             ],
             'addActivity' => [
-                'name' => [
-                    'name' => 'name', 
-                    'require' => true,
-                    'type' => 'string',
-                    'format' => 'utf8',       
-                    'desc' => '活动名称'
-                ],
                 'location' => [
                     'name' => 'location', 
                     'require' => true,
