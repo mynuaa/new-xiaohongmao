@@ -7,14 +7,15 @@ use Medoo\Medoo;
 
 $pass =  [
     'old' => [
-        'username' => 'root',
-        'password' => 'root'
+        'username' => 'volunteer',
+        'password' => '657d640e70b996'
     ],
     'new' => [
-        'username' => 'root',
-        'password' => 'root'
+        'username' => 'newvolunteer',
+        'password' => 'newv01unT33#r'
     ],
 ];
+
 
 $old = new Medoo(array_merge([
     'database_type' => 'mysql',

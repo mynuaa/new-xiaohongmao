@@ -11,6 +11,8 @@ $re = $old->select('join', [
     'sub_time',
     'status',
     'stu_num(stuid)'
+], [
+    'LIMIT' => 100
 ]);
 
 
