@@ -224,7 +224,7 @@ export default {
     showArticle(row){
       this.dialogFormVisible = true
       this.temp = Object.assign({}, row)
-      this.$nextTick(() => { 
+      this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
     },
@@ -259,7 +259,7 @@ export default {
       })
     },
     uploadTime(){
-    }
+    },
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
@@ -311,7 +311,7 @@ export default {
         this.downloadLoading = false
       })
     },
-    
+
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => {
         if (j === 'timestamp') {
