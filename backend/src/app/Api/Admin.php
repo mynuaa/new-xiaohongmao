@@ -41,17 +41,28 @@ class Admin extends Api {
                     'format' => 'utf8',                    
                     'require' => true,
                     'type' => 'string',
+                    'min' => 9,
+                    'max' => 9
                 ],
-                'passwd' => [
-                    'name' => 'passwd', 
-                    'desc' => '学号',
+                'rand' => [
+                    'name' => 'rand', 
+                    'desc' => '安全字符',
                     'format' => 'utf8',                    
                     'require' => true,
                     'type' => 'string',
                 ],
+                'passwd' => [
+                    'name' => 'passwd', 
+                    'desc' => '密码',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                    'min' => 6,
+                    'max' => 16
+                ],
                 'challenge' => [
                     'name' => 'challenge', 
-                    'desc' => '验证码',
+                    'desc' => '挑战',
                     'format' => 'utf8',                    
                     'require' => true,
                     'type' => 'string',
@@ -65,7 +76,7 @@ class Admin extends Api {
                 ],
                 'seccode' => [
                     'name' => 'seccode', 
-                    'desc' => '验证码',
+                    'desc' => '安全码',
                     'format' => 'utf8',                    
                     'require' => true,
                     'type' => 'string',
@@ -390,12 +401,13 @@ class Admin extends Api {
      */
 
     public function login(){
-        /*
-        $geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->stuid);
+        
+        $geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->rand);
+        return $geetest;
         if($geetest !== true){
             throw new Exception('验证码错误', 500);
         }
-        */
+        
         $ded = $this->Ded->verify($this->stuid, $this->passwd);
         if($ded === false){
             throw new Exception('密码错误', 403);
