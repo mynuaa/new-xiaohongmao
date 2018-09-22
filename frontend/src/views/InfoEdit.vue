@@ -2,15 +2,19 @@
   <div id="InfoEdit">
     <div>
         <div class="fixedInfo">
-        <div>
-            <img src="../assets/logo.png" alt="avater" class="avater">
+            <div>
+                <img src="../assets/logo.png" alt="avater" class="avater">
+            </div>
+            <div>
+                <div class="uneditable">{{username}}</div>
+                <div class="uneditable">{{userid}}</div>
+            </div>
         </div>
-        <div>
-            <div class="editable">{{username}}</div>
-            <div class="editable">{{userid}}</div>
+        <div class="changeable">
+            <div>
+                
+            </div>
         </div>
-    </div>
-    
     </div>
     
     <div class="carousel">
@@ -37,19 +41,16 @@ export default {
       return{
         username:'一个人',
         userid:'123456789',
-        activityList:[
-            {activity:'随便什么凑够十五个字还差一点够了',host:'纸飞机啦啦啦',time:'1.1.1',date:'10',state:'1'},
         
-        ]
           
       }
   },
   methods: {
-      getInfo(){
-          this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api').then(re => {
-              console.log(re)
-          })
-      }
+//      getInfo(){
+//          this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api').then(re => {
+//              console.log(re)
+//          })
+//      }
   },
   created() {
       this.getInfo()

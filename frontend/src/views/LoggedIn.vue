@@ -4,7 +4,7 @@
         <div class="userInfo" @mouseover="showEdit" @mouseout="hideEdit">
             <div class="editBox">
                 <router-link to='./infoEdit' >
-                    <img src="../assets/edit.png" class="editIcon" id="editIcon" alt="edit" @click="turnToEdit">
+                    <img src="../assets/edit.png" class="editIcon" id="editIcon" alt="edit">
                 </router-link>
             </div>
             <div class="infoTable">
@@ -70,7 +70,11 @@ export default {
   data(){
       return{
         time:{},
-        averageTime:['', 20, 36, 10, 10],
+        averageTime:[],
+        collegeAve:{},
+        mouthAve:{},
+        universityAve:{},
+        allUsers:{},
         username:'一个人',
         userid:'123456789',
         activityList:[
@@ -101,13 +105,15 @@ export default {
     methods: {
       getInfo(){
           this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
-              service: 'Wechat.TimeLong',
-              stuid: '031630226'
+              service: 'Front.ShowData',
           }).then(re => {
               if(re.data.ret != 200){
 
               }else{
-                  this.averageTime[0] = re.data.data
+                  this.allUsers = re.data.allUsers
+                  this.mouthAve = re.data.mouthLong / allUsers
+
+                //  this.averageTime[0] = re.data.data
               }
           })
       },
@@ -117,9 +123,7 @@ export default {
       hideEdit(){
           document.getElementById("editIcon").style.display = 'none';
       },
-      turnToEdit(){
-          
-      }
+      
   },
   created() {
       
@@ -128,7 +132,7 @@ export default {
         this.getInfo()
         var myChart = echarts.init(document.getElementById('myChart'));
         var averageTime = this.averageTime;
-        myChart.setOption({
+      myChart.setOption({
             title: {
                 text: ''
             },
