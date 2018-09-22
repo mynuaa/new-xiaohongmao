@@ -41,8 +41,6 @@ $re = $old->select('activities', [
     'content(detail)',
     'update(lastupdate)',
     'time_beg(starttime)',
-], [
-    'LIMIT' => 2
 ]);
 
 function changeHoster($old){
@@ -96,7 +94,7 @@ foreach ($re as $v) {
     $v['peoplenum'] = 10;
     $v['alltime'] = $v['peoplenum'] * $v['volunteertimemin'];
     $v['contact'] = 'qq 2269871810 微信公众号 nuaazfj';
-    
+
     $new->insert('activity',$v);
     var_dump($new->error());
 }
