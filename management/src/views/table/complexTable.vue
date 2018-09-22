@@ -34,12 +34,12 @@
       </el-table-column>
       <el-table-column :label="$t('table.author')" width="110px" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.hoster }}</span>
+                      <span>{{ scope.row.hostname }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.readings')" align="center" width="95">
         <template slot-scope="scope">
-          <span>{{ scope.row.peoplenum }}</span>
+          <span>{{ scope.row.volunteertimemin }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('活动时长')" align="center" width="95">
@@ -54,13 +54,14 @@
       </el-table-column>
       <el-table-column :label="$t('table.actions')" align="center" width="310" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="showArticle(scope.row)">{{ $t('table.edit') }}</el-button>
-          <el-button v-if="scope.row.status!='published'" size="mini" type="success" @click="handleModifyStatus(scope.row,'published')">{{ $t('table.publish') }}
+          <el-button type="primary" size="small" width="150px" @click="showArticle(scope.row)">{{ $t('table.view') }}
           </el-button>
-          <el-button v-if="scope.row.status!='draft'" size="mini" @click="handleModifyStatus(scope.row,'draft')">{{ $t('table.draft') }}
+          <el-button type="success" size="small" @click="up(scope.row)">{{ $t('table.apply') }}
           </el-button>
-          <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click="handleModifyStatus(scope.row,'deleted')">{{ $t('table.delete') }}
+          <router-link :to="'/example/edit/'+scope.row.id">
+          <el-button size="small" type="danger" @click="uploadTime(scope.aid)">{{ $t('table.upload') }}
           </el-button>
+          </router-link>    
         </template>
       </el-table-column>
     </el-table>
@@ -71,7 +72,7 @@
 
     <el-dialog title="活动详情" :visible.sync="dialogFormVisible">
       <div class="activity">
-        <label>活动名称：</label><span>{{temp.name}}</span>
+        <label>活动名称：</label><span>{{temp.title}}</span>
       </div>
       <div class="activity">
         <label>活动地点：</label><span class="content">{{temp.location}}</span>
@@ -95,7 +96,6 @@
         <el-button type="primary" @click="dialogPvVisible = false">{{ $t('table.confirm') }}</el-button>
       </span>
     </el-dialog>
-
   </div>
 </template>
 
@@ -205,10 +205,18 @@ export default {
       this.listQuery.limit = val
       this.getList()
     },
+    handleSizeChange(val) {
+      this.listQuery.limit = val
+      this.getList()
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page = val
+      this.getList()
+    },
     showArticle(row){
       this.dialogFormVisible = true
       this.temp = Object.assign({}, row)
-      this.$nextTick(() => { 
+      this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
     },
@@ -241,6 +249,8 @@ export default {
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
+    },
+    uploadTime(){
     },
     createData() {
       this.$refs['dataForm'].validate((valid) => {
@@ -293,6 +303,7 @@ export default {
         this.downloadLoading = false
       })
     },
+
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => {
         if (j === 'timestamp') {

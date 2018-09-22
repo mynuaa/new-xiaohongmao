@@ -1,30 +1,6 @@
 <?php
 
-require_once './Medoo.php';
-
-use Medoo\Medoo;
-
-$old = new Medoo([
-    'database_type' => 'mysql',
-    'database_name' => 'volunteer',
-    'server' => 'localhost',
-    'username' => 'root',
-    'password' => 'root',
-    'charset' => 'utf8mb4',
-    'port' => 3306,
-    'prefix' => '',
-]);
-
-$new = new Medoo([
-    'database_type' => 'mysql',
-    'database_name' => 'newvolunteer',
-    'server' => 'localhost',
-    'username' => 'root',
-    'password' => 'root',
-    'charset' => 'utf8mb4',
-    'port' => 3306,
-    'prefix' => '',
-]);
+require_once './pass.php';
 
 $re = $old->select('join', [
     '[>]user' => ['uid']
@@ -35,6 +11,8 @@ $re = $old->select('join', [
     'sub_time',
     'status',
     'stu_num(stuid)'
+], [
+    'LIMIT' => 100
 ]);
 
 
@@ -52,7 +30,9 @@ foreach ($re as $j) {
     $j['optadmin'] = 'trans';
     
     $new->insert('join',$j);
-    var_dump($new->error());
+    if($new->error()[0] != 0){
+        var_dump($new->error()[2]);
+    }
 }
 
 echo 0;

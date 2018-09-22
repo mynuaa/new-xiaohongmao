@@ -6,13 +6,13 @@
         <div id="body">
           <ul>
             <li v-for="(item, k) in items" :key="item.aid">
-              <router-link :to="'/detail?id=' + k"><div class="label" style="font-weight:550;">{{item.title | label}}</div></router-link>
+              <router-link :to="'/detail/' + item.aid"><div class="label" style="font-weight:550;">{{item.title | label}}</div></router-link>
               <div class="origin">{{item.hostname | origin}}</div>
               <div class="date">{{item.date}}</div>
             </li>
           </ul>
         </div>
-        <div id="footer"><a href='#' @click="routeractivity">more</a></div>
+        <div id="footer"><a href='#' @click="routeractivity" style="padding-bottom:2px;">more</a></div>
     </div>
 </template>
 
@@ -51,7 +51,9 @@ export default {
       this.$router.push('/activity');
     },
     getShowData(){
-      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Front.AllActivity').then(re => {
+      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Front.AllActivity',  {
+          pagenum: 8
+      }).then(re => {
         if(re.data.ret == 200){
           this.items = re.data.data;
         }else{
@@ -113,7 +115,7 @@ export default {
 }
 
 #footer {
-  height: 10%;
+  height: 20px;
   &:hover {
       background-color:#6190e8; 
       color: white;
