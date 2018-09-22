@@ -13,7 +13,7 @@
       <li><router-link to="/loggedIn">个人详情</router-link></li>
       </ul>
     </div>
-    <router-view style="padding-bottom:20px;"/>
+    <router-view style="margin-bottom:20px;"/>
     <div id="footer">
       <div class="copyright">
 			  <span>
