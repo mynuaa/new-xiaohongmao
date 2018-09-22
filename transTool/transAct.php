@@ -88,6 +88,12 @@ function changeHoster($old){
 
 foreach ($re as $v) {
     $v['hoster'] = changeHoster($v['hoster']);
+    if($v['hoster'] == 0){
+        $v['level'] = 1;
+    }else{
+        $v['level'] = 0;
+    }
+    $v['contact'] = '微信公众号 nuaazfj';
     $new->insert('activity',$v);
     var_dump($new->error());
 }
