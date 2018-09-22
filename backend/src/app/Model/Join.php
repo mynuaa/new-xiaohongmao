@@ -55,7 +55,7 @@ class Join{
             'stuid' => $stuid
         ]);
 
-        //todo 查询的列补充
+        //to do 查询的列补充
         return $re;  
     }
 
@@ -141,7 +141,7 @@ class Join{
         $yuan = $this->padding2($yuan);
 
         $re = di()->db->sum('join', 'timelong', [
-            'stuid[~]' => "{$yuan}%" //todo 暂时通过学号判断
+            'stuid[~]' => "{$yuan}%" //todo 暂时通过学号判断，无关紧要
         ]);
         
         return $re;

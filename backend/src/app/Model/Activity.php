@@ -80,7 +80,7 @@ class Activity{
         }
     }
     
-    //todo 更新活动
+    //to do 更新活动
     public function update($args){
         $re=di()->db->update('activity',[
             'group_name'=>$args->group_name,
