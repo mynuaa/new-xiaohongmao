@@ -58,8 +58,10 @@
           </el-button>
           <el-button type="success" size="small" @click="up(scope.row)">{{ $t('table.apply') }}
           </el-button>
+          <router-link :to="'/example/edit/'+scope.row.id">
           <el-button size="small" type="danger" @click="uploadTime(scope.aid)">{{ $t('table.upload') }}
           </el-button>
+          </router-link>    
         </template>
       </el-table-column>
     </el-table>
@@ -94,16 +96,6 @@
         <el-button type="primary" @click="dialogPvVisible = false">{{ $t('table.confirm') }}</el-button>
       </span>
     </el-dialog>
-    <el-dialog
-      title="提示"
-      :visible.sync="dialog"
-      width="30%"
-      :before-close="handleClose">
-      <span>这是一段信息</span>
-      <span slot="footer" class="dialog-footer">
-    </span>
-    </el-dialog>
-
   </div>
 </template>
 
@@ -259,7 +251,7 @@ export default {
       })
     },
     uploadTime(){
-    }
+    },
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
