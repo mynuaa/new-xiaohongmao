@@ -9,11 +9,11 @@
       <li><router-link to="/comments">意见箱</router-link></li>
       <li><router-link to="/certification">服务认证</router-link></li>
       <li><router-link to="/navigate">导航</router-link></li> -->
-      <li><router-link to="/detail">活动详情</router-link></li>
+      <!-- <li><router-link to="/detail">活动详情</router-link></li> -->
       <li><router-link to="/loggedIn">个人详情</router-link></li>
       </ul>
     </div>
-    <router-view/>
+    <router-view style="padding-bottom:20px;"/>
     <div id="footer">
       <div class="copyright">
 			  <span>

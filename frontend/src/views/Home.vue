@@ -4,7 +4,7 @@
       <Box class="box-activity"></Box>
     </div>
     <div class="body-right">
-      <div id="myChart" class="charts" style="width:100%; height:100%"></div>
+      <div id="myChart" class="charts" style="width:100%; height:300px;"></div>
     </div>
     <ul class="bg-bubbles">
 
