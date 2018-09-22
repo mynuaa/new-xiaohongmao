@@ -55,6 +55,7 @@ class Activity{
 
     public function add($args){
         $re = di()->db->insert('activity', [
+            'group_name'=>$args->group_name,
             'location' => $args->location,
             'hoster' => $args->hoster,
             'title' => $args->title,
@@ -82,7 +83,31 @@ class Activity{
     
     //todo 更新活动
     public function update($args){
-
+        $re=di()->db->update('activity',[
+            'group_name'=>$args->group_name,
+            'location' => $args->location,
+            'hoster' => $args->hoster,
+            'title' => $args->title,
+            'summary' => $args->summary,
+            'detail' => $args->detail,
+            'peoplenum' => $args->peoplenum,
+            'alltime' => $args->alltime,
+            'contact' => $args->contact,
+            'starttime' => $args->starttime,
+            'volunteertimemin' => $args->volunteertimemin,
+            'volunteertimemax' => $args->volunteertimemax,
+            'type' => $args->type,
+            'level' => $args->level,
+            'lastupdate' => time(),
+        ],[
+            'aid'=>$args->aid
+        ]);
+        if(di()->db->error()[0] == 0){
+            return true;
+        }else{
+            return false;
+        }
+        return $re;
     }
 
 

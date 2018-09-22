@@ -236,6 +236,117 @@ class Admin extends Api {
                     'type' => 'string',
                 ]  
                 ],
+            'updateActivity'=>[
+                'name' => [
+                    'name' => 'name', 
+                    'require' => true,
+                    'type' => 'string',
+                    'format' => 'utf8',       
+                    'desc' => '活动名称'
+                ],
+                'aid'=>[
+                    'name'=>'aid',
+                    'require' => true,
+                    'type' => 'int',
+                    'format' => 'utf8',       
+                    'desc' => '活动aid'
+                ],
+                'location' => [
+                    'name' => 'location', 
+                    'require' => true,
+                    'type' => 'string',
+                    'format' => 'utf8',       
+                    'desc' => '活动地点'
+                ],
+                'hoster' => [
+                    'name' => 'hoster', 
+                    'require' => true,
+                    'type' => 'int',     
+                    'desc' => '活动举办者'
+                ],
+                'title' => [
+                    'name' => 'title', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '标题'
+                ],
+                'summary' => [
+                    'name' => 'summary', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '简介'
+                ],
+                'detail' => [
+                    'name' => 'detail', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '详情'
+                ],
+                'peoplenum' => [
+                    'name' => 'peoplenum', 
+                    'require' => true,
+                    'type' => 'int',
+                    'min' => 1,
+                    'desc' => '人数'
+                ],
+                'alltime' => [
+                    'name' => 'alltime', 
+                    'require' => true,
+                    'type' => 'int',
+                    'min' => 1,
+                    'desc' => '所有时间'
+                ],
+                'contact' => [
+                    'name' => 'contact', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '联系方式'
+                ],
+                'starttime' => [
+                    'name' => 'starttime', 
+                    'require' => true,
+                    'type' => 'int',
+                    'desc' => '开始时间'
+                ],
+                'volunteertimemin' => [
+                    'name' => 'volunteertimemin', 
+                    'require' => true,
+                    'type' => 'float',
+                    'desc' => '最少志愿时间'
+                ],
+                'volunteertimemax' => [
+                    'name' => 'volunteertimemax', 
+                    'require' => true,
+                    'type' => 'float',
+                    'desc' => '最少志愿时间'
+                ],
+                'type' => [
+                    'name' => 'type', 
+                    'require' => true,
+                    'type' => 'int',
+                    'desc' => '类型 先获取所有的type，如果不存在则先进行添加'
+                ],
+                'operater'=>[
+                    'name' => 'operater', 
+                    'require' => true,
+                    'type' => 'int',     
+                    'desc' => '更新活动的操作者'
+                ],
+                'level' => [
+                    'name' => 'level', 
+                    'require' => true,
+                    'type' => 'int',
+                    'desc' => '级别，0为院级，1为校级',
+                    'min' => 0,
+                    'max' => 1
+                ],
+                'group_name'=>[
+                    'name' => 'group_name', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '组名'
+                ]
+            ],
             '*' => [
                 'jwt' => [
                     'name' => 'jwt', 
@@ -424,7 +535,31 @@ class Admin extends Api {
            }else{
             throw new Exception('失败', 403);
            }
+           }
+    }
+    /**
+     * 更新活动
+     *
+     * @return void
+     */
+    public function updateActivity(){
+        $jwt = $this->checkJwt();
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
         }
+
+        if($jwt['admin']->level == 1){//院级管理员
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)){
+                throw new Exception("无权限", 403);
+            }
+        }
+        if($jwt['admin']->level == 2){
+            if($this->Act->get($this->aid)['level']!=1){
+                throw new Exception("无权限", 403);
+            }
+        }
+           $re= $this->Act->update($this);
+           return $re;
     }
 /**
  * 生成测试使用的jwt
