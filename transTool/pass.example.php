@@ -1,15 +1,20 @@
 <?php
+ini_set('display_errors', true);
+error_reporting(E_ALL);
+require_once './Medoo.php';
+
+use Medoo\Medoo;
+
 $pass =  [
     'old' => [
-        'username' => 'volunteer',
-        'password' => '657d640e70b996'
+        'username' => 'root',
+        'password' => 'root'
     ],
     'new' => [
-        'username' => 'newvolunteer',
-        'password' => 'newv01unT33#r'
+        'username' => 'root',
+        'password' => 'root'
     ],
 ];
-
 
 $old = new Medoo(array_merge([
     'database_type' => 'mysql',
