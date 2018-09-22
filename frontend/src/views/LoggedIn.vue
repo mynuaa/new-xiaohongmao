@@ -3,7 +3,9 @@
     <div class="basicInfo">
         <div class="userInfo" @mouseover="showEdit" @mouseout="hideEdit">
             <div class="editBox">
-                <img src="../assets/edit.png" class="editIcon" id="editIcon" alt="edit" @click="turnToEdit">
+                <router-link to='./infoEdit' >
+                    <img src="../assets/edit.png" class="editIcon" id="editIcon" alt="edit" @click="turnToEdit">
+                </router-link>
             </div>
             <div class="infoTable">
                 <div>

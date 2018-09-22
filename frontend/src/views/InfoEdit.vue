@@ -1,7 +1,7 @@
 <template>
   <div id="InfoEdit">
     <div>
-        <div class="userInfo">
+        <div class="fixedInfo">
         <div>
             <img src="../assets/logo.png" alt="avater" class="avater">
         </div>
@@ -29,7 +29,7 @@
 <script>
 var echarts = require('echarts')
 export default {
-  name: 'loggedIn',
+  name: 'infoEdit',
   components: {
     
   },
