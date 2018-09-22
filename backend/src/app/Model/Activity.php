@@ -10,7 +10,6 @@ class Activity{
     ];
     private $unionColumn = [
         'activity.aid',
-        'activity.name',
         'activity.location',
         'activity.hoster',
         'activity.title',
@@ -54,7 +53,6 @@ class Activity{
 
     public function add($args){
         $re = di()->db->insert('activity', [
-            'name' => $args->name,
             'location' => $args->location,
             'hoster' => $args->hoster,
             'title' => $args->title,
