@@ -5,9 +5,9 @@
         </div>
         <div id="body">
           <ul>
-            <li v-for="item in items">
-              <div class="label" style="font-weight:550;">{{item.label | label}}</div>
-              <div class="origin">{{item.origin | origin}}</div>
+            <li v-for="(item, k) in items" :key="item.aid">
+              <router-link :to="'/detail?id=' + k"><div class="label" style="font-weight:550;">{{item.title | label}}</div></router-link>
+              <div class="origin">{{item.hostname | origin}}</div>
               <div class="date">{{item.date}}</div>
             </li>
           </ul>
@@ -25,43 +25,7 @@ export default {
   data: function() {
     return {
       istrue: true,
-      items: [
-        {
-          label: "南京航空航天大学志愿",
-          origin: "校青协",
-          date: "2014-02-03"
-        },
-        {
-          label: "南京航空航天大学纸飞机志愿",
-          origin: "南航纸飞机",
-          date: "2014-02-08"
-        },
-        {
-          label: "南京航空航天大学十六院志愿",
-          origin: "南航石榴园",
-          date: "2014-02-08"
-        },
-        {
-          label: "南京航空航天大学技术部志愿",
-          origin: "技术部",
-          date: "2014-02-08"
-        },
-        {
-          label: "南京航空航天大学何惧老俱乐部志愿",
-          origin: "何巨佬",
-          date: "2014-02-08"
-        },
-        {
-          label: "南京航空航天大学何惧老俱乐部志愿",
-          origin: "何巨佬",
-          date: "2014-02-08"
-        },
-        {
-          label: "南京航空航天大学何惧老俱乐部志",
-          origin: "何巨佬",
-          date: "2014-02-08"
-        }
-      ]
+      items: []
     };
   },
   filters: {
@@ -85,8 +49,21 @@ export default {
   methods :{
     routeractivity () {
       this.$router.push('/activity');
-    }
-  }
+    },
+    getShowData(){
+      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Front.AllActivity').then(re => {
+        if(re.data.ret == 200){
+          this.items = re.data.data;
+        }else{
+          console.log(re.data.msg)
+        }
+      })
+    },
+
+  },
+  mounted() {
+    this.getShowData()
+  },
 };
 </script>
 
