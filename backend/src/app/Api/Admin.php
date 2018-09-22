@@ -566,11 +566,6 @@ class Admin extends Api {
                 throw new Exception("无权限", 403);
             }
         }
-        if($jwt['admin']->level == 2){
-            if($this->Act->get($this->aid)['level']!=1){
-                throw new Exception("无权限", 403);
-            }
-        }
            $re= $this->Act->update($this);
            return $re;
     }
