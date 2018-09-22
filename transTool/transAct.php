@@ -1,30 +1,5 @@
 <?php
-
-require_once './Medoo.php';
-
-use Medoo\Medoo;
-
-$old = new Medoo([
-    'database_type' => 'mysql',
-    'database_name' => 'volunteer',
-    'server' => 'localhost',
-    'username' => 'root',
-    'password' => 'root',
-    'charset' => 'utf8mb4',
-    'port' => 3306,
-    'prefix' => '',
-]);
-
-$new = new Medoo([
-    'database_type' => 'mysql',
-    'database_name' => 'newvolunteer',
-    'server' => 'localhost',
-    'username' => 'root',
-    'password' => 'root',
-    'charset' => 'utf8mb4',
-    'port' => 3306,
-    'prefix' => '',
-]);
+require_once './pass.php';
 
 $re = $old->select('activities', [
     '[>]activite_group' => ['act_group_id']
@@ -96,7 +71,9 @@ foreach ($re as $v) {
     $v['contact'] = 'qq 2269871810 微信公众号 nuaazfj';
 
     $new->insert('activity',$v);
-    var_dump($new->error());
+    if($new->error()[0] != 0){
+        var_dump($new->error()[2]);
+    }
 }
 
 echo 0;
