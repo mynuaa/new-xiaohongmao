@@ -468,6 +468,9 @@ class Admin extends Api {
         if($jwt['admin'] == false){
             throw new Exception('无权限', 403);
         }
+        if($jwt['admin']->level == 0){
+            throw new Exception('无权限', 403);
+        }
 
         if($jwt['admin']->level == 1){//院级管理员
             if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)){
