@@ -123,33 +123,35 @@ export default {
       hideEdit(){
           document.getElementById("editIcon").style.display = 'none';
       },
-      
+      getuserchart(){
+        var myChart = echarts.init(document.getElementById('myChart'));
+        var averageTime = this.averageTime;
+        myChart.setOption({
+                title: {
+                    text: ''
+                },
+                tooltip: {},
+                legend: {
+                    data:['时长']
+                },
+                xAxis: {
+                    data: ["我","专业平均","院平均","年级平均","校平均"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '志愿时长',
+                    type: 'bar',
+                    data: averageTime,
+                }]
+        });
+      }
   },
   created() {
       
   },
   mounted() {
         this.getInfo()
-        var myChart = echarts.init(document.getElementById('myChart'));
-        var averageTime = this.averageTime;
-      myChart.setOption({
-            title: {
-                text: ''
-            },
-            tooltip: {},
-            legend: {
-                data:['时长']
-            },
-            xAxis: {
-                data: ["我","专业平均","院平均","年级平均","校平均"]
-            },
-            yAxis: {},
-            series: [{
-                name: '志愿时长',
-                type: 'bar',
-                data: averageTime,
-            }]
-      });
+        
   },
 }
 
@@ -209,21 +211,6 @@ export default {
     position: relative;
     width: 120px;
     border-radius: 100%;
-}
-.activities{
-    text-align: center;
-    
-    width: 60%;
-}
-.activityTable{
-    display: inline-block;
-    font-size: 18px;
-    width: 90%;
-    padding: 5px 20px;
-    box-shadow: 2px 2px 5px grey;
-}
-.charts{
-    display: inline-block;
 }
 .carousel{
     display: inline-block;
