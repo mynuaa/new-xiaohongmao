@@ -110,7 +110,7 @@ class Activity{
 
         $hoster = di()->db->get('activity', 'hoster',[
             'aid'=>$aid
-        ] );
+        ] );//这里要修改 todo
 
         if($user == $hoster){
             return true;

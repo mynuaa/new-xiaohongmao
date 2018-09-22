@@ -25,3 +25,25 @@ $new = new Medoo([
     'port' => 3306,
     'prefix' => '',
 ]);
+
+$re = $old->select('activities', [
+    '[>]activite_group' => ['act_group_id']
+], [
+    'aid',
+    'hoster',
+    'group_name',
+    'type',
+    'place(location)',
+    'time_last(volunteertimemin)',
+    'time_last(volunteertimemax)',
+    'title',
+    'title(summary)',
+    'content(detail)',
+    'update(lastupdate)',
+    'time_beg(starttime)',
+    'time_end'
+], [
+    'LIMIT' => 2
+]);
+
+return;
