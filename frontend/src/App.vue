@@ -5,10 +5,11 @@
       <ul>
       <li><router-link to="/">首页</router-link></li>
       <li><router-link to="/activity">志愿活动</router-link></li>
-      <li><router-link to="/announcement">公告&动态</router-link></li>
+      <!-- <li><router-link to="/announcement">公告&动态</router-link></li>
       <li><router-link to="/comments">意见箱</router-link></li>
       <li><router-link to="/certification">服务认证</router-link></li>
-      <li><router-link to="/navigate">导航</router-link></li>
+      <li><router-link to="/navigate">导航</router-link></li> -->
+      <li><router-link to="/detail">活动详情</router-link></li>
       <li><router-link to="/loggedIn">个人详情</router-link></li>
       </ul>
     </div>
@@ -37,7 +38,7 @@
 }
 #nav {
   padding: 0px 0px 20px 0px;
-  text-align: center;
+  // text-align: center;
   font-size: 20px;
   ul {
     background: #11998e; /* fallback for old browsers */
