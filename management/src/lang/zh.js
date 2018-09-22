@@ -126,7 +126,10 @@ export default {
     draft: '草稿',
     delete: '删除',
     cancel: '取 消',
-    confirm: '确 定'
+    confirm: '确 定',
+    view: '查看活动',
+    apply:'申请时长',
+    upload:'上传时长'
   },
   errorLog: {
     tips: '请点击右上角bug小图标',
