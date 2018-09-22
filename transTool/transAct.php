@@ -56,6 +56,8 @@ function changeHoster($old){
             return 11;
         case 26:
             return 103;
+        default:
+            return 999;//容错倒车
     }
 }
 
@@ -72,7 +74,7 @@ foreach ($re as $v) {
 
     $new->insert('activity',$v);
     if($new->error()[0] != 0){
-        var_dump($new->error()[2]);
+        echo "{$v['aid']} {$v['hoster']} {$new->error()[2]}";
     }
 }
 
