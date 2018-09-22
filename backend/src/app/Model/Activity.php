@@ -10,7 +10,6 @@ class Activity{
     ];
     private $unionColumn = [
         'activity.aid',
-        'activity.name',
         'activity.location',
         'activity.hoster',
         'activity.title',
@@ -21,6 +20,8 @@ class Activity{
         'activity.status',
         'activity.starttime',
         'activity.volunteertimemin',
+        'activity.volunteertimemax',
+        'activity.group_name',
         'activity.level',
         'activity.lastupdate',
         'hoster.hostname',
@@ -134,7 +135,7 @@ class Activity{
 
         $hoster = di()->db->get('activity', 'hoster',[
             'aid'=>$aid
-        ] );
+        ] );//这里要修改 todo
 
         if($user == $hoster){
             return true;
