@@ -403,8 +403,8 @@ class Admin extends Api {
     public function login(){
         
         $geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->rand);
-        return $geetest;
-        if($geetest !== true){
+
+        if($geetest != 1){
             throw new Exception('验证码错误', 500);
         }
         

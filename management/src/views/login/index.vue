@@ -123,7 +123,7 @@ export default {
   methods: {
     makegt(){
       this.gtKey = (Math.floor(Math.random()*1e14)).toString(32)
-      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
+      this.axios.post('http://g.gg/new-xiaohongmao/backend/public/index.php', {
         service: 'App.Admin.BeforeLogin',
         stuid: this.gtKey
       }).then(re => {
@@ -175,7 +175,7 @@ export default {
       if(this.gtResult == false){
         return;//todo 提示验证码错误
       }
-      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
+      this.axios.post('http://g.gg/new-xiaohongmao/backend/public/index.php', {
         service: 'App.Admin.Login',
         stuid: this.loginForm.username,
         passwd: this.loginForm.password,

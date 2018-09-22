@@ -103,7 +103,7 @@ class Lite
 
         $data = array_merge($data,$param);
 
-        if ($_SESSION['gtserver'] == 1) {   //服务器正常
+        if (1) {   //服务器正常
             $result = $this->GtLib->success_validate($challenge, $validate, $seccode, $data, $json_format);
             if ($result) {
                 return 1;
