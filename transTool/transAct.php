@@ -41,9 +41,55 @@ $re = $old->select('activities', [
     'content(detail)',
     'update(lastupdate)',
     'time_beg(starttime)',
-    'time_end'
 ], [
     'LIMIT' => 2
 ]);
 
-return;
+function changeHoster($old){
+    switch($old){
+        case 1:
+            return 0;
+        case 6:
+            return 2;
+        case 7:
+            return 3;
+        case 9:
+            return 5;
+        case 11:
+            return 7;
+        case 12:
+            return 8;
+        case 13:
+            return 9;
+        case 14:
+            return 10;
+        case 16:
+            return 12;
+        case 17:
+            return 15;
+        case 19:
+            return 1;
+        case 21:
+            return 16;
+        case 23:
+            return 4;
+        case 24:
+            return 6;
+        case 25:
+            return 101;
+        case 26:
+            return 102;
+        case 27:
+            return 11;
+        case 26:
+            return 103;
+    }
+}
+
+foreach ($re as $v) {
+    $v['hoster'] = changeHoster($v['hoster']);
+    $new->insert('activity',$v);
+    var_dump($new->error());
+}
+
+echo 0;

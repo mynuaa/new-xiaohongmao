@@ -20,6 +20,8 @@ class Activity{
         'activity.status',
         'activity.starttime',
         'activity.volunteertimemin',
+        'activity.volunteertimemax',
+        'activity.group_name',
         'activity.level',
         'activity.lastupdate',
         'hoster.hostname',
