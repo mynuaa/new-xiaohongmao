@@ -4,7 +4,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">{{ $t('login.title') }}</h3>
+        <h3 class="title">小红帽 - 用户登录</h3>
         <lang-select class="set-language"/>
       </div>
 
@@ -14,10 +14,9 @@
         </span>
         <el-input
           v-model="loginForm.username"
-          :placeholder="$t('login.username')"
+          placeholder="用户名"
           name="username"
           type="text"
-          auto-complete="on"
         />
       </el-form-item>
 
@@ -28,7 +27,7 @@
         <el-input
           :type="passwordType"
           v-model="loginForm.password"
-          :placeholder="$t('login.password')"
+          placeholder="密码"
           name="password"
           auto-complete="on"
           @keyup.enter.native="handleLogin" />
@@ -36,9 +35,9 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">{{ $t('login.logIn') }}</el-button>
-
+      <div id="captchaBox" style="width: 100%;"></div>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;margin-top: 22px;" @click.native.prevent="handleLogin">登录</el-button>
+    <!--
       <div class="tips">
         <span>{{ $t('login.username') }} : admin</span>
         <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
@@ -48,7 +47,7 @@
         <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
       </div>
 
-      <el-button class="thirdparty-button" type="primary" @click="showDialog=true">{{ $t('login.thirdparty') }}</el-button>
+      <el-button class="thirdparty-button" type="primary" @click="showDialog=true">{{ $t('login.thirdparty') }}</el-button>-->
     </el-form>
 
     <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog" append-to-body>
@@ -66,6 +65,7 @@
 import { isvalidUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialsignin'
+import '../../dx.js'
 
 export default {
   name: 'Login',
@@ -73,14 +73,14 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!isvalidUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入9位学号'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('密码不能这么短哦~'))
       } else {
         callback()
       }
@@ -90,6 +90,7 @@ export default {
         username: 'admin',
         password: '1111111'
       },
+      dxResult: false,
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
@@ -115,7 +116,53 @@ export default {
   destroyed() {
     // window.removeEventListener('hashchange', this.afterQRScan)
   },
+  mounted(){
+    this.makecode()
+  },
   methods: {
+    /*makegt(){
+      this.gtKey = (Math.floor(Math.random()*1e14)).toString(32)
+      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
+        service: 'App.Admin.BeforeLogin',
+        stuid: this.gtKey
+      }).then(re => {
+        re = {
+          ...re.data.data,
+          new_captcha: 1
+        }
+        initGeetest({
+          ...re,
+          width: '100%',
+          product: 'popup',
+          https: true
+        }, captchaObj => {
+          captchaObj.appendTo("#captchaBox"); //将验证按钮插入到宿主页面中captchaBox元素内
+          captchaObj.onReady(()=>{
+
+          }).onSuccess(()=>{
+              this.gtResult = captchaObj.getValidate()
+
+          }).onError(function(e){
+              console.log(e)
+          })
+      })
+      })
+    },*/
+    makecode(){
+      this._dx = _dx.Captcha(document.getElementById('captchaBox'), {
+        appId: '069ae57274e54291f373478057e1d796',
+        style: 'inline',
+        inlineFloatPosition: 'up',
+        protocol: 'https:',
+        width: document.querySelector('.el-form-item').offsetWidth,
+        success: (token)=>{
+          this.dxResult = token
+        },
+        fail: (e) => {
+            console.log(e)
+        }
+      })
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -124,6 +171,7 @@ export default {
       }
     },
     handleLogin() {
+        /*不要验证
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -137,7 +185,29 @@ export default {
           console.log('error submit!!')
           return false
         }
+      })*/
+      if(this.dxResult == false){
+        return;//todo 提示验证码错误
+      }
+      //http://g.gg/new-xiaohongmao/backend/public/index.php
+      //https://my.nuaa.edu.cn/xiaohongmao2/api
+      this.axios.post('http://g.gg/new-xiaohongmao/backend/public/index.php', {
+        service: 'App.Admin.Login',
+        stuid: this.loginForm.username,
+        passwd: this.loginForm.password,
+        dx: this.dxResult
+      }).then(re => {
+        re = re.data
+        if(re.ret != 200 ){
+          alert(re.msg)
+          if(re.ret == 500){//验证码错误
+            this._dx.reload()
+          }
+        }else{
+
+        }
       })
+
     },
     afterQRScan() {
       // const hash = window.location.hash.slice(1)

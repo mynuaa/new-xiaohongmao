@@ -46,4 +46,7 @@ class User {
     public function isAdmin ($id){
         return $this->User->isAdmin($id);
     }
+    public function bindUser($stuid,$ded){
+        return $this->User->bindUser($stuid,$ded);
+    }
 }

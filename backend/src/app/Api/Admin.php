@@ -13,7 +13,7 @@ use App\Domain\Ded as DDed;
 use App\Domain\User as DUser;
 use App\Domain\Activity as DActivity;
 use App\Domain\Join as DJoin;
-
+use App\Domain\DXCode as DDXCode;
 /**
  * 管理员功能
  *
@@ -35,6 +35,162 @@ class Admin extends Api {
                 ],
             ],
             'login' => [
+                'stuid' => [
+                    'name' => 'stuid', 
+                    'desc' => '学号',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                    'min' => 9,
+                    'max' => 9
+                ],
+                'passwd' => [
+                    'name' => 'passwd', 
+                    'desc' => '密码',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                    'min' => 6,
+                    'max' => 16
+                ],
+                'dx' => [
+                    'name' => 'dx', 
+                    'desc' => 'token',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ]
+            ],
+            'addActivity' => [
+                'location' => [
+                    'name' => 'location', 
+                    'require' => true,
+                    'type' => 'string',
+                    'format' => 'utf8',       
+                    'desc' => '活动地点'
+                ],
+                'title' => [
+                    'name' => 'title', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '标题'
+                ],
+                'summary' => [
+                    'name' => 'summary', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '简介'
+                ],
+                'detail' => [
+                    'name' => 'detail', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '详情'
+                ],
+                'peoplenum' => [
+                    'name' => 'peoplenum', 
+                    'require' => true,
+                    'type' => 'int',
+                    'min' => 1,
+                    'desc' => '人数'
+                ],
+                'alltime' => [
+                    'name' => 'alltime', 
+                    'require' => true,
+                    'type' => 'int',
+                    'min' => 1,
+                    'desc' => '所有时间'
+                ],
+                'contact' => [
+                    'name' => 'contact', 
+                    'require' => true,
+                    'type' => 'string',
+                    'desc' => '联系方式'
+                ],
+                'starttime' => [
+                    'name' => 'starttime', 
+                    'require' => true,
+                    'type' => 'int',
+                    'desc' => '开始时间'
+                ],
+                'volunteertimemin' => [
+                    'name' => 'volunteertimemin', 
+                    'require' => true,
+                    'type' => 'float',
+                    'desc' => '最少志愿时间'
+                ],
+                'volunteertimemax' => [
+                    'name' => 'volunteertimemax', 
+                    'require' => true,
+                    'type' => 'float',
+                    'desc' => '最少志愿时间'
+                ],
+                'type' => [
+                    'name' => 'type', 
+                    'require' => true,
+                    'type' => 'int',
+                    'desc' => '类型 先获取所有的type，如果不存在则先进行添加'
+                ],
+                'level' => [
+                    'name' => 'level', 
+                    'require' => true,
+                    'type' => 'int',
+                    'desc' => '级别，0为院级，1为校级',
+                    'min' => 0,
+                    'max' => 1
+                ],
+                'group_name'=>[
+                    'name' => 'group_name', 
+                    'require' => false,
+                    'type' => 'string',
+                    'desc' => '组名',
+                    'default' => 'new', 
+                ]
+            ],
+            'allActivity' => [
+                'from' => [
+                    'name' => 'from', 
+                    'desc' => '分页起始',
+                    'type' => 'int',
+                    'default' => 0, 
+                ],
+                'pagenum' => [
+                    'name' => 'pagenum', 
+                    'desc' => '页面大小',
+                    'type' => 'int',
+                    'default' => 20, 
+                ]
+            ],
+            'addJoin' => [
+                'stuid' => [
+                    'name' => 'stuid', 
+                    'desc' => '学号',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ],
+                'aid' => [
+                    'name' => 'aid',
+                    'desc' => '活动id',
+                    'type' => 'int',
+                    'require' => true,
+                ],
+                'timelong' => [
+                    'name' => 'timelong',
+                    'desc' => '时长',
+                    'require' => true,
+                    'type' => 'float'
+                ]
+            ],
+            'getActivity' => [
+                'aid' => [
+                    'name' => 'aid',
+                    'desc' => '活动id',
+                    'type' => 'int',
+                    'require' => true,
+                ]
+            ],
+            'bindUser'=>[
                 'stuid' => [
                     'name' => 'stuid', 
                     'desc' => '学号',
@@ -69,15 +225,22 @@ class Admin extends Api {
                     'format' => 'utf8',                    
                     'require' => true,
                     'type' => 'string',
-                ]
-            ],
-            'addActivity' => [
+                ]  
+                ],
+            'updateActivity'=>[
                 'name' => [
                     'name' => 'name', 
                     'require' => true,
                     'type' => 'string',
                     'format' => 'utf8',       
                     'desc' => '活动名称'
+                ],
+                'aid'=>[
+                    'name'=>'aid',
+                    'require' => true,
+                    'type' => 'int',
+                    'format' => 'utf8',       
+                    'desc' => '活动aid'
                 ],
                 'location' => [
                     'name' => 'location', 
@@ -154,6 +317,12 @@ class Admin extends Api {
                     'type' => 'int',
                     'desc' => '类型 先获取所有的type，如果不存在则先进行添加'
                 ],
+                'operater'=>[
+                    'name' => 'operater', 
+                    'require' => true,
+                    'type' => 'int',     
+                    'desc' => '更新活动的操作者'
+                ],
                 'level' => [
                     'name' => 'level', 
                     'require' => true,
@@ -162,48 +331,11 @@ class Admin extends Api {
                     'min' => 0,
                     'max' => 1
                 ],
-            ],
-            'allActivity' => [
-                'from' => [
-                    'name' => 'from', 
-                    'desc' => '分页起始',
-                    'type' => 'int',
-                    'default' => 0, 
-                ],
-                'pagenum' => [
-                    'name' => 'pagenum', 
-                    'desc' => '页面大小',
-                    'type' => 'int',
-                    'default' => 20, 
-                ]
-            ],
-            'addJoin' => [
-                'stuid' => [
-                    'name' => 'stuid', 
-                    'desc' => '学号',
-                    'format' => 'utf8',                    
+                'group_name'=>[
+                    'name' => 'group_name', 
                     'require' => true,
                     'type' => 'string',
-                ],
-                'aid' => [
-                    'name' => 'aid',
-                    'desc' => '活动id',
-                    'type' => 'int',
-                    'require' => true,
-                ],
-                'timelong' => [
-                    'name' => 'timelong',
-                    'desc' => '时长',
-                    'require' => true,
-                    'type' => 'float'
-                ]
-            ],
-            'getActivity' => [
-                'aid' => [
-                    'name' => 'aid',
-                    'desc' => '活动id',
-                    'type' => 'int',
-                    'require' => true,
+                    'desc' => '组名'
                 ]
             ],
             '*' => [
@@ -214,7 +346,7 @@ class Admin extends Api {
                     'require' => false,
                     'type' => 'string',
                 ],
-            ]
+            ],
         ];
 	}
     
@@ -225,6 +357,7 @@ class Admin extends Api {
         $this->User = new DUser();
         $this->Act = new DActivity();
         $this->Join = new DJoin();
+        $this->DXCode = new DDXCode();
     }
 
     /**
@@ -243,19 +376,21 @@ class Admin extends Api {
      */
 
     public function login(){
-        /*
-        $geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->stuid);
-        if($geetest !== true){
+        
+        //$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->rand);
+
+        $dxtest = $this->DXCode->valid($this->dx);
+        if($dxtest != true){
             throw new Exception('验证码错误', 500);
         }
-        */
+        
         $ded = $this->Ded->verify($this->stuid, $this->passwd);
         if($ded === false){
             throw new Exception('密码错误', 403);
         }
 
-        $admin = $this->User->isAdmin($this->stuid);
-        return $this->User->encode($ded['name'], $this->stuid, $admin);
+      //  $admin = $this->User->isAdmin($this->stuid);
+       // return $this->User->encode($ded['name'], $this->stuid, $admin);//注释掉测试代码
 
         if($this->Ded->binded($this->stuid)){//已经绑定 老用户
             //返回jwt
@@ -263,7 +398,7 @@ class Admin extends Api {
             return $this->User->encode($ded['name'], $this->stuid, $admin);
         }else{
             // ？是否要激活？
-            //todo 怎么搞？
+            //to do 怎么搞？
             throw new Exception('请确认绑定', 200);
         }
 
@@ -291,16 +426,20 @@ class Admin extends Api {
 
         $jwt = $this->checkJwt();
 
-        if($jwt['admin'] == false){
+        if($jwt['admin'] == false || $jwt['admin']->level == 0){
             throw new Exception('无权限', 403);
         }
 
         if($jwt['admin']->level == 1){//院级管理员
-            if($jwt['admin']->yuan != $this->hoster || $this->level == 1){//无权发布他院活动 无权发布校级活动
+            if($this->level > 0 ){//无权发布他院活动 无权发布校级活动
                 throw new Exception("没这么高的权限", 403);
             }
+            $this->level = 0;
+            $this->hoster = $jwt['admin']->yuan;
+        }else{//校级（院级以上
+            $this->hoster = 0;
         }
-
+        
         $re = $this->Act->add($this);
 
         return $re;
@@ -319,7 +458,7 @@ class Admin extends Api {
         }
 
         if($jwt['admin']->level == 1){//院级管理员
-            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)){
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)||$this->Act->get($this->aid)['level']==1){
                 throw new Exception("无权限", 403);
             }
         }
@@ -377,14 +516,63 @@ class Admin extends Api {
         }
         return $re;
     }
+ /**
+     * 绑定新用户
+     * 
+     * @return void
+     */
+    public function bindUser(){//绑定用户
+        $ded = $this->Ded->verify($this->stuid, $this->passwd);
+        if($ded === false){
+            throw new Exception('密码错误', 403);
+        }else{
+           $re= $this->User->bindUser($this->stuid,$ded);
+           if($re)
+           {
+            throw new Exception('成功', 100);
+           }else{
+            throw new Exception('失败', 403);
+           }
+           }
+    }
+    /**
+     * 更新活动
+     *
+     * @return void
+     */
+    public function updateActivity(){
+        $jwt = $this->checkJwt();
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
 
+        if($jwt['admin']->level == 1){//院级管理员
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)||$this->Act->get($this->aid)['level']==1){
+                throw new Exception("无权限", 403);
+            }
+        }
+            $re= $this->Act->update($this);
+           return $re;
+        }
+
+ /**
+ * 获取登录的用户的活动信息
+ *
+ * @return void
+ */
+    public function getMyJion()
+    {
+        $jwt = $this->checkJwt();
+        return $this->Join->getJoinByStuid($jwt['stuid']);
+    }
 /**
  * 生成测试使用的jwt
  *
  * @return void
  */
     public function makejwt(){
-        //return $this->User->encode('seiry', '031630226', ['level' => 1, 'yuan' => 3]);
-        return $this->User->encode('seiry', '031630226', ['level' => 3]);
+        return $this->User->encode('seiry', '031630226', ['level' => 2, 'yuan' => 3]);
+        return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
     }
+
 }

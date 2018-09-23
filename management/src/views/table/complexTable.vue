@@ -316,7 +316,7 @@ export default {
         this.downloadLoading = false
       })
     },
-    
+
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => {
         if (j === 'timestamp') {

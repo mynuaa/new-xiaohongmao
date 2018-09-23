@@ -6,6 +6,7 @@ import Announcement from './views/Announcement.vue'
 import Comments from './views/Comments.vue'
 import Certification from './views/Certification.vue'
 import Navigate from './views/Navigate.vue'
+import Detail from './views/Detail.vue'
 import LoggedIn from './views/LoggedIn.vue'
 import VueCarousel from 'vue-carousel'
  
@@ -46,9 +47,14 @@ export default new Router({
       component: Navigate
     },
     {
+      path: '/detail/:aid',
+      name: 'detail',
+      component: Detail
+    },
+    {
       path: '/loggedIn',
       name: 'loggedIn',
       component: LoggedIn
-    }
+    },
   ]
 })

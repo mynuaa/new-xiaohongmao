@@ -4,9 +4,10 @@
       <Box class="box-activity"></Box>
     </div>
     <div class="body-right">
-      <div id="myChart" class="charts" style="width:100%; height:100%"></div>
+      <div id="myChart" class="charts" style="width:100%; height:300px;"></div>
     </div>
     <ul class="bg-bubbles">
+
     <li  v-for="(item, index) in bubbles" :key="index"></li>
 </ul>
   </div> 
@@ -21,72 +22,77 @@ export default {
   name: "home",
   data: function() {
     return {
-      bubbles: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+      bubbles: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+      showData:{},
+      time:[]
     };
   },
   components: {
     Box
   },
-  mounted() {
-    var myChart = echarts.init(document.getElementById("myChart"));
-    myChart.setOption({
-      title: {
-        text: "南航各院志愿时长统计",
-        left: "center"
-      },
-      tooltip: {},
-      legend: {
-        data: ["时长"]
-      },
-      xAxis: {
-        data: [
-          "一院",
-          "二院",
-          "三院",
-          "四院",
-          "五院",
-          "六院",
-          "七院",
-          "八院",
-          "九院",
-          "十院",
-          "十一院",
-          "十二院",
-          "十三院",
-          "十四院",
-          "十五院",
-          "十六院"
-        ]
-      },
-      yAxis: {},
-      series: [
-        {
-          name: "志愿时长",
-          type: "bar",
-          data: [5, 20, 36, 10, 10, 12, 23, 34, 45, 1, 5, 1, 5, 1, 5, 1]
+  methods:{
+    getShowData(){
+      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Front.ShowData').then(re => {
+        if(re.data.ret == 200){
+          this.showData = re.data.data;
+          const timedata = this.showData.yuan;
+          let time = []
+          for(var i = 1; i <= 16; i++ ){
+            time.push(timedata[i]);
+          }
+          this.time = time
+          this.initEchart()
+        }else{
+          console.log(re.data.msg)
         }
-      ]
-    });
+      })
+    },
+    initEchart(){
+        const myChart = echarts.init(document.getElementById("myChart"));
+        myChart.setOption({
+          title: {
+            text: "南航各院志愿时长统计",
+            left: "center"
+          },
+          tooltip: {},
+          legend: {
+            data: ["时长"]
+          },
+          xAxis: {
+            data: [
+              "一院",
+              "二院",
+              "三院",
+              "四院",
+              "五院",
+              "六院",
+              "七院",
+              "八院",
+              "九院",
+              "十院",
+              "十一院",
+              "十二院",
+              "十三院",
+              "十四院",
+              "十五院",
+              "十六院"
+            ]
+          },
+          yAxis: {},
+          series: [
+            {
+              name: "志愿时长",
+              type: "bar",
+              data: this.time
+            }
+          ]
+        });
 
-    // var myChart = echarts.init(document.getElementById('myChart'));
-    //   myChart.setOption({
-    //       title: {
-    //             text: ''
-    //         },
-    //         tooltip: {},
-    //         legend: {
-    //             data:['时长']
-    //         },
-    //         xAxis: {
-    //             data: ["我","专业平均","院平均","年级平均","校平均"]
-    //         },
-    //         yAxis: {},
-    //         series: [{
-    //             name: '志愿时长',
-    //             type: 'bar',
-    //             data: [5, 20, 36, 10, 10]//aaaaaaaaaaaaaaaaaaa抓数据
-    //         }]
-    //   });
+      }
+  },
+  mounted() {
+    // var time = [5, 20, 36, 10, 10, 12, 23, 34, 45, 1, 5, 1, 5, 1, 5, 1]
+    this.getShowData();
   }
 };
 </script>

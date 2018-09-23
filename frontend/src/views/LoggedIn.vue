@@ -3,7 +3,9 @@
     <div class="basicInfo">
         <div class="userInfo" @mouseover="showEdit" @mouseout="hideEdit">
             <div class="editBox">
-                <img src="../assets/edit.png" class="editIcon" id="editIcon" alt="edit" @click="turnToEdit">
+                <router-link to='' >
+                    <img src="../assets/edit.png" class="editIcon" id="editIcon" alt="edit">
+                </router-link>
             </div>
             <div class="infoTable">
                 <div>
@@ -45,16 +47,7 @@
 
         </div>
     </div>
-    <div class="carousel">
-        <carousel :per-page="1" :navigate-to="someLocalProperty" mouse-drag="true" loop='true'>
-            <slide>
-            Slide 1 Content
-            </slide>
-            <slide>
-            Slide 2 Content
-            </slide>
-        </carousel>
-    </div>
+    
   </div>
 </template>
 
@@ -68,7 +61,11 @@ export default {
   data(){
       return{
         time:{},
-        averageTime:['', 20, 36, 10, 10],
+        averageTime:[],
+        collegeAve:{},
+        mouthAve:{},
+        universityAve:{},
+        allUsers:{},
         username:'一个人',
         userid:'123456789',
         activityList:[
@@ -99,13 +96,15 @@ export default {
     methods: {
       getInfo(){
           this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
-              service: 'Wechat.TimeLong',
-              stuid: '031630226'
+              service: 'Front.ShowData',
           }).then(re => {
               if(re.data.ret != 200){
 
               }else{
-                  this.averageTime[0] = re.data.data
+                  this.allUsers = re.data.allUsers
+                  this.mouthAve = re.data.mouthLong / allUsers
+
+                //  this.averageTime[0] = re.data.data
               }
           })
       },
@@ -115,8 +114,27 @@ export default {
       hideEdit(){
           document.getElementById("editIcon").style.display = 'none';
       },
-      turnToEdit(){
-          
+      getuserchart(){
+        var myChart = echarts.init(document.getElementById('myChart'));
+        var averageTime = this.averageTime;
+        myChart.setOption({
+                title: {
+                    text: ''
+                },
+                tooltip: {},
+                legend: {
+                    data:['时长']
+                },
+                xAxis: {
+                    data: ["我","专业平均","院平均","年级平均","校平均"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '志愿时长',
+                    type: 'bar',
+                    data: averageTime,
+                }]
+        });
       }
   },
   created() {
@@ -124,26 +142,7 @@ export default {
   },
   mounted() {
         this.getInfo()
-        var myChart = echarts.init(document.getElementById('myChart'));
-        var averageTime = this.averageTime;
-        myChart.setOption({
-            title: {
-                text: ''
-            },
-            tooltip: {},
-            legend: {
-                data:['时长']
-            },
-            xAxis: {
-                data: ["我","专业平均","院平均","年级平均","校平均"]
-            },
-            yAxis: {},
-            series: [{
-                name: '志愿时长',
-                type: 'bar',
-                data: averageTime,
-            }]
-      });
+        
   },
 }
 
@@ -203,26 +202,5 @@ export default {
     position: relative;
     width: 120px;
     border-radius: 100%;
-}
-.activities{
-    text-align: center;
-    
-    width: 60%;
-}
-.activityTable{
-    display: inline-block;
-    font-size: 18px;
-    width: 90%;
-    padding: 5px 20px;
-    box-shadow: 2px 2px 5px grey;
-}
-.charts{
-    display: inline-block;
-}
-.carousel{
-    display: inline-block;
-    background-color: grey;
-    width: 80%;
-    margin-bottom: 20px;
 }
 </style>
