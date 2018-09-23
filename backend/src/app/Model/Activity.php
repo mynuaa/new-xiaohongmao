@@ -98,7 +98,7 @@ class Activity{
             'volunteertimemin' => $args->volunteertimemin,
             'volunteertimemax' => $args->volunteertimemax,
             'type' => $args->type,
-            'level' => $args->level,
+            //'level' => $args->level,//活动等级无法改变
             'lastupdate' => time(),
         ],[
             'aid'=>$args->aid
