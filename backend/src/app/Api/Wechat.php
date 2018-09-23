@@ -8,11 +8,11 @@ use PhalApi\Exception\BadRequestException;
 use function \PhalApi\DI as di;
 
 use App\Domain\Front as DFront;
-use App\Domain\GTCode as DGTCode;
 use App\Domain\Ded as DDed;
 use App\Domain\User as DUser;
 use App\Domain\Activity as DActivity;
 use App\Domain\Join as DJoin;
+use App\Domain\Wechat as DWechat;
 
 /**
  * 微信小程序接口
@@ -36,6 +36,15 @@ class Wechat extends Api {
                     'max' => 9
                 ]
             ],
+            '*' => [
+                'session' => [
+                    'name' => 'session', 
+                    'desc' => '微信session',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ]
+            ],
         ];
 	}
     
@@ -46,6 +55,7 @@ class Wechat extends Api {
         $this->User = new DUser();
         $this->Act = new DActivity();
         $this->Join = new DJoin();
+        $this->Wechat = new DWechat();
     }
 
     /**
@@ -55,11 +65,11 @@ class Wechat extends Api {
      */
 
     public function login(){
-        
-        /*$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->stuid);
-        if($geetest !== true){
-            throw new Exception('验证码错误', 500);
-        }*/
+
+        $openid = $this->Wechat->sessionGetOpenid($this->session);
+        if($openid === false){
+            throw new Exception('登录无效', 503);
+        }
         
         $ded = $this->Ded->verify($this->stuid, $this->passwd);
         if($ded === false){
