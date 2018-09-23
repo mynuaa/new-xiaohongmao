@@ -7,12 +7,12 @@
                         <th>活动标题</th>
                         <th>主办方</th>
                         <th>志愿时长</th>
-                        <th>活动时间</th>
+                        <th>发布时间</th>
                         <th>状态</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in activityList" :key="item.aid">
+                    <tr v-for="item in activityList" :key="item.aid" class="activityLine">
                         <router-link :to="'/detail/' + item.aid"><td width="52%" class="activityTitle">{{item.title | title}}</td></router-link>
                         <td width="12%" >{{item.hostname | hostname}}</td>
                         <td width="12%" >{{item.volunteertimemax}}</td>
@@ -187,9 +187,11 @@ export default {
     }
   }
 }
+a{
+    text-decoration: none;
+}
 .activity{
     width: 100%;
-    
     text-align: center;
 }
 .allActivities{
@@ -197,19 +199,24 @@ export default {
     text-align: center;
 }
 .activityTable{
+    background-color: white;
     display: inline-table;
     font-size: 18px;
     width: 80%;
     padding: 10px 0px;
     box-shadow: 2px 2px 5px grey;
     margin-bottom: 20px;
-    border-spacing: 5px;
+    border-spacing: 0px 5px;
+    color: #1a3c40;
+}
+.activityLine:hover{
+    background-color: #eae7e7;
 }
 .activityTitle{
-    text-decoration: none;
-}
-a:-webkit-any-link{
-    text-decoration: none;
+    color: #1a3c40;
+    text-decoration-line: none;
+    vertical-align: middle;
+    padding-top: 8px;
 }
 .paginationPart{
     text-align: center;

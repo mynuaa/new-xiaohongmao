@@ -26,7 +26,7 @@
 			  <span>
 				  Copyright &copy; 2012-2018
 				  <span>
-					  <a	href="http://my.nuaa.edu.cn" target="_blank" >纸飞机南航青年网络社区</a>
+					  <a	href="http://my.nuaa.edu.cn" target="_blank" style="color:black">纸飞机南航青年网络社区</a>
 				  </span>
 			  </span>
 	  	</div>
@@ -53,44 +53,45 @@ html{
 }
 #app {
   color: #2c3e50;
-  background-color: rgb(245, 245, 245);
+  background-color: #ecfffb;
   width: 100%;
   font-family: "Microsoft YaHei";
 }
 #nav {
-  padding: 0px 0px 20px 0px;
+  padding: 10px 0px 10px 0px;
   // text-align: center;
   font-size: 20px;
   ul {
-    background: #11998e; /* fallback for old browsers */
+    background: #a1e4ff; /* fallback for old browsers */
     background: -webkit-linear-gradient(
       to left,
-      #92ff98,
+      #c4ffdd,
       #a1e4ff
     ); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #92ff98, #a1e4ff);
+    background: linear-gradient(to left, #c4ffdd, #a1e4ff);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     // border:2px solid rgb(212, 103, 103);
     // box-shadow: 4px 2px rgb(202, 184, 184);
     margin: 0 auto;
     padding: 0;
-    width: 100%;
+    width: 90%;
     height: 70px;
     li {
       display: inline-block;
       height: 70px;
       width: 150px;
       &:hover {
-        background-color: rgb(255, 255, 255);
+        background-color: #ecfffb;
       }
       a {
+        padding: 0;
         line-height: 70px;
         display: inline-block;
         text-decoration: none;
         font-weight: bold;
-        color: #1f0768;
+        color: #444444;
         &.router-link-exact-active {
-          color: #b98542;
+          color: #2d767f;
         }
       }
     }
@@ -124,7 +125,7 @@ html{
     margin-bottom: 0;
   }
   .footer-font {
-    margin-top: 10px;
+    margin: 10px 0;
     font-weight: 900;
     width: 100%;
     font-size: 1.1em;
