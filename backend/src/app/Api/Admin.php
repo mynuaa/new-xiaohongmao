@@ -13,7 +13,7 @@ use App\Domain\Ded as DDed;
 use App\Domain\User as DUser;
 use App\Domain\Activity as DActivity;
 use App\Domain\Join as DJoin;
-
+use App\Domain\DXCode as DDXCode;
 /**
  * 管理员功能
  *
@@ -60,23 +60,9 @@ class Admin extends Api {
                     'min' => 6,
                     'max' => 16
                 ],
-                'challenge' => [
-                    'name' => 'challenge', 
-                    'desc' => '挑战',
-                    'format' => 'utf8',                    
-                    'require' => true,
-                    'type' => 'string',
-                ],
-                'validate' => [
-                    'name' => 'validate', 
-                    'desc' => '验证码',
-                    'format' => 'utf8',                    
-                    'require' => true,
-                    'type' => 'string',
-                ],
-                'seccode' => [
-                    'name' => 'seccode', 
-                    'desc' => '安全码',
+                'dx' => [
+                    'name' => 'dx', 
+                    'desc' => 'token',
                     'format' => 'utf8',                    
                     'require' => true,
                     'type' => 'string',
@@ -383,6 +369,7 @@ class Admin extends Api {
         $this->User = new DUser();
         $this->Act = new DActivity();
         $this->Join = new DJoin();
+        $this->DXCode = new DDXCode();
     }
 
     /**
@@ -402,9 +389,10 @@ class Admin extends Api {
 
     public function login(){
         
-        $geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->rand);
+        //$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->rand);
 
-        if($geetest != 1){
+        $dxtest = $this->DXCode->valid($this->dx);
+        if($dxtest){
             throw new Exception('验证码错误', 500);
         }
         
@@ -586,5 +574,10 @@ class Admin extends Api {
     public function makejwt(){
         return $this->User->encode('seiry', '031630226', ['level' => 3, 'yuan' => 3]);
         //return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
+    }
+
+
+    public function testD(){
+        
     }
 }
