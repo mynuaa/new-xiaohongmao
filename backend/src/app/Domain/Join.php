@@ -64,4 +64,7 @@ class Join {
         return $this->Join->updateStatus($id, time());
     }
 
+    public function getJoinByStuid($stuid){
+        return $this->Join-> getByStuid($stuid);
+    }
 }

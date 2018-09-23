@@ -351,7 +351,7 @@ class Admin extends Api {
                     'require' => false,
                     'type' => 'string',
                 ],
-            ]
+            ],
         ];
 	}
     
@@ -462,7 +462,7 @@ class Admin extends Api {
         }
 
         if($jwt['admin']->level == 1){//院级管理员
-            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)){
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)||$this->Act->get($this->aid)['level']==1){
                 throw new Exception("无权限", 403);
             }
         }
@@ -558,15 +558,25 @@ class Admin extends Api {
             $re= $this->Act->update($this);
            return $re;
         }
-    
+
+ /**
+ * 获取登录的用户的活动信息
+ *
+ * @return void
+ */
+    public function getMyJion()
+    {
+        $jwt = $this->checkJwt();
+        return $this->Join->getJoinByStuid($jwt['stuid']);
+    }
 /**
  * 生成测试使用的jwt
  *
  * @return void
  */
     public function makejwt(){
-        return $this->User->encode('seiry', '031630226', ['level' => 3, 'yuan' => 3]);
-        //return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
+        //return $this->User->encode('seiry', '031630226', ['level' => 3, 'yuan' => 3]);
+        return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
     }
 
 
