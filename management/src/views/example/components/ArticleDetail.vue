@@ -153,8 +153,8 @@ export default {
     })
     if (this.$route.params.id!=null) {
       isEdit = true
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.GetActivity',{
-        'id': this.$route.params.id
+      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
+        'aid': this.$route.params.id
       })
       .then((response) => {
         this.form = Object.assign({}, response.data.data)

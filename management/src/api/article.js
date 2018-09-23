@@ -41,8 +41,8 @@ export function updateArticle(data) {
 }
 
 export function getArticle(id){
-  axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.GetActivity', {
-      'id': id
+  axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity', {
+      'aid': id
     })
     .then((response)=>{
       return response
