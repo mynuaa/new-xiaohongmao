@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="captchaBox"></div>
+</body>
+</html>
+<script src="https://cdn.dingxiang-inc.com/ctu-group/captcha-ui/index.js"></script>
+<script>
+var myCaptcha = _dx.Captcha(document.getElementById('captchaBox'), {
+    appId: '069ae57274e54291f373478057e1d796',   //appId,开通服务后可在控制台中“服务管理”模块获取
+    style: 'inline',
+    inlineFloatPosition: 'down',
+    success: (token)=>{
+      console.log('token:', token)
+    },
+    fail: (e) => {
+        console.log(e)
+    }
+})
+</script>
