@@ -87,63 +87,7 @@ class Activity{
         $re=di()->db->update('activity',[
             'group_name'=>$args->group_name,
             'location' => $args->location,
-            'hoster' => $args->hoster,
-            'title' => $args->title,
-            'summary' => $args->summary,
-            'detail' => $args->detail,
-            'peoplenum' => $args->peoplenum,
-            'alltime' => $args->alltime,
-            'contact' => $args->contact,
-            'starttime' => $args->starttime,
-            'volunteertimemin' => $args->volunteertimemin,
-            'volunteertimemax' => $args->volunteertimemax,
-            'type' => $args->type,
-            //'level' => $args->level,//活动等级无法改变
-            'lastupdate' => time(),
-        ],[
-            'aid'=>$args->aid
-        ]);
-        if(di()->db->error()[0] == 0){
-            return true;
-        }else{
-            return false;
-        }
-        return $re;
-    }
-
-    public function surUpdate($args){
-        $re=di()->db->update('activity',[
-            'group_name'=>$args->group_name,
-            'location' => $args->location,
-            'hoster' => $args->hoster,
-            'title' => $args->title,
-            'summary' => $args->summary,
-            'detail' => $args->detail,
-            'peoplenum' => $args->peoplenum,
-            'alltime' => $args->alltime,
-            'contact' => $args->contact,
-            'starttime' => $args->starttime,
-            'volunteertimemin' => $args->volunteertimemin,
-            'volunteertimemax' => $args->volunteertimemax,
-            'type' => $args->type,
-            'level' => $args->level,//超级管理员可以改
-            'lastupdate' => time(),
-        ],[
-            'aid'=>$args->aid
-        ]);
-        if(di()->db->error()[0] == 0){
-            return true;
-        }else{
-            return false;
-        }
-        return $re;
-    }
-
-    public function yuanUpdate($args){
-        $re=di()->db->update('activity',[
-            'group_name'=>$args->group_name,
-            'location' => $args->location,
-            //'hoster' => $args->hoster,//院管理无法更改发布者
+            //'hoster' => $args->hoster,
             'title' => $args->title,
             'summary' => $args->summary,
             'detail' => $args->detail,
