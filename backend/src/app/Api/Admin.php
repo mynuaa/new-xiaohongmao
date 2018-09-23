@@ -373,11 +373,8 @@ class Admin extends Api {
                     'type' => 'string',
                 ],
             ],
-            'getPassedActBystuid'=>[
+            'getJoinMessageBystuid'=>[
                 
-            ],
-            'getPassingActBystuid'=>[
-
             ]
         ];
 	}
@@ -585,22 +582,14 @@ class Admin extends Api {
         }
 
  /**
- * 获取已认证活动
+ * 获取活动信息
  *
  * @return void
  */
-    public function getPassedActBystuid()
+    public function getMyJion()
     {
-        return $this->Join-> getPassedActBystuid($jwt['stuid']);
-    }
- /**
- * 获取还未认证活动
- *
- * @return void
- */
-    public function getPassingActBystuid()
-    {
-        return $this->Join-> getPassingActBystuid($jwt['stuid']);
+        $jwt = $this->checkJwt();
+        return $this->Join->getJoinByStuid($jwt['stuid']);
     }
 /**
  * 生成测试使用的jwt

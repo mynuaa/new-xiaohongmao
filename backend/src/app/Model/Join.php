@@ -156,27 +156,19 @@ class Join{
 
     }
 
-    public function getPassedActBystuid($stuid)
-    {
-       $re=di()->db->select('join',
-       ['aid',
-        'timelong',
-        'status'
+    public function getJoinByStuid($stuid){
+        $re=di()->db->select('join',[
+            'aid',
+            'status',
+            'timelong'
         ],[
-            'status[>]'=>0
+            'stuid'=>$stuid
         ]);
-        return $re;
-    }
- 
-    public function getPassingActBystuid($stuid)
-    {
-        $re=di()->db->select('join',
-       ['aid',
-        'timelong',
-        'status'
-        ],[
-            'status'=>0
-        ]);
+        if(di()->db->error()[0] == 0){
+            return true;
+        }else{
+            return false;
+        }
         return $re;
     }
 }
