@@ -14,7 +14,6 @@ class Activity{
         'activity.hoster',
         'activity.title',
         'activity.summary',
-        'activity.detail',
         'activity.alltime',
         'activity.contact',
         'activity.status',
@@ -46,6 +45,7 @@ class Activity{
     }
 
     public function get($id){
+        $this->unionColumn[] = 'activity.detail';
         $re= di()->db->get('activity', $this->unionRelation, $this->unionColumn, [
             'aid' => $id,
             'activity.status[>]' => 0
