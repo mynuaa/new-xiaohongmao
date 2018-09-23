@@ -30,7 +30,7 @@ class Activity{
         'type.typename'
     ];
 
-    public function gets($from, $num, $all = false){
+    public function gets($from, $num, $all = false, $hid = -1){
         $con =  [
             'LIMIT' => [$from, $num],
             'ORDER' => [
@@ -40,6 +40,10 @@ class Activity{
 
         if($all === false){
             $con['activity.status[>]'] = 0;
+        }
+
+        if(hid != -1){
+            $con['hoster'] = $hid;
         }
 
         $re= di()->db->select('activity', $this->unionRelation, $this->unionColumn, $con);
@@ -126,19 +130,6 @@ class Activity{
         }else{
             return false;
         }
-    }
-
-    public function getByHid($hid, $from, $num){
-        $con =  [
-            'hoster' => $hid,
-            'LIMIT' => [$from, $num],
-            'ORDER' => [
-                "aid" => "DESC",
-            ]
-        ];
-        $re = di()->db->select('activity', '*', $con);
-
-        return $re;
     }
 
     public function judge($user,$aid){

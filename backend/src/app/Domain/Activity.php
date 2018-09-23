@@ -18,8 +18,8 @@ class Activity {
     }
 
 
-    public function gets($from = 0, $num = 20, $all = false){
-        return $this->Act->gets($from, $num, $all);
+    public function gets($from = 0, $num = 20, $all = false, $hid = -1){
+        return $this->Act->gets($from, $num, $all, $hid);
     }
 
     public function get($id){
@@ -44,12 +44,6 @@ class Activity {
     }
     public function allType(){
         return $this->Type->getAll();
-    }
-
-    public function getByHid($hid, $from, $num){
-        $re = $this->Act->getByHid($hid, $from, $num);
-
-        return $re;
     }
 
     public function del($id){
