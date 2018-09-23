@@ -459,11 +459,10 @@ class Admin extends Api {
         }
 
         if($jwt['admin']->level == 1){//院级管理员
-            if($jwt['admin']->yuan != $this->hoster && $this->level == 1){//无权发布他院活动 无权发布校级活动
+            if($jwt['admin']->yuan != $this->hoster || $this->level == 1){//无权发布他院活动 无权发布校级活动
                 throw new Exception("没这么高的权限", 403);
             }
         }
-
         $re = $this->Act->add($this);
 
         return $re;
@@ -571,11 +570,11 @@ class Admin extends Api {
         }
 
         if($jwt['admin']->level == 1){//院级管理员
-            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)){
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)||$this->Act->get($this->aid)['level']==1){
                 throw new Exception("无权限", 403);
             }
         }
-        if($jwt['admin']->level == 2){
+        if($jwt['admin']->level == 2){//校级管理员
             if($this->Act->get($this->aid)['level']!=1){
                 throw new Exception("无权限", 403);
             }
