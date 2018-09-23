@@ -13,11 +13,11 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in activityList" :key="item.aid" class="activityLine">
-                        <router-link :to="'/detail/' + item.aid"><td width="52%" class="activityTitle">{{item.title | title}}</td></router-link>
-                        <td width="12%" >{{item.hostname | hostname}}</td>
-                        <td width="12%" >{{item.volunteertimemax}}</td>
-                        <td width="12%">{{formatDateTime(item.starttime)}}</td>
-                        <td width="12%">{{item.lastupdate | status}}</td>
+                        <router-link :to="'/detail/' + item.aid"><td width="52%" class="activityTitle"><div class="filter">{{item.title}}</div></td></router-link>
+                        <td width="12%" class="filter">{{item.hostname}}</td>
+                        <td width="12%" class="filter">{{item.volunteertimemax}}</td>
+                        <td width="12%" class="filter">{{formatDateTime(item.starttime)}}</td>
+                        <td width="12%" class="filter">{{item.lastupdate | status}}</td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -56,23 +56,6 @@ export default {
       }
   },
   filters: {
-    title (value) {
-      if (value.length >= 20){
-        return value.substring(0, 20) + ' ...';
-      }
-      else {
-        return value;
-      }
-    },
-    hostname (value) {
-      value = value || ''
-      if (value.length >= 5){
-        return value.substring(0, 5) + ' ...';
-      }
-      else {
-        return value;
-      }
-    },
     status (value) {
         var nowDate = Date.parse(new Date()); 
         if(nowDate > value){
@@ -202,21 +185,28 @@ a{
     background-color: white;
     display: inline-table;
     font-size: 18px;
-    width: 80%;
-    padding: 10px 0px;
+    width: 90%;
+    padding: 10px 10px;
     box-shadow: 2px 2px 5px grey;
     margin-bottom: 20px;
     border-spacing: 0px 5px;
     color: #1a3c40;
 }
+.activityLine{
+    width: 95%;
+}
 .activityLine:hover{
-    background-color: #eae7e7;
+    background-color: #a6e3e9;
 }
 .activityTitle{
     color: #1a3c40;
     text-decoration-line: none;
     vertical-align: middle;
-    padding-top: 8px;
+}
+.filter{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .paginationPart{
     text-align: center;
@@ -242,6 +232,6 @@ a{
     background-color: lightgrey;
 }
 .curpage{
-    color:aquamarine;
+    color:#37aa9c;
 }
 </style>
