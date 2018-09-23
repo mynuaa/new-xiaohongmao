@@ -70,4 +70,8 @@ class Activity {
     public function surUpdate($args){
         return $this->Act->surUpdate($args);
     }
+
+    public function yuanUpdate($args){
+        return $this->Act->yuanUpdate($args);
+    }
 }
