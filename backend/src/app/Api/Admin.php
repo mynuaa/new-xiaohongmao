@@ -69,12 +69,6 @@ class Admin extends Api {
                     'format' => 'utf8',       
                     'desc' => '活动地点'
                 ],
-                'hoster' => [
-                    'name' => 'hoster', 
-                    'require' => true,
-                    'type' => 'int',     
-                    'desc' => '活动举办者'
-                ],
                 'title' => [
                     'name' => 'title', 
                     'require' => true,
@@ -147,9 +141,10 @@ class Admin extends Api {
                 ],
                 'group_name'=>[
                     'name' => 'group_name', 
-                    'require' => true,
+                    'require' => false,
                     'type' => 'string',
-                    'desc' => '组名'
+                    'desc' => '组名',
+                    'default' => 'new', 
                 ]
             ],
             'allActivity' => [
@@ -431,19 +426,20 @@ class Admin extends Api {
 
         $jwt = $this->checkJwt();
 
-        if($jwt['admin'] == false){
-            throw new Exception('无权限', 403);
-        }
-
-        if($jwt['admin']->level == 0){
+        if($jwt['admin'] == false || $jwt['admin']->level == 0){
             throw new Exception('无权限', 403);
         }
 
         if($jwt['admin']->level == 1){//院级管理员
-            if($jwt['admin']->yuan != $this->hoster || $this->level == 1){//无权发布他院活动 无权发布校级活动
+            if($this->level > 0 ){//无权发布他院活动 无权发布校级活动
                 throw new Exception("没这么高的权限", 403);
             }
+            $this->level = 0;
+            $this->hoster = $jwt['admin']->yuan;
+        }else{//校级（院级以上
+            $this->hoster = 0;
         }
+        
         $re = $this->Act->add($this);
 
         return $re;
@@ -575,12 +571,8 @@ class Admin extends Api {
  * @return void
  */
     public function makejwt(){
-        //return $this->User->encode('seiry', '031630226', ['level' => 3, 'yuan' => 3]);
+        return $this->User->encode('seiry', '031630226', ['level' => 2, 'yuan' => 3]);
         return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
     }
 
-
-    public function testD(){
-        
-    }
 }
