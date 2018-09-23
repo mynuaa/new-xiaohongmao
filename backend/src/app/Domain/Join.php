@@ -65,6 +65,6 @@ class Join {
     }
 
     public function getJoinByStuid($stuid){
-        return $this->Join-> getJoinByStuid($stuid);
+        return $this->Join-> getByStuid($stuid);
     }
 }

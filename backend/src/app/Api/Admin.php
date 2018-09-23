@@ -373,9 +373,6 @@ class Admin extends Api {
                     'type' => 'string',
                 ],
             ],
-            'getJoinMessageBystuid'=>[
-                
-            ]
         ];
 	}
     
@@ -582,7 +579,7 @@ class Admin extends Api {
         }
 
  /**
- * 获取活动信息
+ * 获取登录的用户的活动信息
  *
  * @return void
  */

@@ -155,20 +155,4 @@ class Join{
         }
 
     }
-
-    public function getJoinByStuid($stuid){
-        $re=di()->db->select('join',[
-            'aid',
-            'status',
-            'timelong'
-        ],[
-            'stuid'=>$stuid
-        ]);
-        if(di()->db->error()[0] == 0){
-            return true;
-        }else{
-            return false;
-        }
-        return $re;
-    }
 }
