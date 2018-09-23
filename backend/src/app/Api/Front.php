@@ -137,18 +137,15 @@ class Front extends Api {
             'time' => $_SERVER['REQUEST_TIME'],
         ];
     }
-    
+
     /**
      * 获取所有志愿活动
      *
      * @return void
      */
     public function allActivity(){
-        if($this->hid === -1){//未填hid 表示全部 不筛选
-            $re = $this->Act->gets($this->from, $this->pagenum);
-        }else{
-            $re = $this->Act->getByHid($this->hid, $this->from, $this->pagenum);
-        }
+        
+        $re = $this->Act->gets($this->from, $this->pagenum, false, $hid);
 
         return $re;
     }
