@@ -26,7 +26,7 @@
                             <div class="paginationPart">
                                 <ul class="pagination">
                                     <li><div class="pageIcon" @click="turn('-')">«</div></li>
-                                    <li v-for="n in pageNum" :key="n" class="pageIcon" @click="turn(n)" ><div>{{n}}</div></li>
+                                    <li v-for="n in indexs" :key="n" class="pageIcon" v-bind:class=" {'curpage': cur == n}"  @click="turn(n)" ><div>{{n}}</div></li>
                                     <li><div class="pageIcon" @click="turn('+')">»</div></li>
                                 </ul>
                             </div>
@@ -49,9 +49,10 @@ export default {
   },
   data(){
       return{
-        pageNum:10,
+        pageNum:10,//获取全部文章页数
         activityList:[],
         activePage:1,
+        cur:1
       }
   },
   filters: {
@@ -97,6 +98,9 @@ export default {
           })
       },
       turn(n){  //-----------------------------------------------------确定分页数
+        if(n != '-' && n!= '+'){
+                this.cur = n; 
+            }
           var page = this.activePage
           console.log(page)
           if(n == '-'){
@@ -105,10 +109,12 @@ export default {
               }
               else{
                 this.getInfo(page - 1)
+                this.cur --;
               }
           }
           else if(n == '+'){
               this.getInfo(page + 1)
+              this.cur ++;
           }
           else{
               this.getInfo(n)
@@ -124,12 +130,42 @@ export default {
         d = d < 10 ? ('0' + d) : d;   
         return y + '-' + m + '-' + d;    
         },
+    
 
   },
   mounted() {
         this.getInfo()
         
   },
+
+  computed:{
+        indexs: function(){
+          var left = 1;
+          var right = this.pageNum;
+          var ar = [];
+          if(this.pageNum>= 5){
+            if(this.cur > 3 && this.cur < this.pageNum-2){
+                    left = this.cur - 2
+                    right = this.cur + 2
+            }else{
+                if(this.cur<=3){
+                    left = 1
+                    right = 5
+                }else{
+                    right = this.pageNum
+                    left = this.pageNum -4
+                }
+            }
+         }
+        while (left <= right){
+            ar.push(left)
+            left ++
+        }
+        return ar
+       }
+    },
+
+
 }
 
 </script>
@@ -197,5 +233,8 @@ a:-webkit-any-link{
 }
 .pageIcon:hover{
     background-color: lightgrey;
+}
+.curpage{
+    color:aquamarine;
 }
 </style>
