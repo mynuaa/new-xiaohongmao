@@ -372,6 +372,12 @@ class Admin extends Api {
                     'require' => false,
                     'type' => 'string',
                 ],
+            ],
+            'getPassedActBystuid'=>[
+                
+            ],
+            'getPassingActBystuid'=>[
+
             ]
         ];
 	}
@@ -577,14 +583,32 @@ class Admin extends Api {
             $re= $this->Act->update($this);
            return $re;
         }
-    
+
+ /**
+ * 获取已认证活动
+ *
+ * @return void
+ */
+    public function getPassedActBystuid()
+    {
+        return $this->Join-> getPassedActBystuid($jwt['stuid']);
+    }
+ /**
+ * 获取还未认证活动
+ *
+ * @return void
+ */
+    public function getPassingActBystuid()
+    {
+        return $this->Join-> getPassingActBystuid($jwt['stuid']);
+    }
 /**
  * 生成测试使用的jwt
  *
  * @return void
  */
     public function makejwt(){
-        return $this->User->encode('seiry', '031630226', ['level' => 3, 'yuan' => 3]);
-        //return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
+        //return $this->User->encode('seiry', '031630226', ['level' => 3, 'yuan' => 3]);
+        return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
     }
 }

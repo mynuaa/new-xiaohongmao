@@ -64,4 +64,13 @@ class Join {
         return $this->Join->updateStatus($id, time());
     }
 
+    public function getPassedActBystuid($stuid)
+    {
+        return $this->Join-> getPassedActBystuid($stuid);
+    }
+ 
+    public function getPassingActBystuid($stuid)
+    {
+        return $this->Join-> getPassingActBystuid($stuid);
+    }
 }
