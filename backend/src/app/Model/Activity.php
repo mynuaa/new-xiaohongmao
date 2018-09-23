@@ -32,7 +32,10 @@ class Activity{
 
     public function gets($from, $num, $all = false){
         $con =  [
-            'LIMIT' => [$from, $num]
+            'LIMIT' => [$from, $num],
+            'ORDER' => [
+                "aid" => "DESC",
+            ]
         ];
 
         if($all === false){
