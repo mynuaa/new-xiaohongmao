@@ -29,8 +29,8 @@ export default {
     }
   },
   created(){
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.GetActivity',{
-        'id': this.$route.params.aid
+      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
+        'aid': this.$route.params.aid
       })
       .then((response) => {
         this.title = response.data.data.title

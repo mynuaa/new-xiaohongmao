@@ -217,8 +217,8 @@ export default {
     },
     showArticle(row){
       this.dialogFormVisible = true
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.GetActivity',{
-        'id':row
+      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
+        'aid':row
       })
       .then((response) => {
           this.temp = response.data.data

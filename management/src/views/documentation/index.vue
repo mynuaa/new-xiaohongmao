@@ -1,49 +1,63 @@
 <template>
-  <div class="app-container documentation-container">
-    <a class="document-btn" target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/">{{ $t('documentation.documentation') }}</a>
-    <a class="document-btn" target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">{{ $t('documentation.github') }}</a>
-    <a class="document-btn" target="_blank" href="https://panjiachen.gitee.io/vue-element-admin-site/zh/">国内文档</a>
-    <dropdown-menu :items="articleList" style="float:left;margin-left:50px;" title="系列文章"/>
+  <div>
+    <el-table
+      :data="doneActivityForm"
+      stripe
+      style="width: 45%">
+      <el-table-column
+        prop="title"
+        label="已参与活动"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="timelong"
+        label="时长"
+        width="180">
+      </el-table-column>
+      </el-table>
+      <el-table
+      :data="notcertified"
+      stripe
+      style="width: 45%">
+      <el-table-column
+        prop="title"
+        label="未审核活动">
+      </el-table-column>
+      <el-table-column
+        prop="timelong"
+        label="时长">
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 <script>
-import DropdownMenu from '@/components/Share/dropdownMenu'
 
 export default {
   name: 'Documentation',
-  components: { DropdownMenu },
   data() {
     return {
-      articleList: [
-        { title: '基础篇', href: 'https://juejin.im/post/59097cd7a22b9d0065fb61d2' },
-        { title: '登录权限篇', href: 'https://juejin.im/post/591aa14f570c35006961acac' },
-        { title: '实战篇', href: 'https://juejin.im/post/593121aa0ce4630057f70d35' },
-        { title: 'vue-admin-template 篇', href: 'https://juejin.im/post/595b4d776fb9a06bbe7dba56' },
-        { title: '自行封装 component', href: 'https://segmentfault.com/a/1190000009090836' },
-        { title: '优雅的使用 icon', href: 'https://juejin.im/post/59bb864b5188257e7a427c09' },
-        { title: 'webpack4（上）', href: 'https://juejin.im/post/59bb864b5188257e7a427c09' },
-        { title: 'webpack4（下）', href: 'https://juejin.im/post/5b5d6d6f6fb9a04fea58aabc' }
-      ]
+      doneActivityForm:[],
+      notcertified:[]
     }
+  },
+  created(){
+    this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetJoin',{
+      'jwt':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MywieXVhbiI6M319.rhCoMzANEOyKo7ePeYh8qovrXybIPcQoeXJuj5CshAc',
+    })
+    .then((response)=>{
+      for (var prop in response.data.data){
+        if(response.data.data[prop].status==0){
+          this.notcertified.push(response.data.data[prop])
+        }
+        else{
+          this.doneActivityForm.push(response.data.data[prop])
+        }
+      }
+    })
   }
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-.documentation-container {
-  margin: 50px;
-  .document-btn {
-    float: left;
-    margin-left: 50px;
-    display: block;
-    cursor: pointer;
-    background: black;
-    color: white;
-    height: 60px;
-    width: 200px;
-    line-height: 60px;
-    font-size: 20px;
-    text-align: center;
-  }
-}
+<style rel="stylesheet/scss" scoped>
+
 </style>
