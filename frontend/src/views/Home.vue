@@ -1,11 +1,14 @@
 <template>
   <div class="home">
-    <div class="body-left">
-      <Box class="box-activity"></Box>
+    <div class="mainShow">
+      <div class="body-left">
+        <Box class="box-activity"></Box>
+      </div>
+      <div class="body-right">
+        <div id="myChart" class="charts" style="width:100%; height:300px;"></div>
+      </div>
     </div>
-    <div class="body-right">
-      <div id="myChart" class="charts" style="width:100%; height:300px;"></div>
-    </div>
+    
     <ul class="bg-bubbles">
 
     <li  v-for="(item, index) in bubbles" :key="index"></li>
@@ -51,7 +54,7 @@ export default {
         const myChart = echarts.init(document.getElementById("myChart"));
         myChart.setOption({
           title: {
-            text: "南航各院志愿时长统计",
+            text: "",
             left: "center"
           },
           tooltip: {},
@@ -101,17 +104,22 @@ export default {
 .home {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.mainShow{
+  text-align: center;
 }
 .body-left {
   display: inline-block;
-  width: 40%;
+  width: 80%;
+  background-color: white;
 
-  padding-left: 10%;
 }
 .body-right {
   display: inline-block;
-  width: 40%;
+  width: 80%;
   .charts{
     display: inline-block;
 }

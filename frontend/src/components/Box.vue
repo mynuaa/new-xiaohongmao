@@ -6,9 +6,9 @@
         <div id="body">
           <ul>
             <li v-for="item in items" :key="item.aid">
-              <router-link :to="'/detail/' + item.aid"><div class="label" style="font-weight:550;">{{item.title | label}}</div></router-link>
-              <div class="origin">{{item.hostname | origin}}</div>
-              <div class="date">{{item.date}}</div>
+              <router-link :to="'/detail/' + item.aid"><div class="label filter" style="font-weight:550;">{{item.title}}</div></router-link>
+              <div class="origin filter">{{item.hostname}}</div>
+              <div class="date filter">{{formatDateTime(item.starttime)}}</div>
             </li>
           </ul>
         </div>
@@ -28,24 +28,6 @@ export default {
       items: []
     };
   },
-  filters: {
-    label: function (value) {
-      if (value.length >= 15){
-        return value.substring(0, 15) + ' ...';
-      }
-      else {
-        return value;
-      }
-    },
-    origin: function (value) {
-      if (value.length >= 5){
-        return value.substring(0, 5) + ' ...';
-      }
-      else {
-        return value;
-      }
-    }
-  },
   methods :{
     routeractivity () {
       this.$router.push('/activity');
@@ -61,6 +43,15 @@ export default {
         }
       })
     },
+    formatDateTime(timeStamp) { 
+        var date = new Date(parseInt(timeStamp) * 1000);
+        var y = date.getFullYear();    
+        var m = date.getMonth() + 1;    
+        m = m < 10 ? ('0' + m) : m;    
+        var d = date.getDate();    
+        d = d < 10 ? ('0' + d) : d;   
+        return y + '-' + m + '-' + d;    
+        },
 
   },
   mounted() {
@@ -88,6 +79,8 @@ export default {
 #body {
   margin-top: 10px;
   height: 70%;
+  
+  padding-left: 20px;
   ul {
     margin: 0px;
     padding: 0px;
@@ -100,20 +93,27 @@ export default {
       text-decoration: none;
       .label {
         display: inline-block;
-        width: 55%;
+        width: 50%;
       }
       .origin {
         display: inline-block;
-        width: 25%;
+        width: 30%;
       }
       .date {
         display: inline-block;
         width: 20%;
       }
+      .filter{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
     }
   }
 }
-
+a{
+  color: #1a3c40;
+}
 #footer {
   height: 20px;
   &:hover {

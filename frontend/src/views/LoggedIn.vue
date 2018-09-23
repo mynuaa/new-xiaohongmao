@@ -1,54 +1,5 @@
 <template>
-  <div id="LoggedIn">
-    <div class="basicInfo">
-        <div class="userInfo" @mouseover="showEdit" @mouseout="hideEdit">
-            <div class="editBox">
-                <router-link to='' >
-                    <img src="../assets/edit.png" class="editIcon" id="editIcon" alt="edit">
-                </router-link>
-            </div>
-            <div class="infoTable">
-                <div>
-                    <img src="../assets/logo.png" alt="avater" class="avater">
-                </div>
-                <div>
-                    <div class="userInfos">{{username}}</div>
-                    <div class="userInfos">{{userid}}</div>
-                </div>
-            </div>
-            
-        </div>
-        <div class="activities">
-            <table class="activityTable">
-                <thead>
-                    <tr>
-                        <th>活动标题</th>
-                        <th>主办方</th>
-                        <th>志愿时长</th>
-                        <th>活动时间</th>
-                        <th>状态</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in activityList" :key="item.a-id">
-                        <td width="40%">{{item.activity | activity}}</td>
-                        <td width="15%" >{{item.host | host}}</td>
-                        <td width="15%" >{{item.time}}</td>
-                        <td width="15%">{{item.date}}</td>
-                        <td width="15%">{{item.state}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    
-    <div class="achivement">
-        <div id="myChart" class="charts" style="width:80%; height:300px">
-
-        </div>
-    </div>
-    
-  </div>
+  
 </template>
 
 <script>

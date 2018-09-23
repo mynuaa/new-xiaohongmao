@@ -108,6 +108,7 @@ html{
 .carouselBox{
   width: 100%;
   margin: 10px 0;
+  display: none;
 }
 #footer {
   font-size: 90%;
