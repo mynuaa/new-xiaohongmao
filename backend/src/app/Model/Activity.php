@@ -42,7 +42,7 @@ class Activity{
             $con['activity.status[>]'] = 0;
         }
 
-        if(hid != -1){
+        if($hid != -1){
             $con['hoster'] = $hid;
         }
 
