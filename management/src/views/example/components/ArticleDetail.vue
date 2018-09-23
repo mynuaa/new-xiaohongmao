@@ -1,7 +1,7 @@
 <template>
   <div class="createPost-container">
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
-      <sticky :class-name="'sub-navbar '+postForm.status" z-Index="5000">
+      <sticky :class-name="'sub-navbar '+postForm.status" :zIndex="5000">
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">发布</el-button>
       </sticky>
       <div class="createPost-main-container">
@@ -34,8 +34,15 @@
             </el-form-item>
             <div class="postInfo-container">
               <el-row>
-                <el-form-item label-width="120px" label="发布者:" class="postInfo-container-item">
-                  <el-input v-model="form.hoster" placeholder=" " width="90px"/>
+                <el-form-item label-width="100px" label="活动类型:" class="postInfo-container-item">
+                  <el-select v-model="form.type" placeholder="请选择活动类型">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.typeid"
+                      :label="item.typename"
+                      :value="item.typeid">
+                    </el-option>
+                </el-select>
                 </el-form-item>
                 <el-col :span="10">
                   <el-form-item label-width="80px" label="发布时间:" class="postInfo-container-item">
@@ -63,8 +70,6 @@ import Upload from '@/components/Upload/singleImage3'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { validateURL } from '@/utils/validate'
-import { fetchArticle } from '@/api/article'
-import { userSearch } from '@/api/remoteSearch'
 
 const defaultForm = {
   status: 'draft',
@@ -83,12 +88,6 @@ const defaultForm = {
 export default {
   name: 'ArticleDetail',
   components: { Tinymce, MDinput, Upload, Sticky },
-  props: {
-    isEdit: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     const validateRequire = (rule, value, callback) => {
       if (value === '') {
@@ -118,21 +117,23 @@ export default {
     }
     return {
       form: {
-        peoplenum: 1,
-        alltime: 1,
-        volunteertimemax: 1,
-        volunteertimemin: 1,
-        contact: ' ',
-        title: ' ',
-        hoster: ' ',
         location:' ',
-        starttime:'',
+        hoster: '666',
+        title: ' ',
         summary:'',
         detail:'',
-        type:'test',
-        name:'name',
-        level: '0'
+        peoplenum: '',
+        alltime: '',
+        starttime:'',
+        contact: ' ',
+        volunteertimemin: '',
+        volunteertimemax: '',
+        type:'',
+        level:'0',
+        group_name:'new',
       },
+      options: [],
+      value: '',
       postForm: Object.assign({}, defaultForm),
       loading: false,
       userListOptions: [],
@@ -145,27 +146,27 @@ export default {
     }
   },
   created() {
-    if (this.isEdit) {
-      const id = this.$route.params && this.$route.params.id
-      this.fetchData(id)
-    } else {
-      this.postForm = Object.assign({}, defaultForm)
+    let isEdit = false
+    this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllType',{})
+    .then((response) => {
+      this.options = response.data.data
+    })
+    if (this.$route.params.id!=null) {
+      isEdit = true
+      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.GetActivity',{
+        'id': this.$route.params.id
+      })
+      .then((response) => {
+        this.form = Object.assign({}, response.data.data)
+        console.log(this.form)
+      })
     }
   },
   methods: {
-    fetchData(id) {
-      fetchArticle(id).then(response => {
-        this.postForm = response.data
-        // Just for test
-        this.postForm.title += `   Article Id:${this.postForm.id}`
-        this.postForm.content_short += `   Article Id:${this.postForm.id}`
-      }).catch(err => {
-        console.log(err)
-      })
-    },
     submitForm() {
-      this.form.starttime = Date.parse(this.form.starttime) / 1e3
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity', this.form)
+      if(!isEdit){
+        this.form.starttime = Date.parse(this.form.starttime) / 1e3
+        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity', this.form)
         .then(response => {
           if (response.data.ret == 200) {
             this.loading = true
@@ -184,6 +185,29 @@ export default {
             })
           }
         })
+      }
+      if(isEdit){
+        this.form.starttime = Date.parse(this.form.starttime) / 1e3
+        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.UpdateActivity', this.form)
+        .then(response => {
+          if (response.data.ret == 200) {
+            this.loading = true
+            this.$notify({
+              title: '成功',
+              message: '文章修改成功',
+              type: 'success',
+              duration: 2000
+            })
+          } else {
+            this.$notify({
+              title: '失败',
+              message: response.data.msg,
+              type: 'fail',
+              duration: 2000
+            })
+          }
+        })
+      }
     }
   }
 }

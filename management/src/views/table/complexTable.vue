@@ -16,33 +16,33 @@
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
     </div>
 
-    <el-table v-loading="listLoading" :key="tableKey" :data="list" border fit highlight-current-row style="width: 100%;">
-      <el-table-column :label="$t('table.id')" align="center" width="65">
+    <el-table v-loading="listLoading" :key="tableKey" :data="list" border fit highlight-current-row >
+      <el-table-column :label="$t('table.id')" align="center" width="50">
         <template slot-scope="scope">
           <span>{{ scope.row.aid }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.date')" width="150px" align="center">
+      <el-table-column :label="$t('table.date')" width="100px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.starttime | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.title')" width="200px" min-width="100px">
+      <el-table-column :label="$t('table.title')" width="180px" min-width="100px">
         <template slot-scope="scope">
           <span class="link-type" @click="showArticle(scope.row)">{{ scope.row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.author')" width="110px" align="center">
+      <el-table-column :label="$t('table.author')" width="100px" align="center">
         <template slot-scope="scope">
-                      <span>{{ scope.row.hostname }}</span>
+          <span>{{ scope.row.hostname }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.readings')" align="center" width="95">
+      <el-table-column :label="$t('table.readings')" align="center" width="75">
         <template slot-scope="scope">
-          <span>{{ scope.row.volunteertimemin }}</span>
+          <span>{{ scope.row.peoplenum }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('活动时长')" align="center" width="95">
+      <el-table-column :label="$t('活动时长')" align="center" width="75">
         <template slot-scope="scope">
           <span>{{ scope.row.volunteertimemin }}</span>
         </template>
@@ -52,14 +52,17 @@
           <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" align="center" width="310" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('table.actions')" align="center" width="400" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" width="150px" @click="showArticle(scope.row)">{{ $t('table.view') }}
+          <el-button type="primary" size="small" @click="showArticle(scope.row)">{{ $t('table.view') }}
           </el-button>
           <el-button type="success" size="small" @click="up(scope.row)">{{ $t('table.apply') }}
           </el-button>
-            <router-link :to="'/up/'+scope.row.aid">
-            <el-button type="primary" size="small" icon="el-icon-edit">up</el-button>
+          <router-link :to="'/up/'+scope.row.aid">
+            <el-button size="small">上传时长<i class="el-icon-upload el-icon--right"></i></el-button>
+          </router-link>
+          <router-link :to="'/example/edit/'+scope.row.aid" class="link-type">
+            <el-button type="primary" size="small" icon="el-icon-edit">修改文章</el-button>
           </router-link>
         </template>
       </el-table-column>
@@ -198,7 +201,7 @@ export default {
     },
     handleFilter() {
       this.listQuery.page = 1
-      this.getList()
+      this.getList()  
     },
     handleSizeChange(val) {
       this.listQuery.limit = val
@@ -214,7 +217,12 @@ export default {
     },
     showArticle(row){
       this.dialogFormVisible = true
-      this.temp = Object.assign({}, row)
+      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.GetActivity',{
+        'id':row
+      })
+      .then((response) => {
+          this.temp = response.data.data
+        })
       this.$nextTick(() => { 
         this.$refs['dataForm'].clearValidate()
       })
