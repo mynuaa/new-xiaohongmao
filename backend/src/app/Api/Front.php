@@ -90,6 +90,14 @@ class Front extends Api {
                     'desc' => '页面大小',
                     'type' => 'int',
                     'default' => 20, 
+                ],
+                'hid' => [
+                    'name' => 'hid', 
+                    'desc' => 'hosterid',
+                    'type' => 'int',
+                    'require' => false,
+                    'default' => -1, 
+
                 ]
             ],
             'getActivity' => [
@@ -136,7 +144,11 @@ class Front extends Api {
      * @return void
      */
     public function allActivity(){
-        $re = $this->Act->gets($this->from, $this->pagenum);
+        if($this->hid === -1){//未填hid 表示全部 不筛选
+            $re = $this->Act->gets($this->from, $this->pagenum);
+        }else{
+            $re = $this->Act->getByHid($this->hid, $this->from, $this->pagenum);
+        }
 
         return $re;
     }
@@ -151,6 +163,7 @@ class Front extends Api {
 
         return $re;
     }
+
 
     /**
      * 获取用于展示的数据
@@ -172,4 +185,5 @@ class Front extends Api {
         $re['yuan'] = $yuan;
         return $re;
     }
+
 }

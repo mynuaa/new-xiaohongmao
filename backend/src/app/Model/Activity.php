@@ -128,6 +128,19 @@ class Activity{
         }
     }
 
+    public function getByHid($hid, $from, $num){
+        $con =  [
+            'hoster' => $hid,
+            'LIMIT' => [$from, $num],
+            'ORDER' => [
+                "aid" => "DESC",
+            ]
+        ];
+        $re = di()->db->select('activity', '*', $con);
+
+        return $re;
+    }
+
     public function judge($user,$aid){
        /* $hoster = di()->db->get('activity', 'hoster',[
             'aid'=>$aid
