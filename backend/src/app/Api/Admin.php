@@ -228,13 +228,6 @@ class Admin extends Api {
                 ]  
                 ],
             'updateActivity'=>[
-                'name' => [
-                    'name' => 'name', 
-                    'require' => true,
-                    'type' => 'string',
-                    'format' => 'utf8',       
-                    'desc' => '活动名称'
-                ],
                 'aid'=>[
                     'name'=>'aid',
                     'require' => true,
@@ -572,7 +565,7 @@ class Admin extends Api {
  */
     public function makejwt(){
         return $this->User->encode('seiry', '031630226', ['level' => 2, 'yuan' => 3]);
-        return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
+      //  return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
     }
 
 }

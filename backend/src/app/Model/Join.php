@@ -88,7 +88,6 @@ class Join{
             'timelong' => $time,
             'optadmin' => $opt,
             'opttime' => di()->db::raw('NOW()'),
-            'status' => 0
 
         ]);
         
@@ -111,7 +110,6 @@ class Join{
         $re = di()->db->get('join', '*', [
             'jid' => $jid
         ]);
-
         return $re;
     }
 
