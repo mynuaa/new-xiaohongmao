@@ -1,6 +1,6 @@
 <template>
 <div>
-  <sticky class-name="sub-navbar" zIndex="2200">
+  <sticky class-name="sub-navbar" zIndex="200">
     <label style="color: white">活动名称:</label>
     <span style="color: white">{{title}}</span>
     <el-button size="medium" class="uploadConfirm" @click="upload">确定上传</el-button>
@@ -30,7 +30,7 @@ export default {
   },
   created(){
       this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.GetActivity',{
-        id: this.$route.params.aid
+        'id': this.$route.params.aid
       })
       .then((response) => {
         this.title = response.data.data.title
@@ -50,15 +50,35 @@ export default {
       })
       return false
     },
-    test(){
-      console.log(this.$route.params.aid)
-    },
     handleSuccess({ results, header }) {
       this.tableData = results
       this.tableHeader = header
     },
     upload(){
-      alert("666")
+      for (var prop in this.tableData) {
+        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddJoin',{
+          'jwt': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MywieXVhbiI6M319.rhCoMzANEOyKo7ePeYh8qovrXybIPcQoeXJuj5CshAc',
+          'aid':this.$route.params.aid,
+          'stuid': this.tableData[prop].stuid,
+          'timelong': this.tableData[prop].timelong
+      })
+      .then((response) => { 
+        if(response.data.ret==200){
+          this.$message({
+            message: this.tableData[prop].stuid + '上传成功',
+            type: 'success',
+            duration: 500
+          })
+        }
+        else{
+          this.$notify.error({
+            title: '上传错误',
+            message: this.tableData[prop].stuid + '上传错误',
+            duration: 0
+          })
+        }
+      })
+      }
     },
   }
 }
