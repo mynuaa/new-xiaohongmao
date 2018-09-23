@@ -579,12 +579,13 @@ class Admin extends Api {
         if($jwt['admin']->level == 2){//校级管理员
             if($this->Act->get($this->aid)['level']!=1){
                 throw new Exception("无权限", 403);
+            }else{
+                $re= $this->Act->update($this);
             }
         }
         if($jwt['admin']->level == 3){//超级管理员
             $re= $this->Act->surUpdate($this);
         }
-        $re= $this->Act->update($this);
            return $re;
     }
 /**
