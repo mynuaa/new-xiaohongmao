@@ -62,6 +62,7 @@ export const constantRouterMap = [
     component: () => import('@/views/errorPage/401'),
     hidden: true
   },
+
   {
     path: '',
     component: Layout,
@@ -85,6 +86,20 @@ export const constantRouterMap = [
         component: () => import('@/views/information/index'),
         name: 'information',
         meta: { title: '个人信息', icon: 'user', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/up',
+    component: Layout,
+    name: 'excel',
+    hidden: true,
+    children: [
+      {
+        path: ':aid',
+        component: () => import('@/views/excel/uploadExcel'),
+        name: 'up',
+        meta: { title: 'complexTable', icon: 'list' }
       }
     ]
   },

@@ -13,7 +13,7 @@ use App\Domain\Ded as DDed;
 use App\Domain\User as DUser;
 use App\Domain\Activity as DActivity;
 use App\Domain\Join as DJoin;
-
+use App\Domain\DXCode as DDXCode;
 /**
  * 管理员功能
  *
@@ -44,13 +44,6 @@ class Admin extends Api {
                     'min' => 9,
                     'max' => 9
                 ],
-                'rand' => [
-                    'name' => 'rand', 
-                    'desc' => '安全字符',
-                    'format' => 'utf8',                    
-                    'require' => true,
-                    'type' => 'string',
-                ],
                 'passwd' => [
                     'name' => 'passwd', 
                     'desc' => '密码',
@@ -60,23 +53,9 @@ class Admin extends Api {
                     'min' => 6,
                     'max' => 16
                 ],
-                'challenge' => [
-                    'name' => 'challenge', 
-                    'desc' => '挑战',
-                    'format' => 'utf8',                    
-                    'require' => true,
-                    'type' => 'string',
-                ],
-                'validate' => [
-                    'name' => 'validate', 
-                    'desc' => '验证码',
-                    'format' => 'utf8',                    
-                    'require' => true,
-                    'type' => 'string',
-                ],
-                'seccode' => [
-                    'name' => 'seccode', 
-                    'desc' => '安全码',
+                'dx' => [
+                    'name' => 'dx', 
+                    'desc' => 'token',
                     'format' => 'utf8',                    
                     'require' => true,
                     'type' => 'string',
@@ -383,6 +362,7 @@ class Admin extends Api {
         $this->User = new DUser();
         $this->Act = new DActivity();
         $this->Join = new DJoin();
+        $this->DXCode = new DDXCode();
     }
 
     /**
@@ -402,9 +382,10 @@ class Admin extends Api {
 
     public function login(){
         
-        $geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->rand);
+        //$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->rand);
 
-        if($geetest != 1){
+        $dxtest = $this->DXCode->valid($this->dx);
+        if($dxtest != true){
             throw new Exception('验证码错误', 500);
         }
         
@@ -459,11 +440,10 @@ class Admin extends Api {
         }
 
         if($jwt['admin']->level == 1){//院级管理员
-            if($jwt['admin']->yuan != $this->hoster && $this->level == 1){//无权发布他院活动 无权发布校级活动
+            if($jwt['admin']->yuan != $this->hoster || $this->level == 1){//无权发布他院活动 无权发布校级活动
                 throw new Exception("没这么高的权限", 403);
             }
         }
-
         $re = $this->Act->add($this);
 
         return $re;
@@ -571,25 +551,26 @@ class Admin extends Api {
         }
 
         if($jwt['admin']->level == 1){//院级管理员
-            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)){
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)||$this->Act->get($this->aid)['level']==1){
                 throw new Exception("无权限", 403);
             }
         }
-        if($jwt['admin']->level == 2){
-            if($this->Act->get($this->aid)['level']!=1){
-                throw new Exception("无权限", 403);
-            }
-        }
-           $re= $this->Act->update($this);
+            $re= $this->Act->update($this);
            return $re;
-    }
+        }
+    
 /**
  * 生成测试使用的jwt
  *
  * @return void
  */
     public function makejwt(){
-        //return $this->User->encode('seiry', '031630226', ['level' => 1, 'yuan' => 3]);
-        return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
+        return $this->User->encode('seiry', '031630226', ['level' => 3, 'yuan' => 3]);
+        //return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
+    }
+
+
+    public function testD(){
+        
     }
 }

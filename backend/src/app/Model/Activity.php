@@ -14,7 +14,6 @@ class Activity{
         'activity.hoster',
         'activity.title',
         'activity.summary',
-        'activity.detail',
         'activity.alltime',
         'activity.contact',
         'activity.status',
@@ -46,6 +45,7 @@ class Activity{
     }
 
     public function get($id){
+        $this->unionColumn[] = 'activity.detail';
         $re= di()->db->get('activity', $this->unionRelation, $this->unionColumn, [
             'aid' => $id,
             'activity.status[>]' => 0
@@ -87,7 +87,7 @@ class Activity{
         $re=di()->db->update('activity',[
             'group_name'=>$args->group_name,
             'location' => $args->location,
-            'hoster' => $args->hoster,
+            //'hoster' => $args->hoster,
             'title' => $args->title,
             'summary' => $args->summary,
             'detail' => $args->detail,
@@ -98,7 +98,7 @@ class Activity{
             'volunteertimemin' => $args->volunteertimemin,
             'volunteertimemax' => $args->volunteertimemax,
             'type' => $args->type,
-            'level' => $args->level,
+            //'level' => $args->level,//活动等级无法改变
             'lastupdate' => time(),
         ],[
             'aid'=>$args->aid
@@ -110,7 +110,6 @@ class Activity{
         }
         return $re;
     }
-
 
     public function setStatus($id, $status){
         $re = di()->db->update('activity', [

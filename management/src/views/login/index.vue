@@ -35,7 +35,7 @@
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
-      <div id="captchaBox"></div>
+      <div id="captchaBox" style="width: 100%;"></div>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;margin-top: 22px;" @click.native.prevent="handleLogin">登录</el-button>
     <!--
       <div class="tips">
@@ -65,7 +65,7 @@
 import { isvalidUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialsignin'
-import '../../gt.js'
+import '../../dx.js'
 
 export default {
   name: 'Login',
@@ -90,8 +90,7 @@ export default {
         username: 'admin',
         password: '1111111'
       },
-      gtKey: 'mynuaa',
-      gtResult: false,
+      dxResult: false,
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
@@ -118,10 +117,10 @@ export default {
     // window.removeEventListener('hashchange', this.afterQRScan)
   },
   mounted(){
-    this.makegt()
+    this.makecode()
   },
   methods: {
-    makegt(){
+    /*makegt(){
       this.gtKey = (Math.floor(Math.random()*1e14)).toString(32)
       this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
         service: 'App.Admin.BeforeLogin',
@@ -148,6 +147,21 @@ export default {
           })
       })
       })
+    },*/
+    makecode(){
+      this._dx = _dx.Captcha(document.getElementById('captchaBox'), {
+        appId: '069ae57274e54291f373478057e1d796',
+        style: 'inline',
+        inlineFloatPosition: 'up',
+        protocol: 'https:',
+        width: document.querySelector('.el-form-item').offsetWidth,
+        success: (token)=>{
+          this.dxResult = token
+        },
+        fail: (e) => {
+            console.log(e)
+        }
+      })
     },
     showPwd() {
       if (this.passwordType === 'password') {
@@ -172,21 +186,25 @@ export default {
           return false
         }
       })*/
-      if(this.gtResult == false){
+      if(this.dxResult == false){
         return;//todo 提示验证码错误
       }
-      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
+      //http://g.gg/new-xiaohongmao/backend/public/index.php
+      //https://my.nuaa.edu.cn/xiaohongmao2/api
+      this.axios.post('http://g.gg/new-xiaohongmao/backend/public/index.php', {
         service: 'App.Admin.Login',
         stuid: this.loginForm.username,
         passwd: this.loginForm.password,
-        rand: this.gtKey,
-        challenge: this.gtResult.geetest_challenge,
-        seccode: this.gtResult.geetest_seccode,
-        validate: this.gtResult.geetest_validate
+        dx: this.dxResult
       }).then(re => {
         re = re.data
         if(re.ret != 200 ){
           alert(re.msg)
+          if(re.ret == 500){//验证码错误
+            this._dx.reload()
+          }
+        }else{
+
         }
       })
 
