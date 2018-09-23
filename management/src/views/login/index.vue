@@ -191,7 +191,7 @@ export default {
       }
       //http://g.gg/new-xiaohongmao/backend/public/index.php
       //https://my.nuaa.edu.cn/xiaohongmao2/api
-      this.axios.post('http://g.gg/new-xiaohongmao/backend/public/index.php', {
+      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
         service: 'App.Admin.Login',
         stuid: this.loginForm.username,
         passwd: this.loginForm.password,
