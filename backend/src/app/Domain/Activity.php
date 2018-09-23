@@ -46,6 +46,12 @@ class Activity {
         return $this->Type->getAll();
     }
 
+    public function getByHid($hid, $from, $num){
+        $re = $this->Act->getByHid($hid, $from, $num);
+
+        return $re;
+    }
+
     public function del($id){
         return $this->Act->setStatus($id, 0);
     }
