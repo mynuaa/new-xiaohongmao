@@ -66,4 +66,8 @@ class Activity {
     public function update($args){
         return $this->Act->update($args);
     }
+
+    public function surUpdate($args){
+        return $this->Act->surUpdate($args);
+    }
 }

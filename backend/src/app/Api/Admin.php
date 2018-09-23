@@ -579,6 +579,9 @@ class Admin extends Api {
                 throw new Exception("无权限", 403);
             }
         }
+        if($jwt['admin']->level == 3){//超级管理员
+            $re= $this->Act->surUpdate($this);
+        }
            $re= $this->Act->update($this);
            return $re;
     }
