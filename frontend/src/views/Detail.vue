@@ -96,6 +96,7 @@ export default {
     line-height: 30px;
   }
   .detail-detail {
+    height:fit-content;
     text-align: center;
     margin: 10px auto 20px 0;
     height: 30px;

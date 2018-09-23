@@ -3,7 +3,7 @@
     <div class="basicInfo">
         <div class="userInfo" @mouseover="showEdit" @mouseout="hideEdit">
             <div class="editBox">
-                <router-link to='./infoEdit' >
+                <router-link to='' >
                     <img src="../assets/edit.png" class="editIcon" id="editIcon" alt="edit">
                 </router-link>
             </div>
@@ -47,16 +47,7 @@
 
         </div>
     </div>
-    <div class="carousel">
-        <carousel :per-page="1" :navigate-to="someLocalProperty" mouse-drag="true" loop='true'>
-            <slide>
-            Slide 1 Content
-            </slide>
-            <slide>
-            Slide 2 Content
-            </slide>
-        </carousel>
-    </div>
+    
   </div>
 </template>
 
@@ -211,11 +202,5 @@ export default {
     position: relative;
     width: 120px;
     border-radius: 100%;
-}
-.carousel{
-    display: inline-block;
-    background-color: grey;
-    width: 80%;
-    margin-bottom: 20px;
 }
 </style>
