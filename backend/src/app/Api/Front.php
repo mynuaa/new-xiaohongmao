@@ -144,8 +144,8 @@ class Front extends Api {
      * @return void
      */
     public function allActivity(){
-        
-        $re = $this->Act->gets($this->from, $this->pagenum, false, $hid);
+
+        $re = $this->Act->gets($this->from, $this->pagenum, false, $this->hid);
 
         return $re;
     }
