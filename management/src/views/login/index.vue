@@ -66,6 +66,7 @@ import { isvalidUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialsignin'
 import '../../dx.js'
+import { setToken, getRole} from '@/utils/auth'
 
 export default {
   name: 'Login',
@@ -87,8 +88,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '1111111'
+        username: '031630226',
+        password: 'St031630226'
       },
       dxResult: false,
       loginRules: {
@@ -191,6 +192,7 @@ export default {
       }
       //http://g.gg/new-xiaohongmao/backend/public/index.php
       //https://my.nuaa.edu.cn/xiaohongmao2/api
+      this.loading = true
       this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
         service: 'App.Admin.Login',
         stuid: this.loginForm.username,
@@ -200,12 +202,11 @@ export default {
         re = re.data
         if(re.ret != 200 ){
           alert(re.msg)
-          if(re.ret == 500){//验证码错误
-            this._dx.reload()
-          }
-        }else{
-
+          this._dx.reload()
         }
+        setToken(re.data)
+        getRole()
+        this.$router.push({ path: '/' })
       })
 
     },
