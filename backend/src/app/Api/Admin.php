@@ -44,13 +44,6 @@ class Admin extends Api {
                     'min' => 9,
                     'max' => 9
                 ],
-                'rand' => [
-                    'name' => 'rand', 
-                    'desc' => '安全字符',
-                    'format' => 'utf8',                    
-                    'require' => true,
-                    'type' => 'string',
-                ],
                 'passwd' => [
                     'name' => 'passwd', 
                     'desc' => '密码',
@@ -392,7 +385,7 @@ class Admin extends Api {
         //$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->rand);
 
         $dxtest = $this->DXCode->valid($this->dx);
-        if($dxtest){
+        if($dxtest != true){
             throw new Exception('验证码错误', 500);
         }
         

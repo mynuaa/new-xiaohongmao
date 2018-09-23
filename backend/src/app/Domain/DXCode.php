@@ -45,7 +45,7 @@ class DXCode {
         $client->setTimeOut(2);      //设置超时时间
 
         $response = $client->verifyToken($token);
-        var_dump($response);
+        
         if($response->result){
             return true;
         }else{
