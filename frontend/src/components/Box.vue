@@ -5,7 +5,7 @@
         </div>
         <div id="body">
           <ul>
-            <li v-for="(item, k) in items" :key="item.aid">
+            <li v-for="item in items" :key="item.aid">
               <router-link :to="'/detail/' + item.aid"><div class="label" style="font-weight:550;">{{item.title | label}}</div></router-link>
               <div class="origin">{{item.hostname | origin}}</div>
               <div class="date">{{item.date}}</div>

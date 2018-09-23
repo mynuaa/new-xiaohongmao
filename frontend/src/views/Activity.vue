@@ -13,8 +13,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in activityList" :key="item.aid">
-                        <router-link :to="'/detail/' + item.aid"><td width="52%">{{item.title | title}}</td></router-link>
-                        
+                        <router-link :to="'/detail/' + item.aid"><td width="52%" class="activityTitle">{{item.title | title}}</td></router-link>
                         <td width="12%" >{{item.hostname | hostname}}</td>
                         <td width="12%" >{{item.volunteertimemax}}</td>
                         <td width="12%">{{formatDateTime(item.starttime)}}</td>
@@ -23,12 +22,12 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="4">
+                        <td colspan="5">
                             <div class="paginationPart">
                                 <ul class="pagination">
-                                    <li><div class="pageIcon">«</div></li>
-                                    <li v-for="n in pageNum" :key="n" class="pageIcon" @click="turn(n)"><div>{{n}}</div></li>
-                                    <li><div class="pageIcon">»</div></li>
+                                    <li><div class="pageIcon" @click="turn('-')">«</div></li>
+                                    <li v-for="n in pageNum" :key="n" class="pageIcon" @click="turn(n)" ><div>{{n}}</div></li>
+                                    <li><div class="pageIcon" @click="turn('+')">»</div></li>
                                 </ul>
                             </div>
                         </td>
@@ -37,22 +36,12 @@
             </table>
         </div>    
        
-        <div class="carousel">
-            <carousel :per-page="1" :navigate-to="someLocalProperty" mouse-drag="true" loop='true'>
-                <slide>
-                Slide 1 Content
-                </slide>
-                <slide>
-                Slide 2 Content
-                </slide>
-            </carousel>
-        </div>
+        
     </div>
     
 </template>
 
 <script>
-var echarts = require('echarts')
 export default {
   name: 'activity',
   components: {
@@ -61,8 +50,8 @@ export default {
   data(){
       return{
         pageNum:10,
-        activityList:[]
-          
+        activityList:[],
+        activePage:1,
       }
   },
   filters: {
@@ -94,30 +83,37 @@ export default {
     }
   },
     methods: {
-      getInfo(){
+      getInfo(page){
           this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
               service: 'Front.AllActivity',
+              from: page * 20 - 20,
           }).then(re => {
               if(re.data.ret != 200){
-                
+                 alert('')
               }else{
-                  
                   this.activityList = re.data.data;
+                  this.activePage = (page == null)? 1 : page;
               }
           })
       },
-      turn(n){
-          this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
-              service: 'Front.AllActivity',
-              from: n * 20 - 20,
-          }).then(re => {
-              if(re.data.ret != 200){
-                
-              }else{
-                  this.activityList = re.data.data;
-                  
+      turn(n){  //-----------------------------------------------------确定分页数
+          var page = this.activePage
+          console.log(page)
+          if(n == '-'){
+              if(page == 1){
+                  return
               }
-          })
+              else{
+                this.getInfo(page - 1)
+              }
+          }
+          else if(n == '+'){
+              this.getInfo(page + 1)
+          }
+          else{
+              this.getInfo(n)
+          }
+          
       },
       formatDateTime(timeStamp) { 
         var date = new Date(parseInt(timeStamp) * 1000);
@@ -173,6 +169,12 @@ export default {
     margin-bottom: 20px;
     border-spacing: 5px;
 }
+.activityTitle{
+    text-decoration: none;
+}
+a:-webkit-any-link{
+    text-decoration: none;
+}
 .paginationPart{
     text-align: center;
 }
@@ -188,17 +190,12 @@ export default {
     font-weight: bold;
     border-radius: 10%;
     color: #2c3e50;
+    cursor: pointer;
     &.router-link-exact-active {
       color: #42b983;
     } 
 }
 .pageIcon:hover{
     background-color: lightgrey;
-}
-.carousel{
-    display: inline-block;
-    background-color: grey;
-    width: 80%;
-    margin-bottom: 20px;
 }
 </style>

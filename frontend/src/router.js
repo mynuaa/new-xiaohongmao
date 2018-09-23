@@ -8,7 +8,6 @@ import Certification from './views/Certification.vue'
 import Navigate from './views/Navigate.vue'
 import Detail from './views/Detail.vue'
 import LoggedIn from './views/LoggedIn.vue'
-import InfoEdit from './views/InfoEdit.vue'
 import VueCarousel from 'vue-carousel'
  
 Vue.use(VueCarousel);
@@ -56,11 +55,6 @@ export default new Router({
       path: '/loggedIn',
       name: 'loggedIn',
       component: LoggedIn
-    },
-    {
-      path: '/infoEdit',
-      name: 'infoEdit',
-      component: InfoEdit
     },
   ]
 })
