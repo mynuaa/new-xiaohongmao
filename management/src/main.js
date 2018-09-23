@@ -1,5 +1,7 @@
 import Vue from 'vue'
 
+import "@babel/polyfill";
+
 import Cookies from 'js-cookie'
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
