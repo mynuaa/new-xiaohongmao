@@ -62,10 +62,11 @@ export default {
 
 <style <style lang="scss" scoped>
 #box {
-  border:1px solid #CCCCCC;
+  border:1px solid #cffdf8;
 }
 #header {
-  background-color:#CCCCCC;
+  background-color:#cffdf8;
+  color: #2d767f;
   letter-spacing: 4px;
   font-weight: 800;
   height: 40px;
@@ -85,7 +86,7 @@ export default {
     margin: 0px;
     padding: 0px;
     li {
-      border-bottom:1px dashed #CCCCCC;
+      border-bottom:1px dashed #cffdf8;
       margin-left: 4px;
       margin-bottom: 2px;
       text-align: left;
@@ -112,12 +113,12 @@ export default {
   }
 }
 a{
-  color: #1a3c40;
+  color: #2c3e50;
 }
 #footer {
   height: 20px;
   &:hover {
-      background-color:#6190e8; 
+      background-color:#65c0ba; 
       color: white;
     }
   a {

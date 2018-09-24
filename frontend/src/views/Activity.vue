@@ -2,8 +2,8 @@
     <div class="activity">
         <div class="allActivities">
              <div class="radioBox">
-                <el-radio-group v-model="selected" @change="getInfo(1,selected)">
-                    <el-radio-button :label="item.hid" :key="item.hid" v-for="item in hosters">{{item.hostname}}</el-radio-button>
+                <el-radio-group v-model="selected" @change="getInfo(1,selected)" class="radioGroup">
+                    <el-radio-button :label="item.hid" :key="item.hid" v-for="item in hosters" class="radioButton">{{item.hostname}}</el-radio-button>
                 </el-radio-group>
             </div>
             <table class="activityTable">
@@ -288,6 +288,27 @@ a{
 .allActivities{
     width: 100%;
     text-align: center;
+}
+.radioBox{
+    width: 90%;
+    text-align: center;
+    display: inline-block;
+    background-color: white;
+    box-shadow: 2px 2px 5px grey;
+
+
+}
+.radioGroup{
+    display: flex !important ;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 15px 10px; 
+}
+.radioButton{
+    border-left: 0.8px solid #dcdfe6;
+    margin: 2px;
+    border-radius: 4px;
 }
 .activityTable{
     background-color: white;

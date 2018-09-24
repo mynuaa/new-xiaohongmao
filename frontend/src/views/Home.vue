@@ -62,6 +62,12 @@ export default {
             data: ["时长"]
           },
           xAxis: {
+            axisLine:{
+                lineStyle:{
+                    color:'#216583',
+                    width:2
+                }
+            },
             data: [
               "一院",
               "二院",
@@ -81,12 +87,24 @@ export default {
               "十六院"
             ]
           },
-          yAxis: {},
+          yAxis: {
+            axisLine:{
+                lineStyle:{
+                    color:'#216583',
+                    width:2
+                }
+            },
+          },
           series: [
             {
               name: "志愿时长",
               type: "bar",
-              data: this.time
+              data: this.time,
+              itemStyle:{
+                normal:{
+                  color:"#e79e85",
+                }
+              }
             }
           ]
         });
@@ -118,10 +136,12 @@ export default {
 
 }
 .body-right {
+  margin-top: 30px;
   display: inline-block;
   width: 80%;
   .charts{
     display: inline-block;
+    background-color: '#fff';
 }
 }
 
