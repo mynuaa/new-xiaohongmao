@@ -218,10 +218,11 @@ export default {
     showArticle(row){
       this.dialogFormVisible = true
       this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
-        'aid':row
+        'aid':row,
+        'jwt':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MiwieXVhbiI6M319.r9vW77YBAKyQTzdaD-IVA42hEeCLizaYFmqv6pl8NAA'
       })
       .then((response) => {
-          this.temp = response.data.data
+          this.temp = response.data.data.activity
         })
       this.$nextTick(() => { 
         this.$refs['dataForm'].clearValidate()

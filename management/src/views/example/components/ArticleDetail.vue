@@ -71,6 +71,7 @@ import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { validateURL } from '@/utils/validate'
 
+let isEdit = false
 const defaultForm = {
   status: 'draft',
   title: '', // 文章题目
@@ -122,12 +123,12 @@ export default {
         title: ' ',
         summary:'',
         detail:'',
-        peoplenum: '',
-        alltime: '',
+        peoplenum: 1,
+        alltime: 1,
         starttime:'',
         contact: ' ',
-        volunteertimemin: '',
-        volunteertimemax: '',
+        volunteertimemin: 1,
+        volunteertimemax: 1,
         type:'',
         level:'0',
         group_name:'new',
@@ -146,7 +147,6 @@ export default {
     }
   },
   created() {
-    let isEdit = false
     this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllType',{})
     .then((response) => {
       this.options = response.data.data
@@ -154,11 +154,12 @@ export default {
     if (this.$route.params.id!=null) {
       isEdit = true
       this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
-        'aid': this.$route.params.id
+        'aid': this.$route.params.id,
+        'jwt':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MiwieXVhbiI6M319.r9vW77YBAKyQTzdaD-IVA42hEeCLizaYFmqv6pl8NAA'
       })
       .then((response) => {
-        this.form = Object.assign({}, response.data.data)
-        console.log(this.form)
+        this.form = response.data.data.activity
+        this.form.starttime = response.data.data.activity.starttime * 1e3
       })
     }
   },
