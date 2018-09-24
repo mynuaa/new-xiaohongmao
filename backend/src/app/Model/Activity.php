@@ -31,40 +31,53 @@ class Activity{
     ];
 
     public function gets($from, $num, $all = false, $hid = -1){
-        $con =  [
-            'LIMIT' => [$from, $num],
-            'ORDER' => [
-                "aid" => "DESC",
-            ]
-        ];
+        $key='actAll:' . $from.$num. ($all ? 1 : 0) .$hid;
+        $re = di()->redis->get($key);
+        if(!$re){
+            $re = date('r');
+            di()->redis->set('time', $re, 10);
+            $con =  [
+                'LIMIT' => [$from, $num],
+                'ORDER' => [
+                    "aid" => "DESC",
+                ]
+            ];
 
-        if($all === false){
-            $con['activity.status[>]'] = 0;
+            if($all === false){
+                $con['activity.status[>]'] = 0;
+            }
+
+            if($hid != -1){
+                $con['hoster'] = $hid;
+            }
+
+            $re= di()->db->select('activity', $this->unionRelation, $this->unionColumn, $con);
+            di()->redis->set($key, $re);
         }
-
-        if($hid != -1){
-            $con['hoster'] = $hid;
-        }
-
-        $re= di()->db->select('activity', $this->unionRelation, $this->unionColumn, $con);
-
         return $re;
     }
 
     public function get($id){
-        $this->unionColumn[] = 'activity.detail';
-        $re= di()->db->get('activity', $this->unionRelation, $this->unionColumn, [
-            'aid' => $id,
-            'activity.status[>]' => 0
-        ]);
-
-        return $re;
+        $re = di()->redis->get('getact:'.$id);
+        if(!$re){
+            $this->unionColumn[] = 'activity.detail';
+            $re= di()->db->get('activity', $this->unionRelation, $this->unionColumn, [
+                'aid' => $id,
+                'activity.status[>]' => 0
+            ]);
+            di()->redis->set('getact:'.$id, $re);
+         }  
+          return $re;
     }
 
     public function getExpireTime($aid){
-        $re = di()->db->get('activity', 'endtime', [
-            'aid' => $aid
-        ]);
+        $re = di()->redis->get('actExp:'.$aid);
+        if(!$re){
+            $re = di()->db->get('activity', 'endtime', [
+                'aid' => $aid
+            ]);
+            di()->redis->set('actExp:'.$aid, $re);
+        }
         return $re;
     }
 
@@ -90,8 +103,6 @@ class Activity{
             'lastupdate' => time()
 
         ]);
-        
-
         if(di()->db->error()[0] == 0){
             return di()->db->id();
         }else{

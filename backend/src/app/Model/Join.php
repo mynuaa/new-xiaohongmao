@@ -19,18 +19,24 @@ class Join{
     ];
     
     public function countAll(){
-        $re= di()->db->sum('join', 'timelong', [
+        $re=di()->redis->get('joinsum');
+        if(!$re){
+             $re= di()->db->sum('join', 'timelong', [
             'status[>]' => 1
-        ]);
-
+            ]);
+            di()->redis->set('joinsum',$re);
+        }
         return $re;
     }
     
     public function countNum(){
-        $re= di()->db->count('join', 'timelong', [
-            'status[>]' => 1
-        ]);
-
+        $re=di()->redis->get('joinnum');
+        if(!$re){
+            $re= di()->db->count('join', 'timelong', [
+                'status[>]' => 1
+            ]);
+            di()->redis->set('joinnum',$re);
+        }
         return $re;
     }
 
