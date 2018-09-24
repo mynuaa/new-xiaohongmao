@@ -6,13 +6,11 @@
       style="width: 100%">
       <el-table-column
         prop="title"
-        label="已参与活动"
-        width="180">
+        label="已参与活动">
       </el-table-column>
       <el-table-column
         prop="timelong"
-        label="时长"
-        width="180">
+        label="时长">
       </el-table-column>
       </el-table>
       <el-table
