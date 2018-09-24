@@ -33,7 +33,7 @@
               <el-input v-model="form.contact" placeholder="联系方式" width='90px'></el-input>
             </el-form-item>
             <div class="postInfo-container">
-              <el-row>
+              <el-row :gutter="20"> 
                 <el-form-item label-width="100px" label="活动类型:" class="postInfo-container-item">
                   <el-select v-model="form.type" placeholder="请选择活动类型">
                     <el-option
@@ -44,11 +44,24 @@
                     </el-option>
                 </el-select>
                 </el-form-item>
-                <el-col :span="10">
                   <el-form-item label-width="80px" label="发布时间:" class="postInfo-container-item">
                     <el-date-picker v-model="form.starttime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间"/>
                   </el-form-item>
-                </el-col>
+              </el-row>
+              <el-row :gutter="20">
+                <el-form-item label-width="100px" label="活动级别:" class="postInfo-container-item">
+                  <el-select v-model="form.level" placeholder="请选择活动级别">
+                    <el-option
+                      v-for="item in level"
+                      :key="item.value"
+                      :label="item.name"
+                      :value="item.value">
+                    </el-option>
+                </el-select>
+                </el-form-item>
+                <el-form-item label-width="80px" label="截止时间:" class="postInfo-container-item">
+                    <el-date-picker v-model="form.endtime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间"/>
+                  </el-form-item>
               </el-row>
             </div>
           </el-col>
@@ -70,6 +83,7 @@ import Upload from '@/components/Upload/singleImage3'
 import MDinput from '@/components/MDinput'
 import Sticky from '@/components/Sticky' // 粘性header组件
 import { validateURL } from '@/utils/validate'
+import {getToken} from '@/utils/auth'
 
 let isEdit = false
 const defaultForm = {
@@ -130,10 +144,19 @@ export default {
         volunteertimemin: 1,
         volunteertimemax: 1,
         type:'',
-        level:'0',
+        level:'',
         group_name:'new',
+        endtime:''
       },
       options: [],
+      level:[{
+        value:'0',
+        name:'院级'
+        },{
+        value:'1',
+        name:'校级'
+        }
+      ],
       value: '',
       postForm: Object.assign({}, defaultForm),
       loading: false,
@@ -152,13 +175,18 @@ export default {
       this.options = response.data.data
     })
     if (this.$route.params.id!=null) {
+      let jwt = getToken()
       isEdit = true
       this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
         'aid': this.$route.params.id,
-        'jwt':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MiwieXVhbiI6M319.r9vW77YBAKyQTzdaD-IVA42hEeCLizaYFmqv6pl8NAA'
+        'jwt': jwt
       })
       .then((response) => {
         this.form = response.data.data.activity
+        this.form.volunteertimemin = parseInt(response.data.data.activity.volunteertimemin)
+        this.form.volunteertimemax = parseInt(response.data.data.activity.volunteertimemax)
+        this.form.alltime = parseInt(response.data.data.activity.alltime)
+        this.form.peoplenum = parseInt(response.data.data.activity.peoplenum)
         this.form.starttime = response.data.data.activity.starttime * 1e3
       })
     }

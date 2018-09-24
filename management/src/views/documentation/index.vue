@@ -38,7 +38,8 @@
   </div>
 </template>
 <script>
-
+import {getToken} from '@/utils/auth'
+let jwt = getToken()
 export default {
   name: 'Documentation',
   data() {
@@ -49,7 +50,7 @@ export default {
   },
   created(){
     this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetJoin',{
-      'jwt':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MiwieXVhbiI6M319.r9vW77YBAKyQTzdaD-IVA42hEeCLizaYFmqv6pl8NAA',
+      'jwt':jwt,
     })
     .then((response)=>{
       for (var prop in response.data.data){
@@ -65,7 +66,7 @@ export default {
   methods:{
     Certification(id){
       this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.ValidJoin',{
-        'jwt':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MiwieXVhbiI6M319.r9vW77YBAKyQTzdaD-IVA42hEeCLizaYFmqv6pl8NAA',
+        'jwt':jwt,
         'jid':id
       })
       .then((response)=>{
