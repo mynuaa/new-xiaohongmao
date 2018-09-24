@@ -3,7 +3,7 @@
         <Loading v-if="show"></Loading>
         <div class="allActivities">
              <div class="radioBox">
-                <el-radio-group v-model="selected" @change="getInfo(1,selected)" class="radioGroup">
+                <el-radio-group v-model="selected" @change="getInfo(1,selected),turn(1)" class="radioGroup">
                     <el-radio-button :label="item.hid" :key="item.hid" v-for="item in hosters" class="radioButton">{{item.hostname}}</el-radio-button>
                 </el-radio-group>
             </div>
@@ -182,7 +182,7 @@ export default {
     methods: {
 
       getInfo(page,hid){
-                  this.show = true;
+          this.show = true;
           this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
               service: 'Front.AllActivity',
               from: page * 20 - 20,
@@ -191,9 +191,21 @@ export default {
               if(re.data.ret != 200){
                  alert('')
               }else{
+                  this.selected = hid;
                   this.activityList = re.data.data;
                   this.activePage = (page == null)? 1 : page;
                   this.show = false;
+              }
+          })
+
+          this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
+              service: 'Front.ShowData',
+          }).then(re => {
+              if(re.data.ret != 200){
+                 alert('')
+              }else{
+                  var num = re.data.data.actNum;
+                  this.pageNum = Math.ceil(num/20);
               }
           })
           
@@ -202,22 +214,22 @@ export default {
         if(n != '-' && n!= '+'){
                 this.cur = n; 
             }
-          var page = this.activePage
+          var page = this.activePage;
           if(n == '-'){
               if(page == 1){
                   return
               }
               else{
-                this.getInfo(page - 1 , this.hid)
+                this.getInfo(page - 1 , this.selected)
                 this.cur --;
               }
           }
           else if(n == '+'){
-              this.getInfo(page + 1 , this.hid)
+              this.getInfo(page + 1 , this.selected)
               this.cur ++;
           }
           else{
-              this.getInfo(n , this.hid)
+              this.getInfo(n , this.selected)
           }
           
       },
