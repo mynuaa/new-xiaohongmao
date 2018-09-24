@@ -1,6 +1,6 @@
 <template>
     <div class="activity">
-        
+        <Loading v-if="show"></Loading>
         <div class="allActivities">
             <table class="activityTable">
                 <thead>
@@ -43,19 +43,20 @@
 </template>
 
 <script>
-
+import Loading from '../components/Loading.vue'
 
 export default {
   name: 'activity',
   components: {
-     
+     Loading
   },
   data(){
       return{
         pageNum:10,//获取全部文章页数
         activityList:[],
         activePage:1,
-        cur:1
+        cur:1,
+        show:false
       }
   },
   filters: {
@@ -71,6 +72,7 @@ export default {
   },
     methods: {
       getInfo(page){
+          this.show = true;
           this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
               service: 'Front.AllActivity',
               from: page * 20 - 20,
@@ -80,8 +82,10 @@ export default {
               }else{
                   this.activityList = re.data.data;
                   this.activePage = (page == null)? 1 : page;
+                  this.show = false;
               }
           })
+          
       },
       turn(n){  //-----------------------------------------------------确定分页数
         if(n != '-' && n!= '+'){
