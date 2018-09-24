@@ -419,7 +419,7 @@ class Admin extends Api {
         }else{//校级（院级以上
             $this->hoster = 0;
         }
-        $this->optadmin = $jwt['uname'];
+        $this->optadmin = $jwt['stuid'];
         $re = $this->Act->add($this);
 
         return $re;
@@ -455,7 +455,7 @@ class Admin extends Api {
             'volunteertimemin' => $this->volunteertimemin,
             'volunteertimemax' => $this->volunteertimemax,
             'type' => $this->type,
-            'optadmin' => $jwt['uname']
+            'optadmin' => $jwt['stuid']
         ];
 
         $re = $this->Act->update($this->aid, $args);
