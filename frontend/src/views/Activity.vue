@@ -1,6 +1,11 @@
 <template>
     <div class="activity">
         <div class="allActivities">
+             <div class="radioBox">
+                <el-radio-group v-model="selected" @change="getInfo(1,selected)" class="radioGroup">
+                    <el-radio-button :label="item.hid" :key="item.hid" v-for="item in hosters" class="radioButton">{{item.hostname}}</el-radio-button>
+                </el-radio-group>
+            </div>
             <table class="activityTable">
                 <thead>
                     <tr>
@@ -52,7 +57,111 @@ export default {
         pageNum:10,//获取全部文章页数
         activityList:[],
         activePage:1,
-        cur:1
+        cur:1,
+        radio:0,
+        selected:"-1",
+        hosters:[
+            {
+                "hid": "-1",
+                "hostname": "全部",
+                "hostnickname": "全部"
+            },
+            {
+                "hid": "0",
+                "hostname": "校青协",
+                "hostnickname": "校青协"
+            },
+            {
+                "hid": "1",
+                "hostname": "航空宇航学院",
+                "hostnickname": "航空宇航学院"
+            },
+            {
+                "hid": "2",
+                "hostname": "能源与动力学院",
+                "hostnickname": "能源与动力学院"
+            },
+            {
+                "hid": "3",
+                "hostname": "自动化学院",
+                "hostnickname": "紫冬花"
+            },
+            {
+                "hid": "4",
+                "hostname": "电子信息工程学院",
+                "hostnickname": "电子信息工程学院"
+            },
+            {
+                "hid": "5",
+                "hostname": "机电学院",
+                "hostnickname": "机电学院"
+            },
+            {
+                "hid": "6",
+                "hostname": "材料科学与技术学院",
+                "hostnickname": "材料科学与技术学院"
+            },
+            {
+                "hid": "7",
+                "hostname": "民航学院/飞行学院",
+                "hostnickname": "民航学院/飞行学院"
+            },
+            {
+                "hid": "8",
+                "hostname": "理学院",
+                "hostnickname": "理学院"
+            },
+            {
+                "hid": "9",
+                "hostname": "经济管理学院",
+                "hostnickname": "经济管理学院"
+            },
+            {
+                "hid": "10",
+                "hostname": "人文与社会科学学院",
+                "hostnickname": "人文与社会科学学院"
+            },
+            {
+                "hid": "11",
+                "hostname": "艺术学院",
+                "hostnickname": "艺术学院"
+            },
+            {
+                "hid": "12",
+                "hostname": "外国语学院",
+                "hostnickname": "外国语学院"
+            },
+            {
+                "hid": "15",
+                "hostname": "航天学院",
+                "hostnickname": "航天学院"
+            },
+            {
+                "hid": "16",
+                "hostname": "计算机科学与技术学院",
+                "hostnickname": "计算机科学与技术学院"
+            },
+            {
+                "hid": "17",
+                "hostname": "马克思主义学院",
+                "hostnickname": "马克思主义学院"
+            },
+            {
+                "hid": "101",
+                "hostname": "社团组织",
+                "hostnickname": "社团组织"
+            },
+            {
+                "hid": "102",
+                "hostname": "图书馆志愿者分会",
+                "hostnickname": "图书馆志愿者分会"
+            },
+            {
+                "hid": "103",
+                "hostname": "学习支持辅导中心",
+                "hostnickname": "学习支持辅导中心"
+            }
+        ]
       }
   },
   filters: {
@@ -67,10 +176,11 @@ export default {
     }
   },
     methods: {
-      getInfo(page){
+      getInfo(page,hid){
           this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
               service: 'Front.AllActivity',
               from: page * 20 - 20,
+              hid: hid,
           }).then(re => {
               if(re.data.ret != 200){
                  alert('')
@@ -85,22 +195,21 @@ export default {
                 this.cur = n; 
             }
           var page = this.activePage
-          console.log(page)
           if(n == '-'){
               if(page == 1){
                   return
               }
               else{
-                this.getInfo(page - 1)
+                this.getInfo(page - 1 , this.hid)
                 this.cur --;
               }
           }
           else if(n == '+'){
-              this.getInfo(page + 1)
+              this.getInfo(page + 1 , this.hid)
               this.cur ++;
           }
           else{
-              this.getInfo(n)
+              this.getInfo(n , this.hid)
           }
           
       },
@@ -112,8 +221,7 @@ export default {
         var d = date.getDate();    
         d = d < 10 ? ('0' + d) : d;   
         return y + '-' + m + '-' + d;    
-        },
-    
+      },
 
   },
   mounted() {
@@ -180,6 +288,27 @@ a{
 .allActivities{
     width: 100%;
     text-align: center;
+}
+.radioBox{
+    width: 90%;
+    text-align: center;
+    display: inline-block;
+    background-color: white;
+    box-shadow: 2px 2px 5px grey;
+
+
+}
+.radioGroup{
+    display: flex !important ;
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 15px 10px; 
+}
+.radioButton{
+    border-left: 0.8px solid #dcdfe6;
+    margin: 2px;
+    border-radius: 4px;
 }
 .activityTable{
     background-color: white;

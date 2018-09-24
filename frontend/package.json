@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "echarts": "^4.2.0-rc.1",
+    "element-ui": "^2.4.7",
     "vue": "^2.5.17",
     "vue-carousel": "^0.14.0",
     "vue-router": "^3.0.1"

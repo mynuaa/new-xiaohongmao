@@ -118,7 +118,6 @@ html{
   text-align: center;
   border-top: 1px solid #999999;
   .copyright {
-    
     margin-top: 10px;
     margin-bottom: 10px;
     width: 100%;
