@@ -18,6 +18,7 @@
 <script>
 import UploadExcelComponent from '@/components/UploadExcel/index.vue'
 import Sticky from '@/components/Sticky'
+import {getToken} from '@/utils/auth'
 export default {
   name: 'UploadExcel',
   components: { UploadExcelComponent,Sticky },
@@ -29,9 +30,10 @@ export default {
     }
   },
   created(){
+      let jwt = getToken()
       this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
         'aid': this.$route.params.aid,
-        'jwt':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MiwieXVhbiI6M319.r9vW77YBAKyQTzdaD-IVA42hEeCLizaYFmqv6pl8NAA'
+        'jwt': jwt
       })
       .then((response) => {
         this.title = response.data.data.activity.title
@@ -58,7 +60,7 @@ export default {
     upload(){
       for (var prop in this.tableData) {
         this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddJoin',{
-          'jwt': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MiwieXVhbiI6M319.r9vW77YBAKyQTzdaD-IVA42hEeCLizaYFmqv6pl8NAA',
+          'jwt': jwt,
           'aid':this.$route.params.aid,
           'stuid': this.tableData[prop].stuid,
           'timelong': this.tableData[prop].timelong
