@@ -81,10 +81,12 @@ class Activity{
             'alltime' => $args->alltime,
             'contact' => $args->contact,
             'starttime' => $args->starttime,
+            'endtime' => $args->endtime,
             'volunteertimemin' => $args->volunteertimemin,
             'volunteertimemax' => $args->volunteertimemax,
             'type' => $args->type,
             'level' => $args->level,
+            'optadmin' => $args->optadmin,
             'lastupdate' => time()
 
         ]);
@@ -96,28 +98,16 @@ class Activity{
             return false;
         }
     }
-    
-    //todo 更新活动
-    public function update($args){
-        $re=di()->db->update('activity',[
-            'group_name'=>$args->group_name,
-            'location' => $args->location,
-            //'hoster' => $args->hoster,
-            'title' => $args->title,
-            'summary' => $args->summary,
-            'detail' => $args->detail,
-            'peoplenum' => $args->peoplenum,
-            'alltime' => $args->alltime,
-            'contact' => $args->contact,
-            'starttime' => $args->starttime,
-            'volunteertimemin' => $args->volunteertimemin,
-            'volunteertimemax' => $args->volunteertimemax,
-            'type' => $args->type,
-            //'level' => $args->level,//活动等级无法改变
-            'lastupdate' => time(),
-        ],[
-            'aid'=>$args->aid
+
+    public function update($aid, $args){
+        $args = array_merge($args, [
+            'lastupdate' => time()
         ]);
+        
+        $re=di()->db->update('activity', $args, [
+            'aid'=>$aid
+        ]);
+
         if(di()->db->error()[0] == 0){
             return true;
         }else{

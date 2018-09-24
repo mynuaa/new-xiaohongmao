@@ -113,6 +113,12 @@ class Admin extends Api {
                     'type' => 'int',
                     'desc' => '开始时间'
                 ],
+                'endtime' => [
+                    'name' => 'starttime', 
+                    'require' => true,
+                    'type' => 'int',
+                    'desc' => '活动截止时间'
+                ],
                 'volunteertimemin' => [
                     'name' => 'volunteertimemin', 
                     'require' => true,
@@ -242,12 +248,6 @@ class Admin extends Api {
                     'format' => 'utf8',       
                     'desc' => '活动地点'
                 ],
-                'hoster' => [
-                    'name' => 'hoster', 
-                    'require' => true,
-                    'type' => 'int',     
-                    'desc' => '活动举办者'
-                ],
                 'title' => [
                     'name' => 'title', 
                     'require' => true,
@@ -292,6 +292,12 @@ class Admin extends Api {
                     'type' => 'int',
                     'desc' => '开始时间'
                 ],
+                'endtime' => [
+                    'name' => 'starttime', 
+                    'require' => true,
+                    'type' => 'int',
+                    'desc' => '活动截止时间'
+                ],
                 'volunteertimemin' => [
                     'name' => 'volunteertimemin', 
                     'require' => true,
@@ -304,32 +310,13 @@ class Admin extends Api {
                     'type' => 'float',
                     'desc' => '最少志愿时间'
                 ],
-                'type' => [
+                'type' => [//todo
                     'name' => 'type', 
                     'require' => true,
                     'type' => 'int',
                     'desc' => '类型 先获取所有的type，如果不存在则先进行添加'
                 ],
-                'operater'=>[
-                    'name' => 'operater', 
-                    'require' => true,
-                    'type' => 'int',     
-                    'desc' => '更新活动的操作者'
-                ],
-                'level' => [
-                    'name' => 'level', 
-                    'require' => true,
-                    'type' => 'int',
-                    'desc' => '级别，0为院级，1为校级',
-                    'min' => 0,
-                    'max' => 1
-                ],
-                'group_name'=>[
-                    'name' => 'group_name', 
-                    'require' => true,
-                    'type' => 'string',
-                    'desc' => '组名'
-                ]
+                
             ],
             '*' => [
                 'jwt' => [
@@ -432,11 +419,49 @@ class Admin extends Api {
         }else{//校级（院级以上
             $this->hoster = 0;
         }
-        
+        $this->optadmin = $jwt['uname'];
         $re = $this->Act->add($this);
 
         return $re;
     }
+
+    /**
+     * 更新活动
+     *
+     * @return void
+     */
+    public function updateActivity(){
+        $jwt = $this->checkJwt();
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
+
+        if($jwt['admin']->level == 1){//院级管理员
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid) || $this->Act->get($this->aid)['level'] == 1){
+                throw new Exception("无权限", 403);
+            }
+        }
+
+        $args = [
+            'location' => $this->location,
+            'title' => $this->title,
+            'summary' => $this->summary,
+            'detail' => $this->detail,
+            'peoplenum' => $this->peoplenum,
+            'alltime' => $this->alltime,
+            'contact' => $this->contact,
+            'starttime' => $this->starttime,
+            'endtime' => $this->endtime,
+            'volunteertimemin' => $this->volunteertimemin,
+            'volunteertimemax' => $this->volunteertimemax,
+            'type' => $this->type,
+            'optadmin' => $jwt['uname']
+        ];
+
+        $re = $this->Act->update($this->aid, $args);
+        return $re;
+    }
+
 
     /**
      * 增加参与
@@ -516,37 +541,17 @@ class Admin extends Api {
      */
     public function bindUser(){//绑定用户
         $ded = $this->Ded->verify($this->stuid, $this->passwd);
-        if($ded === false){
+        if($ded == false){
             throw new Exception('密码错误', 403);
         }else{
            $re= $this->User->bindUser($this->stuid,$ded);
-           if($re)
-           {
+           if($re){
             throw new Exception('成功', 100);
            }else{
             throw new Exception('失败', 403);
            }
-           }
+        }
     }
-    /**
-     * 更新活动
-     *
-     * @return void
-     */
-    public function updateActivity(){
-        $jwt = $this->checkJwt();
-        if($jwt['admin'] == false){
-            throw new Exception('无权限', 403);
-        }
-
-        if($jwt['admin']->level == 1){//院级管理员
-            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid)||$this->Act->get($this->aid)['level']==1){
-                throw new Exception("无权限", 403);
-            }
-        }
-            $re= $this->Act->update($this);
-           return $re;
-        }
 
  /**
  * 获取登录的用户的活动信息

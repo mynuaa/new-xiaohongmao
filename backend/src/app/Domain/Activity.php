@@ -36,6 +36,10 @@ class Activity {
         return $re;
     }
 
+    public function update($aid, $args){
+        return $this->Act->update($aid, $args);
+    }
+
     public function adminDetail($aid){
         $re['activity'] =  $this->Act->get($aid);
         $re['join'] = $this->Join->getByAid($aid);
@@ -68,7 +72,5 @@ class Activity {
         return $this->Act->judge($user, $hoster);
     }
 
-    public function update($args){
-        return $this->Act->update($args);
-    }
+    
 }
