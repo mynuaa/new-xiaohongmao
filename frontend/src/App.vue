@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  
+import Loading from './components/Loading.vue'
 import AdCarousel from "./components/AdCarousel.vue";
 export default{
   components:{
