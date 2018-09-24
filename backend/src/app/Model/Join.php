@@ -13,6 +13,7 @@ class Join{
         'activity.title',
         'activity.level',
         'activity.hoster',
+        'activity.endtime',
         'hoster.hostname',
         'hoster.hostnickname'
     ];
@@ -25,6 +26,14 @@ class Join{
         return $re;
     }
     
+    public function countNum(){
+        $re= di()->db->count('join', 'timelong', [
+            'status[>]' => 1
+        ]);
+
+        return $re;
+    }
+
     /**
      * 月份差
      *
@@ -46,16 +55,42 @@ class Join{
         return $re;
     }
     
-    public function getByStuid($stuid){
+    public function getByStuid($stuid){//model中进行类别分组 done/undone/expire
 
-        $re= di()->db->select('join', [
+        $re['done'] = di()->db->select('join', [
             '[>]activity' => 'aid',
             '[>]hoster' => ['activity.hoster' => 'hid']
         ], $this->col, [
-            'stuid' => $stuid
+            'stuid' => $stuid,
+            'join.status[>]' => 1
         ]);
 
-        //todo 查询的列补充
+        $re['undone'] = di()->db->select('join', [
+            '[>]activity' => 'aid',
+            '[>]hoster' => ['activity.hoster' => 'hid']
+        ], $this->col, [
+            'stuid' => $stuid,
+            'join.status' => 1,
+            'endtime[>]' => time()
+        ]);
+
+        $re['expire'] = di()->db->select('join', [
+            '[>]activity' => 'aid',
+            '[>]hoster' => ['activity.hoster' => 'hid']
+        ], $this->col, [
+            'OR' => [
+                'AND' => [
+                    'stuid' => $stuid,
+                    'join.status' => 1,
+                    'endtime[<]' => time()
+                ]/*,
+                //暂时不要显示已经失效的了 0还要用做删除
+                'join.status' => 0*/   
+            ]
+            
+        ]);
+        // var_dump(di()->db->error(   ));
+        ////todo 查询的列补充
         return $re;  
     }
 
@@ -88,7 +123,6 @@ class Join{
             'timelong' => $time,
             'optadmin' => $opt,
             'opttime' => di()->db::raw('NOW()'),
-
         ]);
         
 

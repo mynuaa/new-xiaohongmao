@@ -180,6 +180,8 @@ class Front extends Api {
         }
         
         $re['yuan'] = $yuan;
+        $re['actNum'] = $this->Act->countNum();
+        $re['joinNum'] = $this->Join->countNum();
         return $re;
     }
 
