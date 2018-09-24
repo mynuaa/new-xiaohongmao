@@ -61,6 +61,14 @@ class Activity{
         return $re;
     }
 
+    public function getExpireTime($aid){
+        $re = di()->db->get('activity', 'endtime', [
+            'aid' => $aid
+        ]);
+        return $re;
+    }
+
+
     public function add($args){
         $re = di()->db->insert('activity', [
             'group_name'=>$args->group_name,

@@ -2,6 +2,7 @@
 namespace App\Domain;
 
 use App\Model\Join as MJoin;
+use App\Domain\Activity as DActivity;
 
 use function \PhalApi\DI as di;
 class Join {
@@ -11,7 +12,7 @@ class Join {
     }
 
     public function getByStuid($stuid){//是否被认证/过期 都会返回
-        
+
         $re = $this->Join->getByStuid($stuid);
 
         return $re;
@@ -55,7 +56,9 @@ class Join {
     }
 
     public function add($uid, $aid, $time, $admin){
-        return $this->Join->add($uid, $aid, $time, $admin);
+        $Act = new DActivity();
+        $expire = $Act->getExpireTime($aid);
+        return $this->Join->add($uid, $aid, $time, $admin, $expire);
     }
 
     public function del($id, $admin){

@@ -26,6 +26,11 @@ class Activity {
         return $this->Act->get($id);
     }
 
+    public function getExpireTime($aid){
+        $re = $this->Act->getExpireTime($aid);
+        return $re;
+    }
+
     public function add($args){
         $re = $this->Act->add($args);
         return $re;

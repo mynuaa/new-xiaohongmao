@@ -10,7 +10,6 @@ class Join{
         'join.aid',
         'join.timelong',
         'join.status',
-        'join.expire',
         'activity.title',
         'activity.level',
         'activity.hoster',
@@ -64,7 +63,7 @@ class Join{
         ], $this->col, [
             'stuid' => $stuid,
             'join.status' => 1,
-            'expire[>]' => time()
+            'endtime[>]' => time()
         ]);
 
         $re['expire'] = di()->db->select('join', [
@@ -75,14 +74,15 @@ class Join{
                 'AND' => [
                     'stuid' => $stuid,
                     'join.status' => 1,
-                    'expire[<]' => time()
-                ]/*,//暂时不要显示已经失效的了 0还要用做删除
+                    'endtime[<]' => time()
+                ]/*,
+                //暂时不要显示已经失效的了 0还要用做删除
                 'join.status' => 0*/   
             ]
             
         ]);
         // var_dump(di()->db->error(   ));
-        //todo 查询的列补充
+        ////todo 查询的列补充
         return $re;  
     }
 
@@ -108,14 +108,13 @@ class Join{
 
     }
 
-    public function add($uid, $aid, $time, $opt){
+    public function add($uid, $aid, $time, $opt, $expire){
         $re = di()->db->insert('join', [
             'stuid' => $uid,
             'aid' => $aid,
             'timelong' => $time,
             'optadmin' => $opt,
             'opttime' => di()->db::raw('NOW()'),
-
         ]);
         
 
