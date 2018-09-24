@@ -62,6 +62,7 @@ export default {
         activePage:1,
         cur:1,
         radio:0,
+        show:true,
         selected:"-1",
         hosters:[
             {
@@ -179,7 +180,9 @@ export default {
     }
   },
     methods: {
+
       getInfo(page,hid){
+                  this.show = true;
           this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
               service: 'Front.AllActivity',
               from: page * 20 - 20,
