@@ -19,7 +19,7 @@ namespace QRcode;
  * PHP QR Code is distributed under LGPL 3
  * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
  *
- * This library is free software; you can redistribute it and/or
+ * This library is free software; you can tribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or any later version.
@@ -60,7 +60,7 @@ namespace QRcode;
  * PHP QR Code is distributed under LGPL 3
  * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
  *
- * This library is free software; you can redistribute it and/or
+ * This library is free software; you can tribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or any later version.
@@ -141,7 +141,7 @@ namespace QRcode;
  * PHP QR Code is distributed under LGPL 3
  * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
  *
- * This library is free software; you can redistribute it and/or
+ * This library is free software; you can tribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or any later version.
@@ -329,7 +329,7 @@ namespace QRcode;
  * "Automatic identification and data capture techniques -- 
  *  QR Code 2005 bar code symbology specification" (ISO/IEC 18004:2006)
  *
- * This library is free software; you can redistribute it and/or
+ * This library is free software; you can tribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or any later version.
@@ -919,7 +919,7 @@ namespace QRcode;
  * PHP QR Code is distributed under LGPL 3
  * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
  *
- * This library is free software; you can redistribute it and/or
+ * This library is free software; you can tribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or any later version.
@@ -1025,7 +1025,7 @@ namespace QRcode;
  * PHP QR Code is distributed under LGPL 3
  * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
  *
- * This library is free software; you can redistribute it and/or
+ * This library is free software; you can tribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or any later version.
@@ -1761,7 +1761,7 @@ namespace QRcode;
  * PHP QR Code is distributed under LGPL 3
  * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
  *
- * This library is free software; you can redistribute it and/or
+ * This library is free software; you can tribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or any later version.
@@ -1955,7 +1955,7 @@ namespace QRcode;
  * "Automatic identification and data capture techniques -- 
  *  QR Code 2005 bar code symbology specification" (ISO/IEC 18004:2006)
  *
- * This library is free software; you can redistribute it and/or
+ * This library is free software; you can tribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or any later version.
@@ -2270,7 +2270,7 @@ namespace QRcode;
  * PHP QR Code is distributed under LGPL 3
  * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
  *
- * This library is free software; you can redistribute it and/or
+ * This library is free software; you can tribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or any later version.
@@ -2484,7 +2484,7 @@ namespace QRcode;
  * PHP QR Code is distributed under LGPL 3
  * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
  *
- * This library is free software; you can redistribute it and/or
+ * This library is free software; you can tribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or any later version.
@@ -2820,7 +2820,7 @@ namespace QRcode;
  * PHP QR Code is distributed under LGPL 3
  * Copyright (C) 2010 Dominik Dzienia <deltalab at poczta dot fm>
  *
- * This library is free software; you can redistribute it and/or
+ * This library is free software; you can tribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 3 of the License, or any later version.

@@ -24,7 +24,7 @@ class Join{
              $re= di()->db->sum('join', 'timelong', [
             'status[>]' => 1
             ]);
-            di()->redis->set('joinsum',$re);
+            di()->redis->set('joinsum',$re,10);
         }
         return $re;
     }
@@ -35,7 +35,7 @@ class Join{
             $re= di()->db->count('join', 'timelong', [
                 'status[>]' => 1
             ]);
-            di()->redis->set('joinnum',$re);
+            di()->redis->set('joinnum',$re,10);
         }
         return $re;
     }
@@ -62,39 +62,41 @@ class Join{
     }
     
     public function getByStuid($stuid){//model中进行类别分组 done/undone/expire
+        $re=di()->redis->get('joinByStuid');
+        if(!$re){
+                $re['done'] = di()->db->select('join', [
+                    '[>]activity' => 'aid',
+                    '[>]hoster' => ['activity.hoster' => 'hid']
+                ], $this->col, [
+                    'stuid' => $stuid,
+                    'join.status[>]' => 1
+                ]);
 
-        $re['done'] = di()->db->select('join', [
-            '[>]activity' => 'aid',
-            '[>]hoster' => ['activity.hoster' => 'hid']
-        ], $this->col, [
-            'stuid' => $stuid,
-            'join.status[>]' => 1
-        ]);
-
-        $re['undone'] = di()->db->select('join', [
-            '[>]activity' => 'aid',
-            '[>]hoster' => ['activity.hoster' => 'hid']
-        ], $this->col, [
-            'stuid' => $stuid,
-            'join.status' => 1,
-            'endtime[>]' => time()
-        ]);
-
-        $re['expire'] = di()->db->select('join', [
-            '[>]activity' => 'aid',
-            '[>]hoster' => ['activity.hoster' => 'hid']
-        ], $this->col, [
-            'OR' => [
-                'AND' => [
+                $re['undone'] = di()->db->select('join', [
+                    '[>]activity' => 'aid',
+                    '[>]hoster' => ['activity.hoster' => 'hid']
+                ], $this->col, [
                     'stuid' => $stuid,
                     'join.status' => 1,
-                    'endtime[<]' => time()
-                ]/*,
-                //暂时不要显示已经失效的了 0还要用做删除
-                'join.status' => 0*/   
-            ]
-            
-        ]);
+                    'endtime[>]' => time()
+                ]);
+
+                $re['expire'] = di()->db->select('join', [
+                    '[>]activity' => 'aid',
+                    '[>]hoster' => ['activity.hoster' => 'hid']
+                ], $this->col, [
+                    'OR' => [
+                        'AND' => [
+                            'stuid' => $stuid,
+                            'join.status' => 1,
+                            'endtime[<]' => time()
+                        ]/*,
+                        //暂时不要显示已经失效的了 0还要用做删除
+                        'join.status' => 0*/   
+                    ]
+                ]);
+                di()->redis->set('joinByStuid',$re,10);
+        }
         // var_dump(di()->db->error(   ));
         ////todo 查询的列补充
         return $re;  
@@ -140,9 +142,13 @@ class Join{
     }
 
     public function getByAid($aid){
-        $re = di()->db->select('join', '*', [
+        $re=di()->redis->get('joinByStuid');
+        if(!$re){
+            $re = di()->db->select('join', '*', [
             'aid' => $aid
-        ]);
+            ]);
+            di()->redis->set('joinByStuid',$re);
+        }
         return $re;  
     }
 

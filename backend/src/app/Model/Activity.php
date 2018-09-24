@@ -52,7 +52,7 @@ class Activity{
             }
 
             $re= di()->db->select('activity', $this->unionRelation, $this->unionColumn, $con);
-            di()->redis->set($key, $re);
+            di()->redis->set($key, $re,10);
         }
         return $re;
     }
@@ -65,19 +65,15 @@ class Activity{
                 'aid' => $id,
                 'activity.status[>]' => 0
             ]);
-            di()->redis->set('getact:'.$id, $re);
+            di()->redis->set('getact:'.$id, $re,10);
          }  
           return $re;
     }
 
     public function getExpireTime($aid){
-        $re = di()->redis->get('actExp:'.$aid);
-        if(!$re){
             $re = di()->db->get('activity', 'endtime', [
                 'aid' => $aid
             ]);
-            di()->redis->set('actExp:'.$aid, $re);
-        }
         return $re;
     }
 
