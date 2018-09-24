@@ -10,7 +10,8 @@ class Join {
         $this->Join = new MJoin();
     }
 
-    public function getByStuid($stuid){//是否被山河 都会返回
+    public function getByStuid($stuid){//是否被认证/过期 都会返回
+        
         $re = $this->Join->getByStuid($stuid);
 
         return $re;
@@ -62,9 +63,5 @@ class Join {
     }
     public function valid($id){
         return $this->Join->updateStatus($id, time());
-    }
-
-    public function getJoinByStuid($stuid){
-        return $this->Join-> getByStuid($stuid);
     }
 }
