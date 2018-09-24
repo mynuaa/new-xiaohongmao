@@ -59,9 +59,15 @@ class Activity {
         return $this->Act->setStatus($id, 0);
     }
     public function open($id){
+        $this->Act->update($id, [
+            'endtime' => time() + 60 * 60 * 24 * 7  //-1s
+        ]);
         return $this->Act->setStatus($id, 1);
     }
     public function shoutdown($id){
+        $this->Act->update($id, [
+            'endtime' => time() - 1 //-1s
+        ]);
         return $this->Act->setStatus($id, 2);
     }
     public function setStopTime($id, $time){

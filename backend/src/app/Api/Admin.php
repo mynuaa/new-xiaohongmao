@@ -318,6 +318,30 @@ class Admin extends Api {
                 ],
                 
             ],
+            'delAct' => [
+                'aid' => [
+                    'name' => 'aid',
+                    'desc' => '活动id',
+                    'type' => 'int',
+                    'require' => true,
+                ],
+            ],
+            'openAct' => [
+                'aid' => [
+                    'name' => 'aid',
+                    'desc' => '活动id',
+                    'type' => 'int',
+                    'require' => true,
+                ],
+            ],
+            'shoutdownAct' => [
+                'aid' => [
+                    'name' => 'aid',
+                    'desc' => '活动id',
+                    'type' => 'int',
+                    'require' => true,
+                ],
+            ],
             '*' => [
                 'jwt' => [
                     'name' => 'jwt', 
@@ -552,6 +576,42 @@ class Admin extends Api {
            }
         }
     }
+
+    /**
+     * 删除活动
+     *
+     * @return void
+     */
+    public function delAct(){
+        return $this->Act->del($this->aid);
+    }
+    /**
+     * 恢复被删除的活动
+     * 
+     *  @desc 对于join的影响实质上是把认证截止时间从现在时刻向后延长7天
+     * @return void
+     */
+    public function openAct(){
+        return $this->Act->open($this->aid);
+    }
+    /**
+     * 锁死活动 不允许参与
+     *
+     * @desc 对于join的影响实质上是把认证截止时间改为当前时间
+     * @return void
+     */
+    public function shoutdownAct(){
+        return $this->Act->shoutdown($this->aid);
+    }
+    
+    /**
+     * 设置被关闭的时间
+     *
+     * @return void
+     */
+    // public function setStopTime(){
+    //     return $this->Act->setStopTime($this->aid, $this->time);
+    // }
 
  /**
  * 获取登录的用户的活动信息
