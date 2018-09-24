@@ -103,7 +103,7 @@ class Activity{
         $args = array_merge($args, [
             'lastupdate' => time()
         ]);
-        
+
         $re=di()->db->update('activity', $args, [
             'aid'=>$aid
         ]);
@@ -147,5 +147,13 @@ class Activity{
         }else{
             return false;
         }
+    }
+
+    public function countNum(){
+        $re = di()->db->count('activity', [
+            'status[>]' => 0
+        ]);
+
+        return $re;
     }
 }

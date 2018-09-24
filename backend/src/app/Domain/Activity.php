@@ -55,6 +55,10 @@ class Activity {
         return $this->Type->getAll();
     }
 
+    public function countNum(){
+        return $this->Act->countNum();
+    }
+
     public function del($id){
         return $this->Act->setStatus($id, 0);
     }

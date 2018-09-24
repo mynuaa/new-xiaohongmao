@@ -25,11 +25,15 @@ class Join {
     }
 
     public function countAll(){
-        return $this->Join->countAll();
+        return (float)$this->Join->countAll();
+    }
+
+    public function countNum(){
+        return (int)$this->Join->countNum();
     }
 
     public function countMonth(){
-        return $this->Join->countMonth();
+        return (int)$this->Join->countMonth();
     }
 
     public function countByYuan($yuan){
@@ -41,7 +45,7 @@ class Join {
     }
     
     public function validJid($stuid, $jid){
-        $this->valid($jid);
+        return $this->valid($jid);
     }
 
     public function checkStuOwn($stuid, $jid){

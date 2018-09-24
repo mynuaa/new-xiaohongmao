@@ -26,6 +26,14 @@ class Join{
         return $re;
     }
     
+    public function countNum(){
+        $re= di()->db->count('join', 'timelong', [
+            'status[>]' => 1
+        ]);
+
+        return $re;
+    }
+
     /**
      * 月份差
      *
