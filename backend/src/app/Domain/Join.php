@@ -56,9 +56,9 @@ class Join {
     }
 
     public function add($uid, $aid, $time, $admin){
-        $Act = new DActivity();
-        $expire = $Act->getExpireTime($aid);
-        return $this->Join->add($uid, $aid, $time, $admin, $expire);
+        // $Act = new DActivity();
+        // $expire = $Act->getExpireTime($aid);
+        return $this->Join->add($uid, $aid, $time, $admin);
     }
 
     public function del($id, $admin){

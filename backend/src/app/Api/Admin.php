@@ -458,8 +458,8 @@ class Admin extends Api {
         // 去重通过硬件写死数据库实现
         $re = $this->Join->add($this->stuid, $this->aid, $this->timelong, $jwt['stuid']);
 
-        if($re){
-            return true;
+        if($re !== false){
+            return $re;
         }else{
             throw new Exception("出错，请检查是否重复", 503);
         }

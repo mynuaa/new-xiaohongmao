@@ -108,7 +108,7 @@ class Join{
 
     }
 
-    public function add($uid, $aid, $time, $opt, $expire){
+    public function add($uid, $aid, $time, $opt){
         $re = di()->db->insert('join', [
             'stuid' => $uid,
             'aid' => $aid,
