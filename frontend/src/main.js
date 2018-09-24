@@ -5,6 +5,7 @@ import VueCarousel from 'vue-carousel'
 import echarts from 'echarts'
 import axios from 'axios'
 
+
 Vue.use(VueCarousel);
 Vue.prototype.$echarts = echarts 
 Vue.config.productionTip = false

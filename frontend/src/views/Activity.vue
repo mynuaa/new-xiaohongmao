@@ -1,5 +1,6 @@
 <template>
     <div class="activity">
+        
         <div class="allActivities">
             <table class="activityTable">
                 <thead>
@@ -42,10 +43,12 @@
 </template>
 
 <script>
+
+
 export default {
   name: 'activity',
   components: {
-    
+     
   },
   data(){
       return{
