@@ -3,7 +3,7 @@
         <Loading v-if="show"></Loading>
         <div class="allActivities">
              <div class="radioBox">
-                <el-radio-group v-model="selected" @change="getInfo(1,selected),turn(1)" class="radioGroup">
+                <el-radio-group v-model="selected" @change="getInfo(1,selected),turn(1), getPages()" class="radioGroup">
                     <el-radio-button :label="item.hid" :key="item.hid" v-for="item in hosters" class="radioButton">{{item.hostname}}</el-radio-button>
                 </el-radio-group>
             </div>
@@ -64,6 +64,7 @@ export default {
         radio:0,
         show:true,
         selected:"-1",
+        actNum:1,
         hosters:[
             {
                 "hid": "-1",
@@ -180,6 +181,21 @@ export default {
     }
   },
     methods: {
+        getPages(){
+            this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api',{
+                service: 'Front.AllActivity',
+                from:0,
+                pagenum:this.actNum,
+                hid:this.selected
+            }).then(re => {
+                if(re.data.ret != 200){
+                    alert('');
+                }else{
+                    this.pageNum = Math.ceil(re.data.data.length/20);
+                    if(this.pageNum == 0){this.pageNum = 1;}
+                }
+            })
+        },
 
       getInfo(page,hid){
           this.show = true;
@@ -197,7 +213,9 @@ export default {
                   this.show = false;
               }
           })
-
+            
+      },
+      getactNum(){
           this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
               service: 'Front.ShowData',
           }).then(re => {
@@ -205,10 +223,10 @@ export default {
                  alert('')
               }else{
                   var num = re.data.data.actNum;
+                  this.actNum = num;
                   this.pageNum = Math.ceil(num/20);
               }
           })
-          
       },
       turn(n){  //-----------------------------------------------------确定分页数
         if(n != '-' && n!= '+'){
@@ -225,8 +243,13 @@ export default {
               }
           }
           else if(n == '+'){
-              this.getInfo(page + 1 , this.selected)
-              this.cur ++;
+              if(n == pageNum){
+                  return
+              }
+              else{
+                this.getInfo(page + 1 , this.selected)
+                this.cur ++;
+            }
           }
           else{
               this.getInfo(n , this.selected)
@@ -245,8 +268,8 @@ export default {
 
   },
   mounted() {
-        this.getInfo()
-        
+        this.getInfo();
+        this.getactNum();
   },
 
   computed:{
