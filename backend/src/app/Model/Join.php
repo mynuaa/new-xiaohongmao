@@ -19,17 +19,29 @@ class Join{
     ];
     
     public function countAll(){
-        $re= di()->db->sum('join', 'timelong', [
+        $re = di()->redis->get('join:alltime');
+        if($re){
+            return $re;
+        }
+
+        $re = di()->db->sum('join', 'timelong', [
             'status[>]' => 1
         ]);
 
+        di()->redis->set('join:alltime', $re);
         return $re;
     }
     
     public function countNum(){
+        $re = di()->redis->get('join:allNum');
+        if($re){
+            return $re;
+        }
         $re= di()->db->count('join', 'timelong', [
             'status[>]' => 1
         ]);
+
+        di()->redis->set('join:allNum', $re);
 
         return $re;
     }
@@ -41,6 +53,10 @@ class Join{
      * @return void
      */
     public function countMonth($month = 0){
+        $re = di()->redis->get('join:mouthLong:' . $month);
+        if($re){
+            return $re;
+        }
         if($month == 0){
             $time = date('Y-m');
         }else{
@@ -52,6 +68,7 @@ class Join{
             'status[>]' => $time,
 
         ]);
+        di()->redis->set('join:mouthLong:' . $month, $re);
         return $re;
     }
     
@@ -172,10 +189,16 @@ class Join{
     public function countByYuan($yuan){
         $yuan = $this->padding2($yuan);
 
+        $re = di()->redis->get('join:yuan:' . $yuan);
+        if($re){
+            return $re;
+        }
+
         $re = di()->db->sum('join', 'timelong', [
             'stuid[~]' => "{$yuan}%" //todo 暂时通过学号判断
         ]);
-        
+
+        di()->redis->set('join:yuan:' . $yuan, $re);
         return $re;
     }
 
