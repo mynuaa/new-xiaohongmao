@@ -26,9 +26,18 @@ class Activity {
         return $this->Act->get($id);
     }
 
+    public function getExpireTime($aid){
+        $re = $this->Act->getExpireTime($aid);
+        return $re;
+    }
+
     public function add($args){
         $re = $this->Act->add($args);
         return $re;
+    }
+
+    public function update($aid, $args){
+        return $this->Act->update($aid, $args);
     }
 
     public function adminDetail($aid){
@@ -46,13 +55,23 @@ class Activity {
         return $this->Type->getAll();
     }
 
+    public function countNum(){
+        return $this->Act->countNum();
+    }
+
     public function del($id){
         return $this->Act->setStatus($id, 0);
     }
     public function open($id){
+        $this->Act->update($id, [
+            'endtime' => time() + 60 * 60 * 24 * 7  //-1s
+        ]);
         return $this->Act->setStatus($id, 1);
     }
     public function shoutdown($id){
+        $this->Act->update($id, [
+            'endtime' => time() - 1 //-1s
+        ]);
         return $this->Act->setStatus($id, 2);
     }
     public function setStopTime($id, $time){
@@ -63,7 +82,5 @@ class Activity {
         return $this->Act->judge($user, $hoster);
     }
 
-    public function update($args){
-        return $this->Act->update($args);
-    }
+    
 }
