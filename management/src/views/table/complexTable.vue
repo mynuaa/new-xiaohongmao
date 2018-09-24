@@ -56,7 +56,7 @@
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="showArticle(scope.row.aid)">{{ $t('table.view') }}
           </el-button>
-          <el-button type="success" size="small" @click="up(scope.row)">{{ $t('table.apply') }}
+          <el-button type="success" size="small" @click="apply(scope.row)">{{ $t('table.apply') }}
           </el-button>
           <router-link :to="'/up/'+scope.row.aid">
             <el-button size="small">上传时长<i class="el-icon-upload el-icon--right"></i></el-button>
@@ -219,6 +219,17 @@ export default {
       this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',)
       .then((response) => {
           this.list = response.data.data
+          for(var prop in response.data.data){
+             if(response.data.data[prop].status==1){
+               this.list[prop].status = "进行中"
+             }
+             if(response.data.data[prop].status>1e9){
+               this.list[prop].status = "审核中"
+             }
+             if(response.data.data[prop].status==2){
+               this.list[prop].status = "审核关闭"
+             }
+          }
           this.total = this.list.length
         })
 
@@ -251,7 +262,7 @@ export default {
       })
       .then((response) => {
           this.temp = response.data.data.activity
-          for(var prop in response.data.data.join){
+          for(var prop of response.data.data.join){
             if(response.data.data.join[prop]==1){
               this.notcertified.push(response.data.data.join[prop])
             }
