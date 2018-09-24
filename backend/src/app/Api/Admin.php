@@ -114,7 +114,7 @@ class Admin extends Api {
                     'desc' => '开始时间'
                 ],
                 'endtime' => [
-                    'name' => 'starttime', 
+                    'name' => 'endtime', 
                     'require' => true,
                     'type' => 'int',
                     'desc' => '活动截止时间'
@@ -293,7 +293,7 @@ class Admin extends Api {
                     'desc' => '开始时间'
                 ],
                 'endtime' => [
-                    'name' => 'starttime', 
+                    'name' => 'endtime', 
                     'require' => true,
                     'type' => 'int',
                     'desc' => '活动截止时间'

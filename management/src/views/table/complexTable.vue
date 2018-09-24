@@ -54,9 +54,9 @@
       </el-table-column>
       <el-table-column :label="$t('table.actions')" align="center" width="400" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="showArticle(scope.row)">{{ $t('table.view') }}
+          <el-button type="primary" size="small" @click="showArticle(scope.row.aid)">{{ $t('table.view') }}
           </el-button>
-          <el-button type="success" size="small" @click="up(scope.row)">{{ $t('table.apply') }}
+          <el-button type="success" size="small" @click="apply(scope.row)">{{ $t('table.apply') }}
           </el-button>
           <router-link :to="'/up/'+scope.row.aid">
             <el-button size="small">上传时长<i class="el-icon-upload el-icon--right"></i></el-button>
@@ -84,6 +84,32 @@
       </div>
       <div class="activity">
         <label>活动时长：</label><span class="content">{{temp.volunteertimemin}} 小时</span>
+      </div>
+      <div class="activity">
+        <el-table
+          :data="joindata"
+          style="width: 100%">
+          <el-table-column
+            prop="stuid"
+            label="已认证">
+        </el-table-column>
+        <el-table-column
+          prop="timelong"
+          label="时长">
+        </el-table-column>
+         </el-table>
+        <el-table
+          :data="notcertified"
+          style="width: 100%">
+        <el-table-column
+          prop="stuid"
+          label="未认证">
+        </el-table-column>
+        <el-table-column
+          prop="timelong"
+          label="时长">
+        </el-table-column>
+        </el-table>
       </div>
       <div class="activity">
         <label>活动内容：</label><span v-html="temp.detail"></span>
@@ -166,6 +192,8 @@ export default {
         type: '',
         status: 'published'
       },
+      joindata:[],
+      notcertified:[],
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -191,6 +219,17 @@ export default {
       this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',)
       .then((response) => {
           this.list = response.data.data
+          for(var prop in response.data.data){
+             if(response.data.data[prop].status==1){
+               this.list[prop].status = "进行中"
+             }
+             if(response.data.data[prop].status>1e9){
+               this.list[prop].status = "审核中"
+             }
+             if(response.data.data[prop].status==2){
+               this.list[prop].status = "审核关闭"
+             }
+          }
           this.total = this.list.length
         })
 
@@ -223,6 +262,15 @@ export default {
       })
       .then((response) => {
           this.temp = response.data.data.activity
+          for(var prop of response.data.data.join){
+            if(response.data.data.join[prop]==1){
+              this.notcertified.push(response.data.data.join[prop])
+            }
+            if(response.data.data.join[prop]>10e9){
+              this.joindata.push(response.data.data.join[prop])
+            }
+          }
+          
         })
       this.$nextTick(() => { 
         this.$refs['dataForm'].clearValidate()

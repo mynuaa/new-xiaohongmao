@@ -6,13 +6,11 @@
       style="width: 100%">
       <el-table-column
         prop="title"
-        label="已参与活动"
-        width="180">
+        label="已参与活动">
       </el-table-column>
       <el-table-column
         prop="timelong"
-        label="时长"
-        width="180">
+        label="时长">
       </el-table-column>
       </el-table>
       <el-table
@@ -26,6 +24,15 @@
       <el-table-column
         prop="timelong"
         label="时长">
+      </el-table-column>
+      <el-table-column
+        prop="timelong"
+        label="申请认证">
+      <template slot-scope="scope">
+        <el-button
+        type="primary"
+          @click="Certification(scope.row.jid)">认证时长</el-button>
+      </template>
       </el-table-column>
     </el-table>
   </div>
@@ -54,6 +61,26 @@ export default {
         }
       }
     })
+  },
+  methods:{
+    Certification(id){
+      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.ValidJoin',{
+        'jwt':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MiwieXVhbiI6M319.r9vW77YBAKyQTzdaD-IVA42hEeCLizaYFmqv6pl8NAA',
+        'jid':id
+      })
+      .then((response)=>{
+        console.log(response.data.ret)
+        if(response.data.ret==200){
+          this.$message({
+            message: '认证成功，请刷新后查看',
+            type: 'success'
+        });
+        }
+        else{
+          this.$message.error(response.data.data.message);
+        }
+      })
+    }
   }
 }
 </script>
