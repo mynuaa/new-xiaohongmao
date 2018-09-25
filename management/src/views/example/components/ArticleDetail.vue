@@ -18,16 +18,16 @@
               </MDinput>
             </el-form-item>
             <el-form-item label-width="120px" label="人数:" class="postInfo-container-item">
-              <el-slider v-model="form.peoplenum"  show-input  max="1000"></el-slider>
+              <el-slider v-model="form.peoplenum"  show-input  :max=1000></el-slider>
             </el-form-item>
             <el-form-item label-width="120px" label="总时长:" class="postInfo-container-item">
-              <el-slider v-model="form.alltime"  show-input  max="1000"></el-slider>
+              <el-slider v-model="form.alltime"  show-input  :max=1000></el-slider>
             </el-form-item>
             <el-form-item label-width="120px" label="最多志愿时长:" class="postInfo-container-item">
-              <el-slider v-model="form.volunteertimemax"  show-input  max="100"></el-slider>
+              <el-slider v-model="form.volunteertimemax"  show-input  :max=100></el-slider>
             </el-form-item>
             <el-form-item label-width="120px" label="最少志愿时长:" class="postInfo-container-item">
-              <el-slider v-model="form.volunteertimemin"  show-input  max="100"></el-slider>
+              <el-slider v-model="form.volunteertimemin"  show-input  :max=100></el-slider>
             </el-form-item>
             <el-form-item label-width="120px" label="联系方式:" class="postInfo-container-item">
               <el-input v-model="form.contact" placeholder="联系方式" width='90px'></el-input>
@@ -45,7 +45,7 @@
                 </el-select>
                 </el-form-item>
                   <el-form-item label-width="80px" label="发布时间:" class="postInfo-container-item">
-                    <el-date-picker v-model="form.starttime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间"/>
+                    <el-date-picker v-model="form.starttime" type="datetime" format="yyyy-MM-dd" placeholder="选择日期时间"/>
                   </el-form-item>
               </el-row>
               <el-row :gutter="20">
@@ -60,7 +60,7 @@
                 </el-select>
                 </el-form-item>
                 <el-form-item label-width="80px" label="截止时间:" class="postInfo-container-item">
-                    <el-date-picker v-model="form.endtime" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间"/>
+                    <el-date-picker v-model="form.endtime" type="datetime" format="yyyy-MM-dd" placeholder="选择日期时间"/>
                   </el-form-item>
               </el-row>
             </div>
@@ -146,7 +146,7 @@ export default {
         type:'',
         level:'',
         group_name:'new',
-        endtime:''
+        endtime:'',
       },
       options: [],
       level:[{
@@ -193,9 +193,12 @@ export default {
   },
   methods: {
     submitForm() {
+      let jwt = getToken()
       if(!isEdit){
         this.form.starttime = Date.parse(this.form.starttime) / 1e3
-        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity', this.form)
+        this.form.endtime = Date.parse(this.form.endtime) / 1e3
+        this.form.jwt = jwt
+        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity',this.form)
         .then(response => {
           if (response.data.ret == 200) {
             this.loading = true
@@ -217,6 +220,8 @@ export default {
       }
       if(isEdit){
         this.form.starttime = Date.parse(this.form.starttime) / 1e3
+        this.form.endtime = Date.parse(this.form.endtime) / 1e3
+        this.form.jwt = jwt
         this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.UpdateActivity', this.form)
         .then(response => {
           if (response.data.ret == 200) {

@@ -1,6 +1,19 @@
 <template>
   <div>
     <el-table
+      :data="expire"
+      stripe
+      style="width: 100%">
+      <el-table-column
+        prop="title"
+        label="认证过期活动">
+      </el-table-column>
+      <el-table-column
+        prop="timelong"
+        label="时长">
+      </el-table-column>
+      </el-table>
+    <el-table
       :data="doneActivityForm"
       stripe
       style="width: 100%">
@@ -45,7 +58,8 @@ export default {
   data() {
     return {
       doneActivityForm:[],
-      notcertified:[]
+      notcertified:[],
+      expire:[]
     }
   },
   created(){
@@ -53,14 +67,9 @@ export default {
       'jwt':jwt,
     })
     .then((response)=>{
-      for (var prop in response.data.data){
-        if(response.data.data[prop].status==1){
-          this.notcertified.push(response.data.data[prop])
-        }
-        else  if(response.data.data[prop].status>1e9){
-          this.doneActivityForm.push(response.data.data[prop])
-        }
-      }
+          this.notcertified = response.data.data.undone
+          this.doneActivityForm = response.data.data.done
+          this.expire = response.data.data.expire
     })
   },
   methods:{
