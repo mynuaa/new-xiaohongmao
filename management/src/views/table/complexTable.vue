@@ -13,7 +13,7 @@
       </el-table-column>
       <el-table-column label="活动名称"  width="180px" min-width="100px">
         <template slot-scope="scope">
-          <span class="link-type" @click="showArticle(scope.row)">{{ scope.row.title }}</span>
+          <span class="link-type" @click="showArticle(scope.row.aid)">{{ scope.row.title }}</span>
         </template>
       </el-table-column>
       <el-table-column label="主办方" width="100px" align="center">
@@ -38,9 +38,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="400" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="showArticle(scope.row.aid)">{{ $t('table.view') }}
-          </el-button>
-          <el-button type="success" size="small" @click="apply(scope.row)">{{ $t('table.apply') }}
+          <el-button type="success" size="small" @click="showArticle(scope.row.aid)">{{ $t('table.view') }}
           </el-button>
           <router-link :to="'/up/'+scope.row.aid">
             <el-button size="small">上传时长<i class="el-icon-upload el-icon--right"></i></el-button>
@@ -54,10 +52,13 @@
 
     <div class="footer">
       <el-pagination
-  :page-size="20"
-  layout="prev, pager, next">
-</el-pagination>
-    </div>
+        background
+        layout="prev, pager, next"
+        :total="total"
+        :page-size="20"
+        @current-change="currentpage">
+      </el-pagination>
+    </div>  
     <el-dialog title="活动详情" :visible.sync="dialogFormVisible">
       <div class="activity">
         <label>活动名称：</label><span>{{temp.title}}</span>
@@ -113,7 +114,6 @@ export default {
     return {
       tableKey: 0,
       list: null,
-      total: null,
       listLoading: true,
       listQuery: {
         page: 1,
@@ -127,14 +127,18 @@ export default {
       joindata:[],
       notcertified:[],
       dialogFormVisible: false,
+      total:1
     }
   },
   created() {
     this.getList()
+    this.getallnum()
   },
   methods: {
-    getList() {
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',)
+    getList(from = 0) {
+      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',{
+        from:from
+      })
       .then((response) => {
           this.list = response.data.data
           for(var prop in response.data.data){
@@ -148,8 +152,13 @@ export default {
                this.list[prop].status = "审核关闭"
              }
           }
-          this.total = this.list.length
         })
+    },
+    getallnum(){
+      this.axios.post("http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.ShowData",)
+      .then((response)=>{
+        this.total = response.data.data.actNum
+      })
     },
     showArticle(row){
       this.dialogFormVisible = true
@@ -173,6 +182,9 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
+    currentpage(id){
+      this.getList((id-1)*20)
+    }
   }
 }
 </script>
