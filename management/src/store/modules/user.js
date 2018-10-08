@@ -55,39 +55,27 @@ const user = {
       })
     },
 
-    // 获取用户信息
     GetUserInfo({ commit, state }) {
-          /*if (!response.data) { // 由于mockjs 不支持自定义状态码只能这样hack
-            reject('error')
-          }*/
-          const data = getRole()
-
-          if(data.admin == false){
-            commit('SET_ROLES', 'user')
-          }else{
-            commit('SET_ROLES', 'admin')
+      return new Promise((resolve, reject) => {
+          const data = {roles: ['admin'], token: "admin", introduction: "我是超级管理员", avatar: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif", name: "Super Admin"}
+          const data1 = getRole()
+          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
+            commit('SET_ROLES', data.roles)
           }
-          commit('SET_NAME', data.uname)
-          return ['user', 'admin']
-          /*commit('SET_AVATAR', data.avatar)
-          commit('SET_INTRODUCTION', data.introduction)*/
-
-
+          if((data1.admin.level > 1)){
+            data.roles = ['admin']
+            data.name = data1.uname 
+          }
+          if((data1.admin.level==1)){
+            data.roles = ['editor']
+            data.name = data1.uname
+          }
+          commit('SET_NAME', data.name)
+          commit('SET_AVATAR', data.avatar)
+          commit('SET_INTRODUCTION', data.introduction)
+          resolve(data)
+      })
     },
-
-    // 第三方验证登录
-    // LoginByThirdparty({ commit, state }, code) {
-    //   return new Promise((resolve, reject) => {
-    //     commit('SET_CODE', code)
-    //     loginByThirdparty(state.status, state.email, state.code).then(response => {
-    //       commit('SET_TOKEN', response.data.token)
-    //       setToken(response.data.token)
-    //       resolve()
-    //     }).catch(error => {
-    //       reject(error)
-    //     })
-    //   })
-    // },
 
     // 登出
     LogOut({ commit, state }) {

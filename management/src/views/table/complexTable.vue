@@ -40,10 +40,10 @@
         <template slot-scope="scope">
           <el-button type="success" size="small" @click="showArticle(scope.row.aid)">{{ $t('table.view') }}
           </el-button>
-          <router-link :to="'/up/'+scope.row.aid">
+          <router-link :to="'/up/'+scope.row.aid" v-permission="['admin']">
             <el-button size="small">上传时长<i class="el-icon-upload el-icon--right"></i></el-button>
           </router-link>
-          <router-link :to="'/example/edit/'+scope.row.aid" class="link-type">
+          <router-link :to="'/example/edit/'+scope.row.aid" class="link-type" v-permission="['admin']">
             <el-button type="primary" size="small" icon="el-icon-edit">修改文章</el-button>
           </router-link>
         </template>
@@ -72,7 +72,7 @@
       <div class="activity">
         <label>活动时长：</label><span class="content">{{temp.volunteertimemin}} 小时</span>
       </div>
-      <div class="activity">
+      <div class="activity" v-permission="['editor']">
         <el-table
           :data="joindata"
           style="width: 100%">
@@ -108,8 +108,10 @@
 <script>
 import { parseTime } from '@/utils'
 import {getToken} from '@/utils/auth'
-
+import permission from '@/directive/permission/index.js'
+import checkPermission from '@/utils/permission'
 export default {
+  directives: { permission },
   data() {
     return {
       tableKey: 0,
@@ -135,6 +137,7 @@ export default {
     this.getallnum()
   },
   methods: {
+    checkPermission,
     getList(from = 0) {
       this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',{
         from:from
