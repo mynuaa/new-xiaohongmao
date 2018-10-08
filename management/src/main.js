@@ -31,7 +31,6 @@ Vue.use(Element, {
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
-
 Vue.config.productionTip = false
 Vue.prototype.axios = axios
 new Vue({
