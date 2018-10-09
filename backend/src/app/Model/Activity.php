@@ -122,9 +122,9 @@ class Activity{
         ], [
             'aid' => $id
         ]);
-        $re=di()->db->updata('join',[
-            'timelong'=>0,
-            'status'=>0
+        $r = di()->db->update('join',[
+            'status'=>0,
+            'timelong'=>0
         ],[
             'aid' => $id
         ]);
