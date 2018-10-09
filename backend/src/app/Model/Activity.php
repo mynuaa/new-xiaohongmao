@@ -81,7 +81,7 @@ class Activity{
             'alltime' => $args->alltime,
             'contact' => $args->contact,
             'starttime' => $args->starttime,
-            'status' => $args->endtime,
+            'endtime' => $args->endtime,
             'volunteertimemin' => $args->volunteertimemin,
             'volunteertimemax' => $args->volunteertimemax,
             'type' => $args->type,
