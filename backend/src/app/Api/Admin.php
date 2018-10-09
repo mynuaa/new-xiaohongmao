@@ -583,7 +583,7 @@ class Admin extends Api {
      * @return void
      */
     public function delAct(){
-        return $this->Act->del($this->aid);
+        return $this->Act->del($this->aid,$this->$admin);
     }
     /**
      * 恢复被删除的活动

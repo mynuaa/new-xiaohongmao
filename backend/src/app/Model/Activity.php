@@ -81,7 +81,7 @@ class Activity{
             'alltime' => $args->alltime,
             'contact' => $args->contact,
             'starttime' => $args->starttime,
-            'endtime' => $args->endtime,
+            'status' => $args->endtime,
             'volunteertimemin' => $args->volunteertimemin,
             'volunteertimemax' => $args->volunteertimemax,
             'type' => $args->type,
@@ -114,6 +114,25 @@ class Activity{
             return false;
         }
         return $re;
+    }
+
+    public function del($id){
+        $re = di()->db->update('activity', [
+            'status' => 0
+        ], [
+            'aid' => $id
+        ]);
+        $re=di()->db->updata('join',[
+            'timelong'=>0,
+            'status'=>0
+        ],[
+            'aid' => $id
+        ]);
+        if(di()->db->error()[0] == 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function setStatus($id, $status){
