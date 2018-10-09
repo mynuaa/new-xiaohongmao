@@ -5,7 +5,6 @@ use App\Model\Activity as MActivity;
 use App\Model\Hoster as MHoster;
 use App\Model\Type as MType;
 use App\Model\Join as MJoin;
-use App\Domain\Join as DJoin;
 
 use function \PhalApi\DI as di;
 
@@ -14,7 +13,6 @@ class Activity {
     function __construct() {
         $this->Act = new MActivity();
         $this->Join = new MJoin();
-        $this->DJoin= new DJoin();
         $this->Hoster = new MHoster();
         $this->Type = new MType();
     }
@@ -61,9 +59,8 @@ class Activity {
         return $this->Act->countNum();
     }
 
-    public function del($id,$admin){
-        $this->DJoin->del($id,0, $admin);
-        return $this->Act->setStatus($id, 0);//add an function to delete an activity
+    public function del($id){
+        return $this->Act->del($id);//add an function to delete an activity
     }
     public function open($id){
         $this->Act->update($id, [
