@@ -116,6 +116,25 @@ class Activity{
         return $re;
     }
 
+    public function del($id){
+        $re = di()->db->update('activity', [
+            'status' => 0
+        ], [
+            'aid' => $id
+        ]);
+        $r = di()->db->update('join',[
+            'status'=>0,
+            'timelong'=>0
+        ],[
+            'aid' => $id
+        ]);
+        if(di()->db->error()[0] == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public function setStatus($id, $status){
         $re = di()->db->update('activity', [
             'status' => $status

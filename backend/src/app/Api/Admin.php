@@ -583,6 +583,16 @@ class Admin extends Api {
      * @return void
      */
     public function delAct(){
+        $jwt = $this->checkJwt();
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
+
+        if($jwt['admin']->level == 1){//院级管理员
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid) || $this->Act->get($this->aid)['level'] == 1){
+                throw new Exception("无权限", 403);
+            }
+        }
         return $this->Act->del($this->aid);
     }
     /**
@@ -592,6 +602,16 @@ class Admin extends Api {
      * @return void
      */
     public function openAct(){
+        $jwt = $this->checkJwt();
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
+
+        if($jwt['admin']->level == 1){//院级管理员
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid) || $this->Act->get($this->aid)['level'] == 1){
+                throw new Exception("无权限", 403);
+            }
+        }
         return $this->Act->open($this->aid);
     }
     /**
@@ -601,6 +621,16 @@ class Admin extends Api {
      * @return void
      */
     public function shoutdownAct(){
+        $jwt = $this->checkJwt();
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
+
+        if($jwt['admin']->level == 1){//院级管理员
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid) || $this->Act->get($this->aid)['level'] == 1){
+                throw new Exception("无权限", 403);
+            }
+        }
         return $this->Act->shoutdown($this->aid);
     }
     
