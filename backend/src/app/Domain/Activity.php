@@ -59,8 +59,8 @@ class Activity {
         return $this->Act->countNum();
     }
 
-    public function del($id){//todo 加判断
-        return $this->Act->del($id);//add an function to delete an activity
+    public function del($id,$stuid){//todo 加判断
+        return $this->Act->del($id,$stuid);//add an function to delete an activity
     }
     public function open($id){//todo 加判断
         $this->Act->update($id, [

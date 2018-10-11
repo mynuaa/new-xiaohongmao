@@ -593,7 +593,7 @@ class Admin extends Api {
                 throw new Exception("无权限", 403);
             }
         }
-        return $this->Act->del($this->aid);
+        return $this->Act->del($this->aid,$jwt['stuid']);
     }
     /**
      * 恢复被删除的活动

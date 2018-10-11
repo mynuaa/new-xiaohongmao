@@ -116,9 +116,10 @@ class Activity{
         return $re;
     }
 
-    public function del($id){
+    public function del($id,$stuid){
         $re = di()->db->update('activity', [
-            'status' => 0
+            'status' => 0,
+            'optadmin'=>$stuid
         ], [
             'aid' => $id
         ]);
