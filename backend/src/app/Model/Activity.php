@@ -125,7 +125,8 @@ class Activity{
         ]);
         $r = di()->db->update('join',[
             'status'=>0,
-            'timelong'=>0
+            'timelong'=>0,
+            'optadmin'=>$stuid
         ],[
             'aid' => $id
         ]);
