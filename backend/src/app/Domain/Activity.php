@@ -59,23 +59,23 @@ class Activity {
         return $this->Act->countNum();
     }
 
-    public function del($id,$uname){//todo 加判断
-        return $this->Act->del($id,$uname);//add an function to delete an activity
+    public function del($id,$stuid){//todo 加判断
+        return $this->Act->del($id,$stuid);//add an function to delete an activity
     }
-    public function open($id,$uname){//todo 加判断
+    public function open($id,$stuid){//todo 加判断
         $this->Act->update($id, [
-            'endtime' => time() + 60 * 60 * 24 * 7 , //-1s
+            'endtime' => time() + 60 * 60 * 24 * 7  //-1s
         ]);
-        return $this->Act->setStatus($id, 1,$uname);
+        return $this->Act->setStatus($id, 1,$stuid);
     }
-    public function shoutdown($id,$uname){//todo 加判断/***/ */
+    public function shoutdown($id,$stuid){//todo 加判断/***/ */
         $this->Act->update($id, [
             'endtime' => time() - 1 //-1s
         ]);
-        return $this->Act->setStatus($id, 2,$uname);//***** */
+        return $this->Act->setStatus($id, 2,$stuid);//***** */
     }
-    public function setStopTime($id, $time){//todo 加判断/////*///***/ */
-        return $this->Act->setStatus($id, $time);
+    public function setStopTime($id, $time,$stuid){//todo 加判断/////*///***/ */
+        return $this->Act->setStatus($id, $time,$stuid);
     }
 
     public function judge($user,$hoster){//added by helaji//todo 加判断
