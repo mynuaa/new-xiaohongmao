@@ -116,10 +116,10 @@ class Activity{
         return $re;
     }
 
-    public function del($id,$stuid){
+    public function del($id,$uname){
         $re = di()->db->update('activity', [
             'status' => 0,
-            'optadmin'=>$stuid,
+            'optadmin'=>$uname,
             'opttime'=>di()->db::raw('NOW()')
         ], [
             'aid' => $id
@@ -127,7 +127,7 @@ class Activity{
         $r = di()->db->update('join',[
             'status'=>0,
             'timelong'=>0,
-            'optadmin'=>$stuid,
+            'optadmin'=>$uname,
             'opttime'=>di()->db::raw('NOW()')
         ],[
             'aid' => $id
@@ -139,9 +139,11 @@ class Activity{
         }
     }
 
-    public function setStatus($id, $status){
+    public function setStatus($id, $status,$uname){
         $re = di()->db->update('activity', [
-            'status' => $status
+            'status' => $status,
+            'optadmin'=>$uname,
+            'lastypdate'=>time()
         ], [
             'aid' => $id
         ]);

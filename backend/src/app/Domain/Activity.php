@@ -59,22 +59,22 @@ class Activity {
         return $this->Act->countNum();
     }
 
-    public function del($id,$stuid){//todo 加判断
-        return $this->Act->del($id,$stuid);//add an function to delete an activity
+    public function del($id,$uname){//todo 加判断
+        return $this->Act->del($id,$uname);//add an function to delete an activity
     }
-    public function open($id){//todo 加判断
+    public function open($id,$uname){//todo 加判断
         $this->Act->update($id, [
-            'endtime' => time() + 60 * 60 * 24 * 7  //-1s
+            'endtime' => time() + 60 * 60 * 24 * 7 , //-1s
         ]);
-        return $this->Act->setStatus($id, 1);
+        return $this->Act->setStatus($id, 1,$uname);
     }
-    public function shoutdown($id){//todo 加判断
+    public function shoutdown($id,$uname){//todo 加判断/***/ */
         $this->Act->update($id, [
             'endtime' => time() - 1 //-1s
         ]);
-        return $this->Act->setStatus($id, 2);
+        return $this->Act->setStatus($id, 2,$uname);//***** */
     }
-    public function setStopTime($id, $time){//todo 加判断
+    public function setStopTime($id, $time){//todo 加判断/////*///***/ */
         return $this->Act->setStatus($id, $time);
     }
 

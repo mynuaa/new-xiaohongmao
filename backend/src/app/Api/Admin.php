@@ -593,7 +593,7 @@ class Admin extends Api {
                 throw new Exception("无权限", 403);
             }
         }
-        return $this->Act->del($this->aid,$jwt['stuid']);
+        return $this->Act->del($this->aid,$jwt['uname']);
     }
     /**
      * 恢复被删除的活动
@@ -612,7 +612,7 @@ class Admin extends Api {
                 throw new Exception("无权限", 403);
             }
         }
-        return $this->Act->open($this->aid,$jwt['stuid']);
+        return $this->Act->open($this->aid,$jwt['uname']);
     }
     /**
      * 锁死活动 不允许参与
@@ -631,7 +631,7 @@ class Admin extends Api {
                 throw new Exception("无权限", 403);
             }
         }
-        return $this->Act->shoutdown($this->aid,$jwt['stuid']);
+        return $this->Act->shoutdown($this->aid,$jwt['uname']);
     }
     
     /**
