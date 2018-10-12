@@ -119,14 +119,16 @@ class Activity{
     public function del($id,$stuid){
         $re = di()->db->update('activity', [
             'status' => 0,
-            'optadmin'=>$stuid
+            'optadmin'=>$stuid,
+            'opttime'=>di()->db::raw('NOW()')
         ], [
             'aid' => $id
         ]);
         $r = di()->db->update('join',[
             'status'=>0,
             'timelong'=>0,
-            'optadmin'=>$stuid
+            'optadmin'=>$stuid,
+            'opttime'=>di()->db::raw('NOW()')
         ],[
             'aid' => $id
         ]);
