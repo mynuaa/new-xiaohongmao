@@ -139,8 +139,10 @@ export default {
   methods: {
     checkPermission,
     getList(from = 0) {
+      let jwt = getToken()
       this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',{
-        from:from
+        from:from,
+        'jwt':jwt
       })
       .then((response) => {
           this.list = response.data.data

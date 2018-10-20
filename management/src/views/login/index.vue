@@ -88,8 +88,8 @@ export default {
     }
     return {
       loginForm: {
-        username: '031630226',
-        password: 'St031630226'
+        username: '',
+        password: ''
       },
       dxResult: false,
       loginRules: {
