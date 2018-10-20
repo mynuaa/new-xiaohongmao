@@ -396,6 +396,7 @@ class Admin extends Api {
       //  $admin = $this->User->isAdmin($this->stuid);
        // return $this->User->encode($ded['name'], $this->stuid, $admin);//注释掉测试代码
 
+       /*
         if($this->Ded->binded($this->stuid)){//已经绑定 老用户
             //返回jwt
             $admin = $this->User->isAdmin($this->stuid);
@@ -403,8 +404,22 @@ class Admin extends Api {
         }else{
             // ？是否要激活？
             //to do 怎么搞？
-            throw new Exception('请确认绑定', 200);
+            $re = $this->User->bindUser($this->stuid,$ded);
+            
+            throw new Exception('请确认绑定', 199);
         }
+
+        */
+        if(!$this->Ded->binded($this->stuid)){//已经绑定 老用户  自动绑定
+            $re = $this->User->bindUser($this->stuid, $ded);
+            if(!$re){
+                throw new Exception('数据库错误', 500);
+            }
+        }
+
+        $admin = $this->User->isAdmin($this->stuid);
+        return $this->User->encode($ded['name'], $this->stuid, $admin);
+
 
         //判断是否是新注册
         //正常的业务逻辑
