@@ -62,13 +62,14 @@ const user = {
           if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', data.roles)
           }
-          if((data1.admin.level > 1)){
-            data.roles = ['admin']
-            data.name = data1.uname 
-          }
-          if((data1.admin.level==1)){
+          if((data1.admin==false)){
             data.roles = ['editor']
             data.name = data1.uname
+            data.token = 'editor'
+          }else if((data1.admin.level > 1)){
+            data.roles = ['admin']
+            data.name = data1.uname
+            data.token = 'admin'
           }
           commit('SET_NAME', data.name)
           commit('SET_AVATAR', data.avatar)

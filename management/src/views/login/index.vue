@@ -5,7 +5,6 @@
 
       <div class="title-container">
         <h3 class="title">小红帽 - 用户登录</h3>
-        <lang-select class="set-language"/>
       </div>
 
       <el-form-item prop="username">
@@ -88,8 +87,8 @@ export default {
     }
     return {
       loginForm: {
-        username: '031630226',
-        password: 'St031630226'
+        username: '',
+        password: ''
       },
       dxResult: false,
       loginRules: {

@@ -112,19 +112,6 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/table',
-    component: Layout,
-    redirect: '/table/complex-table',
-    children: [
-      {
-        path: 'complex-table',
-        component: () => import('@/views/table/complexTable'),
-        name: 'ComplexTable',
-        meta: { title: 'complexTable', icon: 'list' }
-      }
-    ]
-  },
-  {
     path: '/documentation',
     component: Layout,
     redirect: '/documentation/index',
@@ -148,7 +135,6 @@ export default new Router({
 export const asyncRouterMap = [
   {
     path: '/create',
-    component: Layout,
     redirect: '/information/index',
     children: [
       {
@@ -159,8 +145,20 @@ export const asyncRouterMap = [
           title: '发布活动',
           icon: 'edit',
           noCache: true,
-          roles:['editor']
+          roles:['admin']
         }
+      }
+    ]
+  },
+  {
+    path: '/table',
+    redirect: '/table/complex-table',
+    children: [
+      {
+        path: 'complex-table',
+        component: () => import('@/views/table/complexTable'),
+        name: 'ComplexTable',
+        meta: { title: '活动列表', icon: 'list',roles:['admin'] }
       }
     ]
   },
