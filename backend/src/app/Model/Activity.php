@@ -116,15 +116,19 @@ class Activity{
         return $re;
     }
 
-    public function del($id){
+    public function del($id,$stuid){
         $re = di()->db->update('activity', [
-            'status' => 0
+            'status' => 0,
+            'optadmin'=>$stuid,
+            'opttime'=>di()->db::raw('NOW()')
         ], [
             'aid' => $id
         ]);
         $r = di()->db->update('join',[
             'status'=>0,
-            'timelong'=>0
+            'timelong'=>0,
+            'optadmin'=>$stuid,
+            'opttime'=>di()->db::raw('NOW()')
         ],[
             'aid' => $id
         ]);
@@ -135,9 +139,11 @@ class Activity{
         }
     }
 
-    public function setStatus($id, $status){
+    public function setStatus($id, $status,$stuid){
         $re = di()->db->update('activity', [
-            'status' => $status
+            'status' => $status,
+            'optadmin'=>$stuid,
+            'lastupdate'=>time()
         ], [
             'aid' => $id
         ]);

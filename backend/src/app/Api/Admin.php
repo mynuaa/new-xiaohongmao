@@ -608,7 +608,7 @@ class Admin extends Api {
                 throw new Exception("无权限", 403);
             }
         }
-        return $this->Act->del($this->aid);
+        return $this->Act->del($this->aid,$jwt['stuid']);
     }
     /**
      * 恢复被删除的活动
@@ -627,7 +627,7 @@ class Admin extends Api {
                 throw new Exception("无权限", 403);
             }
         }
-        return $this->Act->open($this->aid);
+        return $this->Act->open($this->aid,$jwt['stuid']);
     }
     /**
      * 锁死活动 不允许参与
@@ -646,7 +646,7 @@ class Admin extends Api {
                 throw new Exception("无权限", 403);
             }
         }
-        return $this->Act->shoutdown($this->aid);
+        return $this->Act->shoutdown($this->aid,$jwt['stuid']);
     }
     
     /**
@@ -655,7 +655,7 @@ class Admin extends Api {
      * @return void
      */
     // public function setStopTime(){
-    //     return $this->Act->setStopTime($this->aid, $this->time);
+    //     return $this->Act->setStopTime($this->aid, $this->time,$jwt['stuid']);
     // }
 
  /**
@@ -675,7 +675,7 @@ class Admin extends Api {
  */
     public function makejwt(){
         return $this->User->encode('seiry', '031630226', ['level' => 2, 'yuan' => 3]);
-      //  return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
+        //return $this->User->encode('se', '161740225', ['level' => 3,'yuan'=>16]);
     }
 
 }
