@@ -206,7 +206,7 @@ export default {
         }
         setToken(re.data)
         getRole()
-        this.$router.push({ path: '/' })
+        this.$router.push({ path: '/information' })
       })
 
     },

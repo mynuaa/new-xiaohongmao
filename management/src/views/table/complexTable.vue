@@ -38,13 +38,13 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="400" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="success" size="small" @click="showArticle(scope.row.aid)">{{ $t('table.view') }}
+          <el-button type="success" size="primary" @click="showArticle(scope.row.aid)">查看活动
           </el-button>
           <router-link :to="'/up/'+scope.row.aid" v-permission="['admin']">
-            <el-button size="small">上传时长<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button size="primary">上传时长<i class="el-icon-upload el-icon--right"></i></el-button>
           </router-link>
           <router-link :to="'/example/edit/'+scope.row.aid" class="link-type" v-permission="['admin']">
-            <el-button type="primary" size="small" icon="el-icon-edit">修改文章</el-button>
+            <el-button type="primary" size="primary" icon="el-icon-edit">修改文章</el-button>
           </router-link>
         </template>
       </el-table-column>
@@ -72,7 +72,7 @@
       <div class="activity">
         <label>活动时长：</label><span class="content">{{temp.volunteertimemin}} 小时</span>
       </div>
-      <div class="activity" v-permission="['editor']">
+      <div class="activity" v-permission="['admin']">
         <el-table
           :data="joindata"
           style="width: 100%">
