@@ -135,10 +135,11 @@ export default new Router({
 export const asyncRouterMap = [
   {
     path: '/create',
+    component: Layout,
     redirect: '/information/index',
     children: [
       {
-        path: 'index',
+        path: 'index', 
         component: () => import('@/views/example/create'),
         name: 'CreateArticle',
         meta: {
@@ -152,6 +153,7 @@ export const asyncRouterMap = [
   },
   {
     path: '/table',
+    component: Layout,
     redirect: '/table/complex-table',
     children: [
       {
