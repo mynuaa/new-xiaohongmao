@@ -12,7 +12,7 @@
       <li><router-link to="/certification">服务认证</router-link></li>
       <li><router-link to="/navigate">导航</router-link></li> -->
       <!-- <li><router-link to="/detail">活动详情</router-link></li> -->
-      <li><router-link to="/loggedIn">个人详情</router-link></li>
+      <li><a href='http://my.nuaa.edu.cn/xiaohongmao2/admin/'>个人详情</a></li>
       </ul>
     </div>
     <div class="mainPage">
