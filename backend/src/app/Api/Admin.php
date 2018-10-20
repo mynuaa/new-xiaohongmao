@@ -431,8 +431,11 @@ class Admin extends Api {
      * @return void
      */
     public function allActivity(){
+        $jwt = $this->checkJwt();
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
         $re = $this->Act->gets($this->from, $this->pagenum, true);
-
         return $re;
     }
 
@@ -674,7 +677,7 @@ class Admin extends Api {
  * @return void
  */
     public function makejwt(){
-        return $this->User->encode('seiry', '031630226', ['level' => 2, 'yuan' => 3]);
+        return $this->User->encode('seiry', '031630226', ['level' => 1, 'yuan' => 3]);
         //return $this->User->encode('se', '161740225', ['level' => 3,'yuan'=>16]);
     }
 
