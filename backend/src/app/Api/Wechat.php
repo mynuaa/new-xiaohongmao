@@ -70,8 +70,10 @@ class Wechat extends Api {
         if($openid === false){
             throw new Exception('登录无效', 503);
         }
+
+        if($this->)
         
-        $ded = $this->Ded->verify($this->stuid, $this->passwd);
+        $ded = $this->Ded->verify($this->stuid, $this->passwd); //保证学号、密码正确
         if($ded === false){
             throw new Exception('密码错误', 403);
         }
@@ -98,5 +100,9 @@ class Wechat extends Api {
         $re['join'] = $this->Join->getByStuid($this->id);
         
         return $re;
+    }
+
+    public function getActivity(){
+
     }
 }
