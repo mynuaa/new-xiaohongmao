@@ -62,8 +62,6 @@ export const constantRouterMap = [
     component: () => import('@/views/errorPage/401'),
     hidden: true
   },
-
-
   {
     path: '/information',
     component: Layout,
@@ -121,6 +119,19 @@ export const constantRouterMap = [
         component: () => import('@/views/documentation/index'),
         name: 'Documentation',
         meta: { title: '个人参与', icon: 'documentation', noCache:true}
+      }
+    ]
+  },
+  {
+    path: '/print',
+    component: Layout,
+    redirect: '/print/print',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/print/print'),
+        name: 'print',
+        meta: { title: '服务认证', icon: 'user', noCache: false }
       }
     ]
   },
