@@ -16,8 +16,6 @@ $re = $old->select('activities', [
     'content(detail)',
     'update(lastupdate)',
     'time_beg(starttime)',
-], [
-    'LIMIT' => 100
 ]);
 
 function changeHoster($old){

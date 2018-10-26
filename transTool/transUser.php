@@ -9,8 +9,6 @@ $re = $old->select('user', [
     'sex(gender)',
     'adminid',
     'update(updatetime)',
-], [
-    'LIMIT' => 100
 ]);
 
 
