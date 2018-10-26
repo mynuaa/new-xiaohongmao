@@ -396,6 +396,7 @@ class Admin extends Api {
       //  $admin = $this->User->isAdmin($this->stuid);
        // return $this->User->encode($ded['name'], $this->stuid, $admin);//注释掉测试代码
 
+       /*
         if($this->Ded->binded($this->stuid)){//已经绑定 老用户
             //返回jwt
             $admin = $this->User->isAdmin($this->stuid);
@@ -403,8 +404,22 @@ class Admin extends Api {
         }else{
             // ？是否要激活？
             //to do 怎么搞？
-            throw new Exception('请确认绑定', 200);
+            $re = $this->User->bindUser($this->stuid,$ded);
+            
+            throw new Exception('请确认绑定', 199);
         }
+
+        */
+        if(!$this->Ded->binded($this->stuid)){//已经绑定 老用户  自动绑定
+            $re = $this->User->bindUser($this->stuid, $ded);
+            if(!$re){
+                throw new Exception('数据库错误', 500);
+            }
+        }
+
+        $admin = $this->User->isAdmin($this->stuid);
+        return $this->User->encode($ded['name'], $this->stuid, $admin);
+
 
         //判断是否是新注册
         //正常的业务逻辑
@@ -416,8 +431,11 @@ class Admin extends Api {
      * @return void
      */
     public function allActivity(){
+        $jwt = $this->checkJwt();
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
         $re = $this->Act->gets($this->from, $this->pagenum, true);
-
         return $re;
     }
 
@@ -583,7 +601,17 @@ class Admin extends Api {
      * @return void
      */
     public function delAct(){
-        return $this->Act->del($this->aid);
+        $jwt = $this->checkJwt();
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
+
+        if($jwt['admin']->level == 1){//院级管理员
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid) || $this->Act->get($this->aid)['level'] == 1){
+                throw new Exception("无权限", 403);
+            }
+        }
+        return $this->Act->del($this->aid,$jwt['stuid']);
     }
     /**
      * 恢复被删除的活动
@@ -592,7 +620,17 @@ class Admin extends Api {
      * @return void
      */
     public function openAct(){
-        return $this->Act->open($this->aid);
+        $jwt = $this->checkJwt();
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
+
+        if($jwt['admin']->level == 1){//院级管理员
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid) || $this->Act->get($this->aid)['level'] == 1){
+                throw new Exception("无权限", 403);
+            }
+        }
+        return $this->Act->open($this->aid,$jwt['stuid']);
     }
     /**
      * 锁死活动 不允许参与
@@ -601,7 +639,17 @@ class Admin extends Api {
      * @return void
      */
     public function shoutdownAct(){
-        return $this->Act->shoutdown($this->aid);
+        $jwt = $this->checkJwt();
+        if($jwt['admin'] == false){
+            throw new Exception('无权限', 403);
+        }
+
+        if($jwt['admin']->level == 1){//院级管理员
+            if(!$this->Act->judge($jwt['admin']->yuan, $this->aid) || $this->Act->get($this->aid)['level'] == 1){
+                throw new Exception("无权限", 403);
+            }
+        }
+        return $this->Act->shoutdown($this->aid,$jwt['stuid']);
     }
     
     /**
@@ -610,7 +658,7 @@ class Admin extends Api {
      * @return void
      */
     // public function setStopTime(){
-    //     return $this->Act->setStopTime($this->aid, $this->time);
+    //     return $this->Act->setStopTime($this->aid, $this->time,$jwt['stuid']);
     // }
 
  /**
@@ -629,8 +677,8 @@ class Admin extends Api {
  * @return void
  */
     public function makejwt(){
-        return $this->User->encode('seiry', '031630226', ['level' => 2, 'yuan' => 3]);
-      //  return $this->User->encode('se', '161740225', ['level' => 1,'yuan'=>16]);
+        return $this->User->encode('seiry', '031630226', ['level' => 1, 'yuan' => 3]);
+        //return $this->User->encode('se', '161740225', ['level' => 3,'yuan'=>16]);
     }
 
 }

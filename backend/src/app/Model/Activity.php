@@ -116,9 +116,34 @@ class Activity{
         return $re;
     }
 
-    public function setStatus($id, $status){
+    public function del($id,$stuid){
         $re = di()->db->update('activity', [
-            'status' => $status
+            'status' => 0,
+            'optadmin'=>$stuid,
+            'opttime'=>di()->db::raw('NOW()')
+        ], [
+            'aid' => $id
+        ]);
+        $r = di()->db->update('join',[
+            'status'=>0,
+            'timelong'=>0,
+            'optadmin'=>$stuid,
+            'opttime'=>di()->db::raw('NOW()')
+        ],[
+            'aid' => $id
+        ]);
+        if(di()->db->error()[0] == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function setStatus($id, $status,$stuid){
+        $re = di()->db->update('activity', [
+            'status' => $status,
+            'optadmin'=>$stuid,
+            'lastupdate'=>time()
         ], [
             'aid' => $id
         ]);
