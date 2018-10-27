@@ -60,7 +60,7 @@ function changeHoster($old){
             return 999;//容错倒车
     }
 }
-
+$allsql = [];
 foreach ($re as $v) {
     $v['hoster'] = changeHoster($v['hoster']);
     if($v['hoster'] == 0){
@@ -72,10 +72,13 @@ foreach ($re as $v) {
     $v['alltime'] = $v['peoplenum'] * $v['volunteertimemin'];
     $v['contact'] = 'qq 2269871810 微信公众号 nuaazfj';
 
-    $new->insert('activity',$v);
-    if($new->error()[0] != 0){
-        echo "{$v['aid']} {$v['hoster']} {$new->error()[2]}";
-    }
+    $allsql[] = $v;
 }
+var_dump(count($allsql));
+$new->insert('activity',$allsql);
 
+var_dump($new->error());
+if($new->error()[0] != 0){
+    echo "{$new->error()[2]}";
+}
 echo 0;
