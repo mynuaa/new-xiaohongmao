@@ -197,12 +197,15 @@ export default {
   methods: {
     submitForm() {
       this.loading = true
-      let jwt = getToken()
+      const jwt = getToken()
       if(!isEdit){
         let params = {...this.form}
-        params.starttime = params.starttime / 1e3
-        params.endtime = params.endtime / 1e3
-        params.jwt = jwt
+        params = {
+          ...params,
+          starttime: params.starttime / 1e3,
+          endtime: params.endtime / 1e3,
+          jwt: jwt
+        }
         this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity', params)
         .then(response => {
           this.loading = false
