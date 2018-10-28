@@ -12,7 +12,7 @@
           <screenfull class="screenfull right-menu-item"/>
         </el-tooltip>
 
-        <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
+        <!--<el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
           <size-select class="international right-menu-item"/>
         </el-tooltip>
 
@@ -20,12 +20,12 @@
 
         <el-tooltip :content="$t('navbar.theme')" effect="dark" placement="bottom">
           <theme-picker class="theme-switch right-menu-item"/>
-        </el-tooltip>
+        </el-tooltip>-->
       </template>
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img src="@/assets/logo.png" class="user-avatar">
+          <img src="@/assets/logo.x160.png" class="user-avatar">
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -128,10 +128,15 @@ export default {
         margin-top: 5px;
         position: relative;
         .user-avatar {
-
+          animation-name: rotate;
+          animation-duration: 8s;
+          animation-timing-function: linear;
+          animation-delay: 0s;
+          animation-iteration-count: infinite;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          image-rendering: crisp-edges;
+          //border-radius: 10px;
         }
         .el-icon-caret-bottom {
           position: absolute;
@@ -142,5 +147,16 @@ export default {
       }
     }
   }
+  @keyframes rotate {
+	0%{
+		transform: rotate(0)
+	}
+	50%{
+		transform: rotate(180deg);
+	}
+	100%{
+		transform: rotate(360deg)
+	}
+}
 }
 </style>
