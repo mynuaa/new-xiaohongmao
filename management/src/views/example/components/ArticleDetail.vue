@@ -196,16 +196,17 @@ export default {
   },
   methods: {
     submitForm() {
+      this.loading = true
       let jwt = getToken()
       if(!isEdit){
         let params = {...this.form}
-        params.starttime = Date.parse(params.starttime) / 1e3
-        params.endtime = Date.parse(params.endtime) / 1e3
+        params.starttime = params.starttime / 1e3
+        params.endtime = params.endtime / 1e3
         params.jwt = jwt
         this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity', params)
         .then(response => {
+          this.loading = false
           if (response.data.ret == 200) {
-            this.loading = true
             this.$notify({
               title: '成功',
               message: '发布文章成功',
@@ -223,6 +224,7 @@ export default {
         })
       }
       if(isEdit){
+        this.loading = true
         let params = {...this.form}
         params = {
           ...params,
@@ -232,8 +234,8 @@ export default {
         }
         this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.UpdateActivity', params)
         .then(response => {
+          this.loading = false
           if (response.data.ret == 200) {
-            this.loading = true
             this.$notify({
               title: '成功',
               message: '文章修改成功',
