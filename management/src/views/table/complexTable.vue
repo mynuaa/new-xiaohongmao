@@ -46,7 +46,9 @@
           <router-link :to="'/example/edit/'+scope.row.aid" class="link-type" v-permission="['admin']">
             <el-button type="primary" size="medium" icon="el-icon-edit">修改活动</el-button>
           </router-link>
-          <el-button type="danger" size="medium">删除</el-button>
+          <el-button type="danger" size="medium" @click="del(scope.row.aid)" v-permission="['admin']">
+            删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -165,6 +167,40 @@ export default {
       .then((response)=>{
         this.total = response.data.data.actNum
       })
+    },
+    del(id){
+      this.$confirm('此操作将永久删除该活动, 是否继续?', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.DelAct', {
+            aid: id,
+            jwt: getToken()
+          }).then(re => {
+            if(re.data.ret == 200){
+              this.$notify({
+                title: '成功',
+                message: '删除成功',
+                type: 'success',
+                duration: 2000
+              })
+            }else{
+              this.$notify({
+                title: '失败',
+                message: re.data.msg,
+                type: 'fail',
+                duration: 2000
+              })
+
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
     },
     showArticle(row){
       this.dialogFormVisible = true

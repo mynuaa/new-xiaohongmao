@@ -677,6 +677,7 @@ class Admin extends Api {
  * @return void
  */
     public function makejwt(){
+        return;
         return $this->User->encode('seiry', '031630226', ['level' => 1, 'yuan' => 3]);
         //return $this->User->encode('se', '161740225', ['level' => 3,'yuan'=>16]);
     }
