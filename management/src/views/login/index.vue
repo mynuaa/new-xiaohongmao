@@ -79,7 +79,7 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
+      if (value.length < 4) {
         callback(new Error('密码不能这么短哦~'))
       } else {
         callback()

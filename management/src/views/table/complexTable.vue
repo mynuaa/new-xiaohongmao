@@ -44,8 +44,9 @@
             <el-button size="primary">上传时长<i class="el-icon-upload el-icon--right"></i></el-button>
           </router-link>
           <router-link :to="'/example/edit/'+scope.row.aid" class="link-type" v-permission="['admin']">
-            <el-button type="primary" size="primary" icon="el-icon-edit">修改文章</el-button>
+            <el-button type="primary" size="primary" icon="el-icon-edit">修改活动</el-button>
           </router-link>
+          <el-button type="primary" size="primary" icon="el-icon-edit">删除活动</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -58,7 +59,7 @@
         :page-size="20"
         @current-change="currentpage">
       </el-pagination>
-    </div>  
+    </div>
     <el-dialog title="活动详情" :visible.sync="dialogFormVisible">
       <div class="activity">
         <label>活动名称：</label><span>{{temp.title}}</span>
@@ -74,7 +75,7 @@
       </div>
       <div class="activity" v-permission="['admin']">
         <el-table
-          :data="joindata"
+          :data="certified"
           style="width: 100%">
           <el-table-column
             prop="stuid"
@@ -125,8 +126,8 @@ export default {
         type: undefined,
         sort: '+id'
       },
-      temp:[],  
-      joindata:[],
+      temp:[],
+      certified:[],
       notcertified:[],
       dialogFormVisible: false,
       total:1
@@ -174,6 +175,20 @@ export default {
       })
       .then((response) => {
           this.temp = response.data.data.activity
+          const joins = response.data.data.join
+          let notcertified = []
+          let certified = []
+          for(let join of joins){
+            console.log(join)
+            if(join.status == 1){
+              notcertified.push(join)
+            }else if(join.status > 1e10){
+              certified.push(join)
+            }
+          }
+          this.notcertified = notcertified
+          this.certified = certified
+          /*
           for(var prop of response.data.data.join){
             if(response.data.data.join[prop]==1){
               this.notcertified.push(response.data.data.join[prop])
@@ -181,11 +196,13 @@ export default {
             if(response.data.data.join[prop]>10e9){
               this.joindata.push(response.data.data.join[prop])
             }
-          }  
+          }*/
+
         })
-      this.$nextTick(() => { 
+        /*
+      this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
-      })
+      })*/
     },
     currentpage(id){
       this.getList((id-1)*20)
