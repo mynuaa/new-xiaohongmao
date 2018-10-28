@@ -18,6 +18,7 @@ class Activity{
         'activity.contact',
         'activity.status',
         'activity.starttime',
+        'activity.endtime',
         'activity.peoplenum',
         'activity.volunteertimemin',
         'activity.volunteertimemax',

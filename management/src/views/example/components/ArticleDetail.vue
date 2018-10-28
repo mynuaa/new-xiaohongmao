@@ -33,7 +33,7 @@
               <el-input v-model="form.contact" placeholder="联系方式" width='90px'></el-input>
             </el-form-item>
             <div class="postInfo-container">
-              <el-row :gutter="20"> 
+              <el-row :gutter="20">
                 <el-form-item label-width="100px" label="活动类型:" class="postInfo-container-item">
                   <el-select v-model="form.type" placeholder="请选择活动类型">
                     <el-option
@@ -182,12 +182,14 @@ export default {
         'jwt': jwt
       })
       .then((response) => {
-        this.form = response.data.data.activity
-        this.form.volunteertimemin = parseInt(response.data.data.activity.volunteertimemin)
-        this.form.volunteertimemax = parseInt(response.data.data.activity.volunteertimemax)
-        this.form.alltime = parseInt(response.data.data.activity.alltime)
-        this.form.peoplenum = parseInt(response.data.data.activity.peoplenum)
-        this.form.starttime = response.data.data.activity.starttime * 1e3
+        const act = response.data.data.activity
+        console.log(act)
+        this.form = act
+        this.form.volunteertimemin = parseInt(act.volunteertimemin)
+        this.form.volunteertimemax = parseInt(act.volunteertimemax)
+        this.form.alltime = parseInt(act.alltime)
+        this.form.peoplenum = parseInt(act.peoplenum)
+        this.form.starttime = act.starttime * 1e3
       })
     }
   },
