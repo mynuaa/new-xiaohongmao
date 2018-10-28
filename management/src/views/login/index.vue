@@ -79,7 +79,7 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
+      if (value.length < 4) {
         callback(new Error('密码不能这么短哦~'))
       } else {
         callback()
@@ -192,7 +192,7 @@ export default {
       //http://g.gg/new-xiaohongmao/backend/public/index.php
       //https://my.nuaa.edu.cn/xiaohongmao2/api
       this.loading = true
-      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/api', {
         service: 'App.Admin.Login',
         stuid: this.loginForm.username,
         passwd: this.loginForm.password,

@@ -31,7 +31,7 @@ export default {
   },
   created(){
       const jwt = getToken()
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
         'aid': this.$route.params.aid,
         'jwt': jwt
       })
@@ -60,13 +60,13 @@ export default {
     upload(){
       const jwt = getToken()
       for (var prop in this.tableData) {
-        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddJoin',{
+        this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddJoin',{
           'jwt': jwt,
           'aid':this.$route.params.aid,
           'stuid': Object.values(this.tableData[prop])[0],
           'timelong': Object.values(this.tableData[prop])[1]
       })
-      .then((response) => { 
+      .then((response) => {
         if(response.data.ret==200){
           this.$message({
             message: Object.values(this.tableData[prop])[0] + '上传成功',

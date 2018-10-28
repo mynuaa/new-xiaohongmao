@@ -52,7 +52,7 @@ export default{
     }
   },
   created(){
-    this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetJoin',{
+    this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetJoin',{
       'jwt':jwt,
     })
     .then((response)=>{
@@ -63,7 +63,7 @@ export default{
       }
       this.doneActivityForm = response.data.data.done
     })
-    this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetInfo', {
+    this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetInfo', {
       'jwt': jwt
     }).then((response) => {
           if (response.data.ret == 200) {
