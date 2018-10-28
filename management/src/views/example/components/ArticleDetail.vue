@@ -45,7 +45,7 @@
                 </el-select>
                 </el-form-item>
                   <el-form-item label-width="80px" label="发布时间:" class="postInfo-container-item">
-                    <el-date-picker v-model="form.starttime" type="datetime" format="yyyy-MM-dd" placeholder="选择日期时间"/>
+                    <el-date-picker v-model="form.starttime" type="datetime" format="yyyy-MM-dd" placeholder="选择日期时间" value-format="timestamp"/>
                   </el-form-item>
               </el-row>
               <el-row :gutter="20">
@@ -60,7 +60,7 @@
                 </el-select>
                 </el-form-item>
                 <el-form-item label-width="80px" label="截止时间:" class="postInfo-container-item">
-                    <el-date-picker v-model="form.endtime" type="datetime" format="yyyy-MM-dd" placeholder="选择日期时间"/>
+                    <el-date-picker v-model="form.endtime" type="datetime" format="yyyy-MM-dd" placeholder="选择日期时间" value-format="timestamp"/>
                   </el-form-item>
               </el-row>
             </div>
@@ -139,7 +139,7 @@ export default {
         detail:'',
         peoplenum: 1,
         alltime: 1,
-        starttime: '',
+        starttime: 0,
         endtime: 0,
         contact: ' ',
         volunteertimemin: 1,
@@ -224,9 +224,12 @@ export default {
       }
       if(isEdit){
         let params = {...this.form}
-        params.starttime = Date.parse(params.starttime) / 1e3
-        params.endtime = Date.parse(params.endtime) / 1e3
-        params.jwt = jwt
+        params = {
+          ...params,
+          starttime: params.starttime / 1e3,
+          endtime: params.endtime / 1e3,
+          jwt: jwt
+        }
         this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.UpdateActivity', params)
         .then(response => {
           if (response.data.ret == 200) {
