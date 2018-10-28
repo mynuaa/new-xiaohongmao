@@ -182,14 +182,15 @@ export default {
         'jwt': jwt
       })
       .then((response) => {
-        const act = response.data.data.activity
+        let act = response.data.data.activity
+        act.volunteertimemin = parseInt(act.volunteertimemin)
+        act.volunteertimemax = parseInt(act.volunteertimemax)
+        act.alltime = parseInt(act.alltime)
+        act.peoplenum = parseInt(act.peoplenum)
+        act.starttime = act.starttime * 1e3
+        act.endtime = act.endtime * 1e3
+
         this.form = act
-        this.form.volunteertimemin = parseInt(act.volunteertimemin)
-        this.form.volunteertimemax = parseInt(act.volunteertimemax)
-        this.form.alltime = parseInt(act.alltime)
-        this.form.peoplenum = parseInt(act.peoplenum)
-        this.form.starttime = act.starttime * 1e3
-        this.form.endtime = act.endtime * 1e3
       })
     }
   },
