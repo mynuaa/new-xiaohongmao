@@ -58,10 +58,15 @@ html{
   font-family: "Microsoft YaHei";
 }
 #nav {
+  
   padding: 10px 0px 10px 0px;
+  overflow:hidden;
   // text-align: center;
   font-size: 20px;
   ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
     background: #a1e4ff; /* fallback for old browsers */
     background: -webkit-linear-gradient(
       to left,
@@ -77,7 +82,9 @@ html{
     width: 90%;
     height: 70px;
     li {
+      white-space:nowrap;
       display: inline-block;
+      overflow: hidden;
       height: 70px;
       width: 150px;
       &:hover {
