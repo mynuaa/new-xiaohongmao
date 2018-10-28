@@ -11,7 +11,7 @@
           <span>{{ scope.row.starttime | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="活动名称"  width="180px" min-width="100px">
+      <el-table-column label="活动名称"  width="250px" min-width="100px">
         <template slot-scope="scope">
           <span class="link-type" @click="showArticle(scope.row.aid)">{{ scope.row.title }}</span>
         </template>
@@ -36,17 +36,17 @@
           <el-tag :type="scope.row.status">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="400" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="500px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="success" size="primary" @click="showArticle(scope.row.aid)">查看活动
+          <el-button type="success" size="medium" @click="showArticle(scope.row.aid)">查看活动
           </el-button>
           <router-link :to="'/up/'+scope.row.aid" v-permission="['admin']">
-            <el-button size="primary">上传时长<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button size="medium" icon="el-icon-upload">上传时长</el-button>
           </router-link>
           <router-link :to="'/example/edit/'+scope.row.aid" class="link-type" v-permission="['admin']">
-            <el-button type="primary" size="primary" icon="el-icon-edit">修改活动</el-button>
+            <el-button type="primary" size="medium" icon="el-icon-edit">修改活动</el-button>
           </router-link>
-          <el-button type="primary" size="primary" icon="el-icon-edit">删除活动</el-button>
+          <el-button type="danger" size="medium">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -141,7 +141,7 @@ export default {
     checkPermission,
     getList(from = 0) {
       let jwt = getToken()
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',{
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',{
         from:from,
         'jwt':jwt
       })
@@ -161,7 +161,7 @@ export default {
         })
     },
     getallnum(){
-      this.axios.post("http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.ShowData",)
+      this.axios.post("//my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.ShowData",)
       .then((response)=>{
         this.total = response.data.data.actNum
       })
@@ -169,7 +169,7 @@ export default {
     showArticle(row){
       this.dialogFormVisible = true
       let jwt = getToken()
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
         'aid':row,
         'jwt': jwt
       })
