@@ -1,7 +1,7 @@
 <template>
   <div class="createPost-container">
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
-      <sticky :class-name="'sub-navbar '+postForm.status" :zIndex="5000">
+      <sticky :class-name="'sub-navbar '+postForm.status" :zIndex="2000">
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">发布</el-button>
       </sticky>
       <div class="createPost-main-container">
