@@ -58,7 +58,7 @@ html{
   font-family: "Microsoft YaHei";
 }
 #nav {
-  text-align: center;
+  
   padding: 10px 0px 10px 0px;
   overflow:hidden;
   // text-align: center;
@@ -66,7 +66,7 @@ html{
   ul {
     display: flex;
     flex-direction: row;
-    
+    justify-content: center; 
     background: #a1e4ff; /* fallback for old browsers */
     background: -webkit-linear-gradient(
       to left,
