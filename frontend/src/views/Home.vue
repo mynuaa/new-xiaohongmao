@@ -40,7 +40,9 @@ export default {
           const timedata = this.showData.yuan;
           let time = []
           for(var i = 1; i <= 16; i++ ){
-            time.push(timedata[i]);
+            if(i != 13 && i != 14){
+              time.push(timedata[i]);
+            } 
           }
           this.time = time
           this.initEchart()
@@ -80,8 +82,6 @@ export default {
               "十院",
               "十一院",
               "十二院",
-              "十三院",
-              "十四院",
               "十五院",
               "十六院"
             ]
