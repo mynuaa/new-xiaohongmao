@@ -139,14 +139,14 @@ export default {
         detail:'',
         peoplenum: 1,
         alltime: 1,
-        starttime:'',
+        starttime: '',
+        endtime: 0,
         contact: ' ',
         volunteertimemin: 1,
         volunteertimemax: 1,
         type:'',
         level:'',
         group_name:'new',
-        endtime:'',
       },
       options: [],
       level:[{
@@ -183,13 +183,13 @@ export default {
       })
       .then((response) => {
         const act = response.data.data.activity
-        console.log(act)
         this.form = act
         this.form.volunteertimemin = parseInt(act.volunteertimemin)
         this.form.volunteertimemax = parseInt(act.volunteertimemax)
         this.form.alltime = parseInt(act.alltime)
         this.form.peoplenum = parseInt(act.peoplenum)
         this.form.starttime = act.starttime * 1e3
+        this.form.endtime = act.endtime * 1e3
       })
     }
   },
@@ -197,10 +197,11 @@ export default {
     submitForm() {
       let jwt = getToken()
       if(!isEdit){
-        this.form.starttime = Date.parse(this.form.starttime) / 1e3
-        this.form.endtime = Date.parse(this.form.endtime) / 1e3
-        this.form.jwt = jwt
-        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity',this.form)
+        let params = {...this.form}
+        params.starttime = Date.parse(params.starttime) / 1e3
+        params.endtime = Date.parse(params.endtime) / 1e3
+        params.jwt = jwt
+        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity', params)
         .then(response => {
           if (response.data.ret == 200) {
             this.loading = true
@@ -221,10 +222,11 @@ export default {
         })
       }
       if(isEdit){
-        this.form.starttime = Date.parse(this.form.starttime) / 1e3
-        this.form.endtime = Date.parse(this.form.endtime) / 1e3
-        this.form.jwt = jwt
-        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.UpdateActivity', this.form)
+        let params = {...this.form}
+        params.starttime = Date.parse(params.starttime) / 1e3
+        params.endtime = Date.parse(params.endtime) / 1e3
+        params.jwt = jwt
+        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.UpdateActivity', params)
         .then(response => {
           if (response.data.ret == 200) {
             this.loading = true
