@@ -25,17 +25,17 @@
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img src="@/assets/logo.png" class="user-avatar">
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
             <el-dropdown-item>
-              {{ $t('navbar.dashboard') }}
+              回到主页
             </el-dropdown-item>
           </router-link>
           <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
+            <span style="display:block;" @click="logout">退出小红帽</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -67,7 +67,6 @@ export default {
     ...mapGetters([
       'sidebar',
       'name',
-      'avatar',
       'device'
     ])
   },
@@ -129,6 +128,7 @@ export default {
         margin-top: 5px;
         position: relative;
         .user-avatar {
+
           width: 40px;
           height: 40px;
           border-radius: 10px;

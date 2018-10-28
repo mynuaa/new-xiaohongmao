@@ -17,9 +17,9 @@ export default {
 	background-size: contain;
 	animation-name: rotate;
 	animation-duration:3s;
-animation-timing-function: linear;
-animation-delay: 0s;
-animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	animation-delay: 0s;
+	animation-iteration-count: infinite;
 }
 @keyframes rotate {
 	0%{
