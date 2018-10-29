@@ -50,7 +50,7 @@ class Admin extends Api {
                     'format' => 'utf8',                    
                     'require' => true,
                     'type' => 'string',
-                    'min' => 6,
+                    'min' => 5,
                     'max' => 16
                 ],
                 'dx' => [
