@@ -4,7 +4,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">小红帽 - 用户登录</h3>
+        <h3 class="title">小红帽 - 用户登录 - 纸飞机青年网络社区</h3>
       </div>
 
       <el-form-item prop="username">
@@ -13,7 +13,7 @@
         </span>
         <el-input
           v-model="loginForm.username"
-          placeholder="用户名"
+          placeholder="学号"
           name="username"
           type="text"
         />
@@ -26,7 +26,7 @@
         <el-input
           :type="passwordType"
           v-model="loginForm.password"
-          placeholder="密码"
+          placeholder="教务处密码"
           name="password"
           auto-complete="on"
           @keyup.enter.native="handleLogin" />
