@@ -11,7 +11,7 @@
     
     <ul class="bg-bubbles">
 
-    <li  v-for="(item, index) in 10" :key="index">oo</li>
+    <li  v-for="(item, index) in 10" :key="index"></li>
 </ul>
   </div> 
 </template>
