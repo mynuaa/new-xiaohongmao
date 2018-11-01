@@ -26,7 +26,7 @@
 			  <span>
 				  Copyright &copy; 2012-2018
 				  <span>
-					  <a	href="http://my.nuaa.edu.cn" target="_blank" style="color:black">纸飞机南航青年网络社区</a>
+					  <a	href="//my.nuaa.edu.cn" target="_blank" style="color:black">纸飞机南航青年网络社区</a>
 				  </span>
 			  </span>
 	  	</div>
@@ -50,6 +50,7 @@ export default{
 <style lang="scss">
 html{
   width: 100%;
+  overflow: hidden;
 }
 #app {
   color: #2c3e50;

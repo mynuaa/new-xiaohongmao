@@ -34,7 +34,7 @@ export default {
   },
   methods:{
     getShowData(){
-      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Front.ShowData').then(re => {
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Front.ShowData').then(re => {
         if(re.data.ret == 200){
           this.showData = re.data.data;
           const timedata = this.showData.yuan;
