@@ -182,7 +182,7 @@ export default {
   },
     methods: {
         getPages(){
-            this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api',{
+            this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/api',{
                 service: 'Front.AllActivity',
                 from:0,
                 pagenum:this.actNum,
@@ -198,12 +198,7 @@ export default {
         },
 
       getInfo(page,hid){
-<<<<<<< HEAD
           this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/api', {
-=======
-          this.show = true;
-          this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
->>>>>>> cb10c3a48f194d031344d715b944d05d206f0844
               service: 'Front.AllActivity',
               from: page * 20 - 20,
               hid: hid,
@@ -220,7 +215,7 @@ export default {
             
       },
       getactNum(){
-          this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
+          this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/api', {
               service: 'Front.ShowData',
           }).then(re => {
               if(re.data.ret != 200){
