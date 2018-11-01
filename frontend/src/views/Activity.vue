@@ -227,13 +227,13 @@ export default {
               }
           })
       },
-      turn(n){  //-----------------------------------------------------确定分页数
+      turn(n){ 
         if(n != '-' && n!= '+'){
                 this.cur = n; 
             }
           var page = this.activePage;
           if(n == '-'){
-              if(page == 1){
+              if(page == 1 || page == null){
                   return
               }
               else{
@@ -242,7 +242,7 @@ export default {
               }
           }
           else if(n == '+'){
-              if(n == pageNum){
+              if(page == this.pageNum){
                   return
               }
               else{
