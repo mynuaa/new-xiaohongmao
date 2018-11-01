@@ -29,7 +29,7 @@ export default {
 		transform: rotate(-180deg) scale(2);
 	}
 	100%{
-		transform: rotate(0deg)
+		transform: rotate(-360deg)
 	}
 }
 </style>
