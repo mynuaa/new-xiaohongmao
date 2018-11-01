@@ -177,7 +177,7 @@ export default {
   },
     methods: {
       getInfo(page,hid){
-          this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
+          this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/api', {
               service: 'Front.AllActivity',
               from: page * 20 - 20,
               hid: hid,

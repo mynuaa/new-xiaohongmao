@@ -46,7 +46,7 @@ export default {
   },
     methods: {
       getInfo(){
-          this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
+          this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/api', {
               service: 'Front.ShowData',
           }).then(re => {
               if(re.data.ret != 200){
