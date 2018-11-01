@@ -50,7 +50,7 @@ export default{
 <style lang="scss">
 html{
   width: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 #app {
   color: #2c3e50;
@@ -63,7 +63,7 @@ html{
   padding: 10px 0px 10px 0px;
   overflow:hidden;
   // text-align: center;
-  font-size: 20px;
+  font-size: 95%;
   ul {
     display: flex;
     flex-direction: row;
@@ -133,7 +133,7 @@ html{
     margin-bottom: 0;
   }
   .footer-font {
-    margin: 10px 0;
+    padding: 10px 0;
     font-weight: 900;
     width: 100%;
     font-size: 1.1em;
