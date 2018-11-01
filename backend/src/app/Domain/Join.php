@@ -2,6 +2,7 @@
 namespace App\Domain;
 
 use App\Model\Join as MJoin;
+use App\Domain\Activity as DActivity;
 
 use function \PhalApi\DI as di;
 class Join {
@@ -10,7 +11,8 @@ class Join {
         $this->Join = new MJoin();
     }
 
-    public function getByStuid($stuid){//是否被山河 都会返回
+    public function getByStuid($stuid){//是否被认证/过期 都会返回
+
         $re = $this->Join->getByStuid($stuid);
 
         return $re;
@@ -23,11 +25,15 @@ class Join {
     }
 
     public function countAll(){
-        return $this->Join->countAll();
+        return (float)$this->Join->countAll();
+    }
+
+    public function countNum(){
+        return (int)$this->Join->countNum();
     }
 
     public function countMonth(){
-        return $this->Join->countMonth();
+        return (int)$this->Join->countMonth();
     }
 
     public function countByYuan($yuan){
@@ -39,7 +45,7 @@ class Join {
     }
     
     public function validJid($stuid, $jid){
-        $this->valid($jid);
+        return $this->valid($jid);
     }
 
     public function checkStuOwn($stuid, $jid){
@@ -54,6 +60,8 @@ class Join {
     }
 
     public function add($uid, $aid, $time, $admin){
+        // $Act = new DActivity();
+        // $expire = $Act->getExpireTime($aid);
         return $this->Join->add($uid, $aid, $time, $admin);
     }
 
@@ -62,9 +70,5 @@ class Join {
     }
     public function valid($id){
         return $this->Join->updateStatus($id, time());
-    }
-
-    public function getJoinByStuid($stuid){
-        return $this->Join-> getByStuid($stuid);
     }
 }

@@ -18,6 +18,7 @@ class Activity{
         'activity.contact',
         'activity.status',
         'activity.starttime',
+        'activity.endtime',
         'activity.peoplenum',
         'activity.volunteertimemin',
         'activity.volunteertimemax',
@@ -61,6 +62,14 @@ class Activity{
         return $re;
     }
 
+    public function getExpireTime($aid){
+        $re = di()->db->get('activity', 'endtime', [
+            'aid' => $aid
+        ]);
+        return $re;
+    }
+
+
     public function add($args){
         $re = di()->db->insert('activity', [
             'group_name'=>$args->group_name,
@@ -73,10 +82,12 @@ class Activity{
             'alltime' => $args->alltime,
             'contact' => $args->contact,
             'starttime' => $args->starttime,
+            'endtime' => $args->endtime,
             'volunteertimemin' => $args->volunteertimemin,
             'volunteertimemax' => $args->volunteertimemax,
             'type' => $args->type,
             'level' => $args->level,
+            'optadmin' => $args->optadmin,
             'lastupdate' => time()
 
         ]);
@@ -88,28 +99,16 @@ class Activity{
             return false;
         }
     }
-    
-    //todo 更新活动
-    public function update($args){
-        $re=di()->db->update('activity',[
-            'group_name'=>$args->group_name,
-            'location' => $args->location,
-            //'hoster' => $args->hoster,
-            'title' => $args->title,
-            'summary' => $args->summary,
-            'detail' => $args->detail,
-            'peoplenum' => $args->peoplenum,
-            'alltime' => $args->alltime,
-            'contact' => $args->contact,
-            'starttime' => $args->starttime,
-            'volunteertimemin' => $args->volunteertimemin,
-            'volunteertimemax' => $args->volunteertimemax,
-            'type' => $args->type,
-            //'level' => $args->level,//活动等级无法改变
-            'lastupdate' => time(),
-        ],[
-            'aid'=>$args->aid
+
+    public function update($aid, $args){
+        $args = array_merge($args, [
+            'lastupdate' => time()
         ]);
+
+        $re=di()->db->update('activity', $args, [
+            'aid'=>$aid
+        ]);
+
         if(di()->db->error()[0] == 0){
             return true;
         }else{
@@ -118,9 +117,33 @@ class Activity{
         return $re;
     }
 
-    public function setStatus($id, $status){
+    public function del($id, $stuid){
         $re = di()->db->update('activity', [
-            'status' => $status
+            'status' => 0,
+            'optadmin'=> $stuid,
+        ], [
+            'aid' => $id
+        ]);
+        $r = di()->db->update('join',[
+            'status' => 0,
+            /*'timelong'=>0,*/
+            'optadmin' => $stuid,
+            'opttime' => di()->db::raw('NOW()')
+        ],[
+            'aid' => $id
+        ]);
+        if(di()->db->error()[0] == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function setStatus($id, $status,$stuid){
+        $re = di()->db->update('activity', [
+            'status' => $status,
+            'optadmin'=>$stuid,
+            'lastupdate'=>time()
         ], [
             'aid' => $id
         ]);
@@ -149,5 +172,13 @@ class Activity{
         }else{
             return false;
         }
+    }
+
+    public function countNum(){
+        $re = di()->db->count('activity', [
+            'status[>]' => 0
+        ]);
+
+        return $re;
     }
 }

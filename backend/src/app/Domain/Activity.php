@@ -26,9 +26,18 @@ class Activity {
         return $this->Act->get($id);
     }
 
+    public function getExpireTime($aid){
+        $re = $this->Act->getExpireTime($aid);
+        return $re;
+    }
+
     public function add($args){
         $re = $this->Act->add($args);
         return $re;
+    }
+
+    public function update($aid, $args){
+        return $this->Act->update($aid, $args);
     }
 
     public function adminDetail($aid){
@@ -46,24 +55,32 @@ class Activity {
         return $this->Type->getAll();
     }
 
-    public function del($id){
-        return $this->Act->setStatus($id, 0);
-    }
-    public function open($id){
-        return $this->Act->setStatus($id, 1);
-    }
-    public function shoutdown($id){
-        return $this->Act->setStatus($id, 2);
-    }
-    public function setStopTime($id, $time){
-        return $this->Act->setStatus($id, $time);
+    public function countNum(){
+        return $this->Act->countNum();
     }
 
-    public function judge($user,$hoster){//added by helaji
+    public function del($id,$stuid){//todo 加判断
+        return $this->Act->del($id,$stuid);//add an function to delete an activity
+    }
+    public function open($id,$stuid){//todo 加判断
+        $this->Act->update($id, [
+            'endtime' => time() + 60 * 60 * 24 * 7  //-1s
+        ]);
+        return $this->Act->setStatus($id, 1,$stuid);
+    }
+    public function shoutdown($id,$stuid){//todo 加判断/***/ */
+        $this->Act->update($id, [
+            'endtime' => time() - 1 //-1s
+        ]);
+        return $this->Act->setStatus($id, 2,$stuid);//***** */
+    }
+    public function setStopTime($id, $time,$stuid){//todo 加判断/////*///***/ */
+        return $this->Act->setStatus($id, $time,$stuid);
+    }
+
+    public function judge($user,$hoster){//added by helaji//todo 加判断
         return $this->Act->judge($user, $hoster);
     }
 
-    public function update($args){
-        return $this->Act->update($args);
-    }
+    
 }

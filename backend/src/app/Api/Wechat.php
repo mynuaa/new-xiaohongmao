@@ -50,7 +50,7 @@ class Wechat extends Api {
     
     function __construct() {
         $this->Front = new DFront();
-        $this->GTCode = new DGTCode();
+        //$this->GTCode = new DGTCode();
         $this->Ded = new DDed();
         $this->User = new DUser();
         $this->Act = new DActivity();

@@ -4,8 +4,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">小红帽 - 用户登录</h3>
-        <lang-select class="set-language"/>
+        <h3 class="title">小红帽 - 用户登录 - 纸飞机青年网络社区</h3>
       </div>
 
       <el-form-item prop="username">
@@ -14,7 +13,7 @@
         </span>
         <el-input
           v-model="loginForm.username"
-          placeholder="用户名"
+          placeholder="学号"
           name="username"
           type="text"
         />
@@ -27,7 +26,7 @@
         <el-input
           :type="passwordType"
           v-model="loginForm.password"
-          placeholder="密码"
+          placeholder="教务处密码"
           name="password"
           auto-complete="on"
           @keyup.enter.native="handleLogin" />
@@ -80,7 +79,7 @@ export default {
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
+      if (value.length < 4) {
         callback(new Error('密码不能这么短哦~'))
       } else {
         callback()
@@ -88,8 +87,8 @@ export default {
     }
     return {
       loginForm: {
-        username: '031630226',
-        password: 'St031630226'
+        username: '',
+        password: ''
       },
       dxResult: false,
       loginRules: {
@@ -193,7 +192,7 @@ export default {
       //http://g.gg/new-xiaohongmao/backend/public/index.php
       //https://my.nuaa.edu.cn/xiaohongmao2/api
       this.loading = true
-      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api', {
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/api', {
         service: 'App.Admin.Login',
         stuid: this.loginForm.username,
         passwd: this.loginForm.password,
@@ -206,7 +205,7 @@ export default {
         }
         setToken(re.data)
         getRole()
-        this.$router.push({ path: '/' })
+        this.$router.push({ path: '/information' })
       })
 
     },

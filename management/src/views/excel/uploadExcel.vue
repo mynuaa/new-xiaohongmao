@@ -1,6 +1,6 @@
 <template>
 <div>
-  <sticky class-name="sub-navbar" zIndex="200">
+  <sticky class-name="sub-navbar" :zIndex="200">
     <label style="color: white">活动名称:</label>
     <span style="color: white">{{title}}</span>
     <el-button size="medium" class="uploadConfirm" @click="upload">确定上传</el-button>
@@ -18,6 +18,7 @@
 <script>
 import UploadExcelComponent from '@/components/UploadExcel/index.vue'
 import Sticky from '@/components/Sticky'
+import {getToken} from '@/utils/auth'
 export default {
   name: 'UploadExcel',
   components: { UploadExcelComponent,Sticky },
@@ -29,9 +30,10 @@ export default {
     }
   },
   created(){
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
+      const jwt = getToken()
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
         'aid': this.$route.params.aid,
-        'jwt':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MiwieXVhbiI6M319.r9vW77YBAKyQTzdaD-IVA42hEeCLizaYFmqv6pl8NAA'
+        'jwt': jwt
       })
       .then((response) => {
         this.title = response.data.data.activity.title
@@ -56,17 +58,18 @@ export default {
       this.tableHeader = header
     },
     upload(){
+      const jwt = getToken()
       for (var prop in this.tableData) {
-        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddJoin',{
-          'jwt': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MiwieXVhbiI6M319.r9vW77YBAKyQTzdaD-IVA42hEeCLizaYFmqv6pl8NAA',
+        this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddJoin',{
+          'jwt': jwt,
           'aid':this.$route.params.aid,
-          'stuid': this.tableData[prop].stuid,
-          'timelong': this.tableData[prop].timelong
+          'stuid': Object.values(this.tableData[prop])[0],
+          'timelong': Object.values(this.tableData[prop])[1]
       })
-      .then((response) => { 
+      .then((response) => {
         if(response.data.ret==200){
           this.$message({
-            message: this.tableData[prop].stuid + '上传成功',
+            message: Object.values(this.tableData[prop])[0] + '上传成功',
             type: 'success',
             duration: 500
           })
@@ -74,7 +77,7 @@ export default {
         else{
           this.$notify.error({
             title: '上传错误',
-            message: this.tableData[prop].stuid + '上传错误',
+            message: Object.values(this.tableData[prop])[0] + '上传错误',
             duration: 0
           })
         }

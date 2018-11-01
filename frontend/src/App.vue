@@ -12,7 +12,7 @@
       <li><router-link to="/certification">服务认证</router-link></li>
       <li><router-link to="/navigate">导航</router-link></li> -->
       <!-- <li><router-link to="/detail">活动详情</router-link></li> -->
-      <li><router-link to="/loggedIn">个人详情</router-link></li>
+      <li><a href='//my.nuaa.edu.cn/xiaohongmao2/admin/' target="_blank">个人详情</a></li>
       </ul>
     </div>
     <div class="mainPage">
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  
+import Loading from './components/Loading.vue'
 import AdCarousel from "./components/AdCarousel.vue";
 export default{
   components:{
@@ -59,10 +59,15 @@ html{
   font-family: "Microsoft YaHei";
 }
 #nav {
+  
   padding: 10px 0px 10px 0px;
+  overflow:hidden;
   // text-align: center;
   font-size: 20px;
   ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
     background: #a1e4ff; /* fallback for old browsers */
     background: -webkit-linear-gradient(
       to left,
@@ -78,7 +83,9 @@ html{
     width: 90%;
     height: 70px;
     li {
+      white-space:nowrap;
       display: inline-block;
+      overflow: hidden;
       height: 70px;
       width: 150px;
       &:hover {

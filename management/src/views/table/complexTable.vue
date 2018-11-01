@@ -1,77 +1,67 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      <el-input :placeholder="$t('table.title')" v-model="listQuery.title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-select v-model="listQuery.importance" :placeholder="$t('table.importance')" clearable style="width: 90px" class="filter-item">
-        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item"/>
-      </el-select>
-      <el-select v-model="listQuery.type" :placeholder="$t('table.type')" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key"/>
-      </el-select>
-      <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
-        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key"/>
-      </el-select>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @cxlick="handleFilter">{{ $t('table.search') }}</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
-    </div>
-
-    <el-table v-loading="listLoading" :key="tableKey" :data="list" border fit highlight-current-row >
-      <el-table-column :label="$t('table.id')" align="center" width="50">
+    <el-table :key="tableKey" :data="list" border fit highlight-current-row >
+      <el-table-column label="序号" align="center" width="70">
         <template slot-scope="scope">
           <span>{{ scope.row.aid }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.date')" width="100px" align="center">
+      <el-table-column label="时间" width="100px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.starttime | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.title')" width="180px" min-width="100px">
+      <el-table-column label="活动名称"  width="250px" min-width="100px">
         <template slot-scope="scope">
-          <span class="link-type" @click="showArticle(scope.row)">{{ scope.row.title }}</span>
+          <span class="link-type" @click="showArticle(scope.row.aid)">{{ scope.row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.author')" width="100px" align="center">
+      <el-table-column label="主办方" width="100px" align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.hostname }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.readings')" align="center" width="75">
+      <el-table-column label="活动人数" align="center" width="75">
         <template slot-scope="scope">
           <span>{{ scope.row.peoplenum }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('活动时长')" align="center" width="75">
+      <el-table-column label="活动时长" align="center" width="75">
         <template slot-scope="scope">
           <span>{{ scope.row.volunteertimemin }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.status')" class-name="status-col" width="100">
+      <el-table-column label="活动状态" class-name="status-col" width="100">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
+          <el-tag :type="scope.row.status">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" align="center" width="400" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="500px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="showArticle(scope.row)">{{ $t('table.view') }}
+          <el-button type="success" size="medium" @click="showArticle(scope.row.aid)">查看活动
           </el-button>
-          <el-button type="success" size="small" @click="up(scope.row)">{{ $t('table.apply') }}
+          <router-link :to="'/up/'+scope.row.aid" v-permission="['admin']">
+            <el-button size="medium" icon="el-icon-upload">上传时长</el-button>
+          </router-link>
+          <router-link :to="'/example/edit/'+scope.row.aid" class="link-type" v-permission="['admin']">
+            <el-button type="primary" size="medium" icon="el-icon-edit">修改活动</el-button>
+          </router-link>
+          <el-button type="danger" size="medium" @click="del(scope.row.aid)" v-permission="['admin']">
+            删除
           </el-button>
-          <router-link :to="'/up/'+scope.row.aid">
-            <el-button size="small">上传时长<i class="el-icon-upload el-icon--right"></i></el-button>
-          </router-link>
-          <router-link :to="'/example/edit/'+scope.row.aid" class="link-type">
-            <el-button type="primary" size="small" icon="el-icon-edit">修改文章</el-button>
-          </router-link>
         </template>
       </el-table-column>
     </el-table>
 
-    <div class="pagination-container">
-      <el-pagination v-show="total>0" :current-page="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" :total="total" background layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange" @current-change="handleCurrentChange"/>
+    <div class="footer">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="total"
+        :page-size="20"
+        @current-change="currentpage">
+      </el-pagination>
     </div>
-
     <el-dialog title="活动详情" :visible.sync="dialogFormVisible">
       <div class="activity">
         <label>活动名称：</label><span>{{temp.title}}</span>
@@ -85,64 +75,50 @@
       <div class="activity">
         <label>活动时长：</label><span class="content">{{temp.volunteertimemin}} 小时</span>
       </div>
+      <div class="activity" v-permission="['admin']">
+        <el-table
+          :data="certified"
+          style="width: 100%">
+          <el-table-column
+            prop="stuid"
+            label="已认证">
+        </el-table-column>
+        <el-table-column
+          prop="timelong"
+          label="时长">
+        </el-table-column>
+         </el-table>
+        <el-table
+          :data="notcertified"
+          style="width: 100%">
+        <el-table-column
+          prop="stuid"
+          label="未认证">
+        </el-table-column>
+        <el-table-column
+          prop="timelong"
+          label="时长">
+        </el-table-column>
+        </el-table>
+      </div>
       <div class="activity">
         <label>活动内容：</label><span v-html="temp.detail"></span>
       </div>
-    </el-dialog>
-    <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel"/>
-        <el-table-column prop="pv" label="Pv"/>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">{{ $t('table.confirm') }}</el-button>
-      </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
-import waves from '@/directive/waves' // 水波纹指令
 import { parseTime } from '@/utils'
-import {getArticle} from '@/api/article'
-
-const calendarTypeOptions = [
-  { key: 'CN', display_name: 'China' },
-  { key: 'US', display_name: 'USA' },
-  { key: 'JP', display_name: 'Japan' },
-  { key: 'EU', display_name: 'Eurozone' }
-]
-
-// arr to obj ,such as { CN : "China", US : "USA" }
-const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.display_name
-  return acc
-}, {})
-
+import {getToken} from '@/utils/auth'
+import permission from '@/directive/permission/index.js'
+import checkPermission from '@/utils/permission'
 export default {
-  name: 'ComplexTable',
-  directives: {
-    waves
-  },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    },
-    typeFilter(type) {
-      return calendarTypeKeyValue[type]
-    }
-  },
+  directives: { permission },
   data() {
     return {
       tableKey: 0,
       list: null,
-      total: null,
       listLoading: true,
       listQuery: {
         page: 1,
@@ -152,180 +128,120 @@ export default {
         type: undefined,
         sort: '+id'
       },
-      importanceOptions: [1, 2, 3],
-      calendarTypeOptions,
-      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
-      statusOptions: ['published', 'draft', 'deleted'],
-      showReviewer: false,
-      temp: {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
-      },
+      temp:[],
+      certified:[],
+      notcertified:[],
       dialogFormVisible: false,
-      dialogStatus: '',
-      textMap: {
-        update: 'Edit',
-        create: 'Create'
-      },
-      dialogPvVisible: false,
-      pvData: [],
-      rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
-      },
-      downloadLoading: false
+      total:1
     }
   },
   created() {
     this.getList()
+    this.getallnum()
   },
   methods: {
-    getList() {
-      this.listLoading = true
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',)
+    checkPermission,
+    getList(from = 0) {
+      let jwt = getToken()
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',{
+        from:from,
+        'jwt':jwt
+      })
       .then((response) => {
           this.list = response.data.data
-          this.total = this.list.length
-        })
-
-        // Just to simulate the time of the request
-      setTimeout(() => {
-        this.listLoading = false
-      }, 0.5 * 1000)
-    },
-    handleFilter() {
-      this.listQuery.page = 1
-      this.getList()  
-    },
-    handleSizeChange(val) {
-      this.listQuery.limit = val
-      this.getList()
-    },
-    handleSizeChange(val) {
-      this.listQuery.limit = val
-      this.getList()
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val
-      this.getList()
-    },
-    showArticle(row){
-      this.dialogFormVisible = true
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
-        'aid':row,
-        'jwt':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MiwieXVhbiI6M319.r9vW77YBAKyQTzdaD-IVA42hEeCLizaYFmqv6pl8NAA'
-      })
-      .then((response) => {
-          this.temp = response.data.data.activity
-        })
-      this.$nextTick(() => { 
-        this.$refs['dataForm'].clearValidate()
-      })
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val
-      this.getList()
-    },
-    handleModifyStatus(row, status) {
-      this.$message({
-        message: '操作成功',
-        type: 'success'
-      })
-      row.status = status
-    },
-    resetTemp() {
-      this.temp = {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        status: 'published',
-        type: ''
-      }
-    },
-    handleCreate() {
-      this.resetTemp()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
-    },
-    upload(id){
-      this.$router.push({
-        name: 'excel',
-          params: {
-            id: id
+          for(var prop in response.data.data){
+             if(response.data.data[prop].status==1){
+               this.list[prop].status = "进行中"
+             }
+             if(response.data.data[prop].status>1e9){
+               this.list[prop].status = "审核中"
+             }
+             if(response.data.data[prop].status==2){
+               this.list[prop].status = "审核关闭"
+             }
           }
         })
     },
-    createData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.hoster = 'vue-element-admin'
-          createArticle(this.temp).then(() => {
-            this.list.unshift(this.temp)
-            this.dialogFormVisible = false
-            this.$notify({
-              title: '成功',
-              message: '创建成功',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        }
+    getallnum(){
+      this.axios.post("//my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.ShowData",)
+      .then((response)=>{
+        this.total = response.data.data.actNum
       })
     },
-    handleUpdate(row) {
-      this.dialogFormVisible = true
-    },
-    handleDelete(row) {
-      this.$notify({
-        title: '成功',
-        message: '删除成功',
-        type: 'success',
-        duration: 2000
-      })
-      const index = this.list.indexOf(row)
-      this.list.splice(index, 1)
-    },
-    handleFetchPv(pv) {
-      fetchPv(pv).then(response => {
-        this.pvData = response.data.pvData
-        this.dialogPvVisible = true
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-        const data = this.formatJson(filterVal, this.list)
-        excel.export_json_to_excel({
-          header: tHeader,
-          data,
-          filename: 'table-list'
-        })
-        this.downloadLoading = false
-      })
-    },
+    del(id){
+      this.$confirm('此操作将永久删除该活动, 是否继续?', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.DelAct', {
+            aid: id,
+            jwt: getToken()
+          }).then(re => {
+            if(re.data.ret == 200){
+              this.$notify({
+                title: '成功',
+                message: '删除成功',
+                type: 'success',
+                duration: 2000
+              })
+            }else{
+              this.$notify({
+                title: '失败',
+                message: re.data.msg,
+                type: 'fail',
+                duration: 2000
+              })
 
-    formatJson(filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => {
-        if (j === 'timestamp') {
-          return parseTime(v[j])
-        } else {
-          return v[j]
-        }
-      }))
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+    },
+    showArticle(row){
+      this.dialogFormVisible = true
+      let jwt = getToken()
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
+        'aid':row,
+        'jwt': jwt
+      })
+      .then((response) => {
+          this.temp = response.data.data.activity
+          const joins = response.data.data.join
+          let notcertified = []
+          let certified = []
+          for(let join of joins){
+            console.log(join)
+            if(join.status == 1){
+              notcertified.push(join)
+            }else if(join.status > 1e10){
+              certified.push(join)
+            }
+          }
+          this.notcertified = notcertified
+          this.certified = certified
+          /*
+          for(var prop of response.data.data.join){
+            if(response.data.data.join[prop]==1){
+              this.notcertified.push(response.data.data.join[prop])
+            }
+            if(response.data.data.join[prop]>10e9){
+              this.joindata.push(response.data.data.join[prop])
+            }
+          }*/
+
+        })
+        /*
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })*/
+    },
+    currentpage(id){
+      this.getList((id-1)*20)
     }
   }
 }
@@ -339,5 +255,8 @@ export default {
 }
 .content{
   padding-left:20px;
+}
+.footer{
+  padding-top:20px;
 }
 </style>

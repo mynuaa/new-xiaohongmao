@@ -1,18 +1,29 @@
 <template>
   <div>
     <el-table
+      :data="expire"
+      stripe
+      style="width: 100%">
+      <el-table-column
+        prop="title"
+        label="认证过期活动">
+      </el-table-column>
+      <el-table-column
+        prop="timelong"
+        label="时长">
+      </el-table-column>
+      </el-table>
+    <el-table
       :data="doneActivityForm"
       stripe
       style="width: 100%">
       <el-table-column
         prop="title"
-        label="已参与活动"
-        width="180">
+        label="已参与活动">
       </el-table-column>
       <el-table-column
         prop="timelong"
-        label="时长"
-        width="180">
+        label="时长">
       </el-table-column>
       </el-table>
       <el-table
@@ -27,33 +38,59 @@
         prop="timelong"
         label="时长">
       </el-table-column>
+      <el-table-column
+        prop="timelong"
+        label="申请认证">
+      <template slot-scope="scope">
+        <el-button
+        type="primary"
+          @click="Certification(scope.row.jid)">认证时长</el-button>
+      </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 <script>
-
+import {getToken} from '@/utils/auth'
+let jwt = getToken()
 export default {
   name: 'Documentation',
   data() {
     return {
       doneActivityForm:[],
-      notcertified:[]
+      notcertified:[],
+      expire:[]
     }
   },
   created(){
-    this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetJoin',{
-      'jwt':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmFtZSI6InNlaXJ5Iiwic3R1aWQiOiIwMzE2MzAyMjYiLCJhZG1pbiI6eyJsZXZlbCI6MiwieXVhbiI6M319.r9vW77YBAKyQTzdaD-IVA42hEeCLizaYFmqv6pl8NAA',
+    this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetJoin',{
+      'jwt':jwt,
     })
     .then((response)=>{
-      for (var prop in response.data.data){
-        if(response.data.data[prop].status==1){
-          this.notcertified.push(response.data.data[prop])
-        }
-        else  if(response.data.data[prop].status>1e9){
-          this.doneActivityForm.push(response.data.data[prop])
-        }
-      }
+          this.notcertified = response.data.data.undone
+          this.doneActivityForm = response.data.data.done
+          this.expire = response.data.data.expire
     })
+  },
+  methods:{
+    Certification(id){
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.User.ValidJoin',{
+        'jwt':jwt,
+        'jid':id
+      })
+      .then((response)=>{
+        console.log(response.data.ret)
+        if(response.data.ret==200){
+          this.$message({
+            message: '认证成功，请刷新后查看',
+            type: 'success'
+        });
+        }
+        else{
+          this.$message.error(response.data.data.message);
+        }
+      })
+    }
   }
 }
 </script>

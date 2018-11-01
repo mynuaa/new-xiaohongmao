@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import htmlToPdf from '@/utils/htmlToPdf'
 import "@babel/polyfill";
 
 import Cookies from 'js-cookie'
@@ -31,9 +31,9 @@ Vue.use(Element, {
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
-
 Vue.config.productionTip = false
 Vue.prototype.axios = axios
+Vue.use(htmlToPdf)
 new Vue({
   el: '#app',
   router,

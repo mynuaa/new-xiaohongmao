@@ -4,7 +4,7 @@
 
     <breadcrumb class="breadcrumb-container"/>
 
-    <div class="right-menu">
+    <div class="right-menu" style="z-index:9999;">
       <template v-if="device!=='mobile'">
         <error-log class="errLog-container right-menu-item"/>
 
@@ -12,7 +12,7 @@
           <screenfull class="screenfull right-menu-item"/>
         </el-tooltip>
 
-        <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
+        <!--<el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
           <size-select class="international right-menu-item"/>
         </el-tooltip>
 
@@ -20,27 +20,22 @@
 
         <el-tooltip :content="$t('navbar.theme')" effect="dark" placement="bottom">
           <theme-picker class="theme-switch right-menu-item"/>
-        </el-tooltip>
+        </el-tooltip>-->
       </template>
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img src="@/assets/logo.x160.png" class="user-avatar">
           <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
             <el-dropdown-item>
-              {{ $t('navbar.dashboard') }}
+              回到主页
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
-            <el-dropdown-item>
-              {{ $t('navbar.github') }}
-            </el-dropdown-item>
-          </a>
           <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
+            <span style="display:block;" @click="logout">退出小红帽</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -72,7 +67,6 @@ export default {
     ...mapGetters([
       'sidebar',
       'name',
-      'avatar',
       'device'
     ])
   },
@@ -134,9 +128,15 @@ export default {
         margin-top: 5px;
         position: relative;
         .user-avatar {
+          animation-name: rotate;
+          animation-duration: 8s;
+          animation-timing-function: linear;
+          animation-delay: 0s;
+          animation-iteration-count: infinite;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          image-rendering: crisp-edges;
+          //border-radius: 10px;
         }
         .el-icon-caret-bottom {
           position: absolute;
@@ -147,5 +147,16 @@ export default {
       }
     }
   }
+  @keyframes rotate {
+	0%{
+		transform: rotate(0)
+	}
+	50%{
+		transform: rotate(180deg);
+	}
+	100%{
+		transform: rotate(360deg)
+	}
+}
 }
 </style>
