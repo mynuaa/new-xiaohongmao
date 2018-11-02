@@ -4,7 +4,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">小红帽 - 用户登录 - 纸飞机青年网络社区</h3>
+        <h3 class="title">小红帽 - 用户登录</h3>
       </div>
 
       <el-form-item prop="username">
@@ -204,7 +204,7 @@ export default {
           this._dx.reload()
         }
         setToken(re.data)
-        getRole()
+        //getRole()
         this.$router.push({ path: '/information' })
       })
 
