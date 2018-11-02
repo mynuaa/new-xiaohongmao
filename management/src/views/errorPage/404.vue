@@ -14,7 +14,7 @@
         </div>
         <div class="bullshit__headline">{{ message }}</div>
         <div class="bullshit__info">请检查您输入的网址是否正确，请点击以下按钮返回主页或者发送错误报告</div>
-        <a href="" class="bullshit__return-home" @click="rmcookie">返回首页</a>
+        <a href="https://my.nuaa.edu.cn/xiaohongmao2/admin/" class="bullshit__return-home" @click="rmcookie">返回首页</a>
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     rmcookie() {
-      Cookies.remove(TokenKey)
+      Cookies.remove('xiaohongmao-Token') //这是个临时方案 TODO！！
     }
   }
 }
