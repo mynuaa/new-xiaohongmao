@@ -11,7 +11,7 @@
           <span>{{ scope.row.starttime | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="活动名称"  width="180px" min-width="100px">
+      <el-table-column label="活动名称"  width="250px" min-width="100px">
         <template slot-scope="scope">
           <span class="link-type" @click="showArticle(scope.row.aid)">{{ scope.row.title }}</span>
         </template>
@@ -36,16 +36,19 @@
           <el-tag :type="scope.row.status">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="400" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" width="500px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="success" size="primary" @click="showArticle(scope.row.aid)">查看活动
+          <el-button type="success" size="medium" @click="showArticle(scope.row.aid)">查看活动
           </el-button>
           <router-link :to="'/up/'+scope.row.aid" v-permission="['admin']">
-            <el-button size="primary">上传时长<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button size="medium" icon="el-icon-upload">上传时长</el-button>
           </router-link>
           <router-link :to="'/example/edit/'+scope.row.aid" class="link-type" v-permission="['admin']">
-            <el-button type="primary" size="primary" icon="el-icon-edit">修改文章</el-button>
+            <el-button type="primary" size="medium" icon="el-icon-edit">修改活动</el-button>
           </router-link>
+          <el-button type="danger" size="medium" @click="del(scope.row.aid)" v-permission="['admin']">
+            删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -58,7 +61,7 @@
         :page-size="20"
         @current-change="currentpage">
       </el-pagination>
-    </div>  
+    </div>
     <el-dialog title="活动详情" :visible.sync="dialogFormVisible">
       <div class="activity">
         <label>活动名称：</label><span>{{temp.title}}</span>
@@ -74,7 +77,7 @@
       </div>
       <div class="activity" v-permission="['admin']">
         <el-table
-          :data="joindata"
+          :data="certified"
           style="width: 100%">
           <el-table-column
             prop="stuid"
@@ -125,8 +128,8 @@ export default {
         type: undefined,
         sort: '+id'
       },
-      temp:[],  
-      joindata:[],
+      temp:[],
+      certified:[],
       notcertified:[],
       dialogFormVisible: false,
       total:1
@@ -140,7 +143,7 @@ export default {
     checkPermission,
     getList(from = 0) {
       let jwt = getToken()
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',{
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',{
         from:from,
         'jwt':jwt
       })
@@ -160,20 +163,68 @@ export default {
         })
     },
     getallnum(){
-      this.axios.post("http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.ShowData",)
+      this.axios.post("//my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.ShowData",)
       .then((response)=>{
         this.total = response.data.data.actNum
       })
     },
+    del(id){
+      this.$confirm('此操作将永久删除该活动, 是否继续?', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.DelAct', {
+            aid: id,
+            jwt: getToken()
+          }).then(re => {
+            if(re.data.ret == 200){
+              this.$notify({
+                title: '成功',
+                message: '删除成功',
+                type: 'success',
+                duration: 2000
+              })
+            }else{
+              this.$notify({
+                title: '失败',
+                message: re.data.msg,
+                type: 'fail',
+                duration: 2000
+              })
+
+            }
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+    },
     showArticle(row){
       this.dialogFormVisible = true
       let jwt = getToken()
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
         'aid':row,
         'jwt': jwt
       })
       .then((response) => {
           this.temp = response.data.data.activity
+          const joins = response.data.data.join
+          let notcertified = []
+          let certified = []
+          for(let join of joins){
+            console.log(join)
+            if(join.status == 1){
+              notcertified.push(join)
+            }else if(join.status > 1e10){
+              certified.push(join)
+            }
+          }
+          this.notcertified = notcertified
+          this.certified = certified
+          /*
           for(var prop of response.data.data.join){
             if(response.data.data.join[prop]==1){
               this.notcertified.push(response.data.data.join[prop])
@@ -181,11 +232,13 @@ export default {
             if(response.data.data.join[prop]>10e9){
               this.joindata.push(response.data.data.join[prop])
             }
-          }  
+          }*/
+
         })
-      this.$nextTick(() => { 
+        /*
+      this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
-      })
+      })*/
     },
     currentpage(id){
       this.getList((id-1)*20)

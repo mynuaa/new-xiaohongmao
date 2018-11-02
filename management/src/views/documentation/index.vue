@@ -63,7 +63,7 @@ export default {
     }
   },
   created(){
-    this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetJoin',{
+    this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetJoin',{
       'jwt':jwt,
     })
     .then((response)=>{
@@ -74,7 +74,7 @@ export default {
   },
   methods:{
     Certification(id){
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.User.ValidJoin',{
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.User.ValidJoin',{
         'jwt':jwt,
         'jid':id
       })

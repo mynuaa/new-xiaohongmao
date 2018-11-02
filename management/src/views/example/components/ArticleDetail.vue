@@ -1,7 +1,7 @@
 <template>
   <div class="createPost-container">
     <el-form ref="postForm" :model="postForm" :rules="rules" class="form-container">
-      <sticky :class-name="'sub-navbar '+postForm.status" :zIndex="5000">
+      <sticky :class-name="'sub-navbar '+postForm.status" :zIndex="2000">
         <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm">发布</el-button>
       </sticky>
       <div class="createPost-main-container">
@@ -33,7 +33,7 @@
               <el-input v-model="form.contact" placeholder="联系方式" width='90px'></el-input>
             </el-form-item>
             <div class="postInfo-container">
-              <el-row :gutter="20"> 
+              <el-row :gutter="20">
                 <el-form-item label-width="100px" label="活动类型:" class="postInfo-container-item">
                   <el-select v-model="form.type" placeholder="请选择活动类型">
                     <el-option
@@ -45,7 +45,7 @@
                 </el-select>
                 </el-form-item>
                   <el-form-item label-width="80px" label="发布时间:" class="postInfo-container-item">
-                    <el-date-picker v-model="form.starttime" type="datetime" format="yyyy-MM-dd" placeholder="选择日期时间"/>
+                    <el-date-picker v-model="form.starttime" type="datetime" format="yyyy-MM-dd" placeholder="选择日期时间" value-format="timestamp"/>
                   </el-form-item>
               </el-row>
               <el-row :gutter="20">
@@ -60,7 +60,7 @@
                 </el-select>
                 </el-form-item>
                 <el-form-item label-width="80px" label="截止时间:" class="postInfo-container-item">
-                    <el-date-picker v-model="form.endtime" type="datetime" format="yyyy-MM-dd" placeholder="选择日期时间"/>
+                    <el-date-picker v-model="form.endtime" type="datetime" format="yyyy-MM-dd" placeholder="选择日期时间" value-format="timestamp"/>
                   </el-form-item>
               </el-row>
             </div>
@@ -139,14 +139,14 @@ export default {
         detail:'',
         peoplenum: 1,
         alltime: 1,
-        starttime:'',
+        starttime: 0,
+        endtime: 0,
         contact: ' ',
         volunteertimemin: 1,
         volunteertimemax: 1,
         type:'',
         level:'',
         group_name:'new',
-        endtime:'',
       },
       options: [],
       level:[{
@@ -170,38 +170,46 @@ export default {
     }
   },
   created() {
-    this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllType',{})
+    this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllType',{})
     .then((response) => {
       this.options = response.data.data
     })
     if (this.$route.params.id!=null) {
       let jwt = getToken()
       isEdit = true
-      this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
         'aid': this.$route.params.id,
         'jwt': jwt
       })
       .then((response) => {
-        this.form = response.data.data.activity
-        this.form.volunteertimemin = parseInt(response.data.data.activity.volunteertimemin)
-        this.form.volunteertimemax = parseInt(response.data.data.activity.volunteertimemax)
-        this.form.alltime = parseInt(response.data.data.activity.alltime)
-        this.form.peoplenum = parseInt(response.data.data.activity.peoplenum)
-        this.form.starttime = response.data.data.activity.starttime * 1e3
+        let act = response.data.data.activity
+        act.volunteertimemin = parseInt(act.volunteertimemin)
+        act.volunteertimemax = parseInt(act.volunteertimemax)
+        act.alltime = parseInt(act.alltime)
+        act.peoplenum = parseInt(act.peoplenum)
+        act.starttime = act.starttime * 1e3
+        act.endtime = act.endtime * 1e3
+
+        this.form = act
       })
     }
   },
   methods: {
     submitForm() {
-      let jwt = getToken()
+      this.loading = true
+      const jwt = getToken()
       if(!isEdit){
-        this.form.starttime = Date.parse(this.form.starttime) / 1e3
-        this.form.endtime = Date.parse(this.form.endtime) / 1e3
-        this.form.jwt = jwt
-        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity',this.form)
+        let params = {...this.form}
+        params = {
+          ...params,
+          starttime: params.starttime / 1e3,
+          endtime: params.endtime / 1e3,
+          jwt: jwt
+        }
+        this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity', params)
         .then(response => {
+          this.loading = false
           if (response.data.ret == 200) {
-            this.loading = true
             this.$notify({
               title: '成功',
               message: '发布文章成功',
@@ -219,13 +227,18 @@ export default {
         })
       }
       if(isEdit){
-        this.form.starttime = Date.parse(this.form.starttime) / 1e3
-        this.form.endtime = Date.parse(this.form.endtime) / 1e3
-        this.form.jwt = jwt
-        this.axios.post('http://my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.UpdateActivity', this.form)
+        this.loading = true
+        let params = {...this.form}
+        params = {
+          ...params,
+          starttime: params.starttime / 1e3,
+          endtime: params.endtime / 1e3,
+          jwt: jwt
+        }
+        this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.UpdateActivity', params)
         .then(response => {
+          this.loading = false
           if (response.data.ret == 200) {
-            this.loading = true
             this.$notify({
               title: '成功',
               message: '文章修改成功',

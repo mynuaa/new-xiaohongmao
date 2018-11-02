@@ -11,7 +11,7 @@
     
     <ul class="bg-bubbles">
 
-    <li  v-for="(item, index) in bubbles" :key="index"></li>
+    <li  v-for="(item, index) in 10" :key="index"></li>
 </ul>
   </div> 
 </template>
@@ -25,7 +25,6 @@ export default {
   name: "home",
   data: function() {
     return {
-      bubbles: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
       showData:{},
       time:[]
     };
@@ -35,13 +34,15 @@ export default {
   },
   methods:{
     getShowData(){
-      this.axios.post('https://my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Front.ShowData').then(re => {
+      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Front.ShowData').then(re => {
         if(re.data.ret == 200){
           this.showData = re.data.data;
           const timedata = this.showData.yuan;
           let time = []
           for(var i = 1; i <= 16; i++ ){
-            time.push(timedata[i]);
+            if(i != 13 && i != 14){
+              time.push(timedata[i]);
+            } 
           }
           this.time = time
           this.initEchart()
@@ -81,8 +82,6 @@ export default {
               "十院",
               "十一院",
               "十二院",
-              "十三院",
-              "十四院",
               "十五院",
               "十六院"
             ]
@@ -150,8 +149,9 @@ export default {
   // 使气泡背景充满整个屏幕
   bottom: 0px;
   left: 0;
-  width: 90%;
+  width: 100%;
   // height: 300px;
+  // overflow: hidden;  
   li {
     position: absolute;
     // bottom 的设置是为了营造出气泡从页面底部冒出的效果；

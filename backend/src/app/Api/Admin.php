@@ -50,7 +50,7 @@ class Admin extends Api {
                     'format' => 'utf8',                    
                     'require' => true,
                     'type' => 'string',
-                    'min' => 6,
+                    'min' => 5,
                     'max' => 16
                 ],
                 'dx' => [
@@ -677,7 +677,8 @@ class Admin extends Api {
  * @return void
  */
     public function makejwt(){
-        return $this->User->encode('seiry', '031630226', ['level' => 1, 'yuan' => 3]);
+        //return;
+        return $this->User->encode('seiry', '031630226', ['level' => 3, 'yuan' => 3]);
         //return $this->User->encode('se', '161740225', ['level' => 3,'yuan'=>16]);
     }
 

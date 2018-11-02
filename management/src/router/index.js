@@ -146,32 +146,31 @@ export default new Router({
 export const asyncRouterMap = [
   {
     path: '/create',
-    component: Layout,
+    component: () => import('@/views/example/create'),
     redirect: '/information/index',
+    meta: { roles: ['admin']},
     children: [
       {
-        path: 'index', 
-        component: () => import('@/views/example/create'),
+        path: 'index',
         name: 'CreateArticle',
         meta: {
           title: '发布活动',
           icon: 'edit',
           noCache: true,
-          roles:['admin']
         }
       }
     ]
   },
   {
     path: '/table',
-    component: Layout,
+    component: () => import('@/views/table/complexTable'),
     redirect: '/table/complex-table',
+    meta: { roles: ['admin']},
     children: [
       {
         path: 'complex-table',
-        component: () => import('@/views/table/complexTable'),
         name: 'ComplexTable',
-        meta: { title: '活动列表', icon: 'list',roles:['admin'] }
+        meta: { title: '活动列表', icon: 'list' }
       }
     ]
   },

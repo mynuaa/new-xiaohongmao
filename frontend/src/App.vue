@@ -26,7 +26,7 @@
 			  <span>
 				  Copyright &copy; 2012-2018
 				  <span>
-					  <a	href="http://my.nuaa.edu.cn" target="_blank" style="color:black">纸飞机南航青年网络社区</a>
+					  <a	href="//my.nuaa.edu.cn" target="_blank" style="color:black">纸飞机南航青年网络社区</a>
 				  </span>
 			  </span>
 	  	</div>
@@ -50,6 +50,7 @@ export default{
 <style lang="scss">
 html{
   width: 100%;
+  overflow-x: hidden;
 }
 #app {
   color: #2c3e50;
@@ -58,10 +59,15 @@ html{
   font-family: "Microsoft YaHei";
 }
 #nav {
+  
   padding: 10px 0px 10px 0px;
+  overflow:hidden;
   // text-align: center;
-  font-size: 20px;
+  font-size: 95%;
   ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
     background: #a1e4ff; /* fallback for old browsers */
     background: -webkit-linear-gradient(
       to left,
@@ -77,7 +83,9 @@ html{
     width: 90%;
     height: 70px;
     li {
+      white-space:nowrap;
       display: inline-block;
+      overflow: hidden;
       height: 70px;
       width: 150px;
       &:hover {
@@ -125,7 +133,7 @@ html{
     margin-bottom: 0;
   }
   .footer-font {
-    margin: 10px 0;
+    padding: 10px 0;
     font-weight: 900;
     width: 100%;
     font-size: 1.1em;
