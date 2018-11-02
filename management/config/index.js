@@ -9,7 +9,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/xiaohongmao2':{
+        target:'http://my.nuaa.edu.cn/',
+        changeOrigin:true,
+        pathRewrite:{
+            '':''
+        }
+      },
+    },
 
     // Various Dev Server settings
 
