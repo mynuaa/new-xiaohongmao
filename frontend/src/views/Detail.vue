@@ -35,7 +35,7 @@ export default {
     getShowData() {
       this.axios
         .post(
-          "https://my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Front.GetActivity",
+          "/xiaohongmao2/api/?s=App.Front.GetActivity",
           {
             id: this.$route.params.aid
           }

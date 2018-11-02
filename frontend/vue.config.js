@@ -3,10 +3,10 @@ module.exports = {
     devServer: {
         proxy: {
             '/xiaohongmao2':{
-              target:'http://my.nuaa.edu.cn/',
-              changeOrigin:true,
-              pathRewrite:{
-                  '':''
+              target: 'http://my.nuaa.edu.cn/',
+              changeOrigin: true,
+              pathRewrite: {
+                  '': ''
               }
             },
           },
