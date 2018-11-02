@@ -26,7 +26,7 @@ export default {
   methods: {
     fetchData() {
         let jwt = getToken()
-    		this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.User.GetInfo', {
+    		this.axios.post('/xiaohongmao2/?service=App.User.GetInfo', {
         'jwt': jwt
       })
         .then((response) => {
