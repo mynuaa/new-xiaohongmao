@@ -7,7 +7,7 @@
                     <el-radio-button :label="item.hid" :key="item.hid" v-for="item in hosters" class="radioButton">{{item.hostname}}</el-radio-button>
                 </el-radio-group>
             </div>
-            <div class="activityTable">
+            <div class="activityTable" style="width:90%;">
                 <div class="tableHeader">
                         <div style="width:40%" class="filter">活动标题</div>
                         <div style="width:24%" class="filter">主办方</div>
@@ -338,7 +338,7 @@ a{
     text-align: center;
     display: inline-block;
     background-color: white;
-    box-shadow: 2px 2px 5px grey;
+    box-shadow: 2px 0px 4px grey;
 
 
 }
@@ -355,12 +355,14 @@ a{
     border-radius: 4px;
 }
 .activityTable{
+    
     background-color: white;
     font-size: 18px;
     width: 90%;
     text-align: center;
-    padding: 10px 10px;
+    // padding: 10px 10px;
     box-shadow: 2px 2px 5px grey;
+    margin-top: 2px;
     margin-bottom: 20px;
     margin-left: 5%;
     border-spacing: 0px 5px;
@@ -368,6 +370,7 @@ a{
     display: flex !important;
     flex-direction: column;
     .tableHeader{
+        margin-top: 4px;
         display: flex;
         flex-direction: row;
         margin-bottom: 8px;
