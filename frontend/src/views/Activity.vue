@@ -410,12 +410,18 @@ a{
 }
 .paginationPart{
     text-align: center;
+    // ul{
+    //     padding: 0px;
+    //     margin: 0px;
+    // }
 }
 .pagination{
     list-style: none;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin: 24px 0px;
+    padding-inline-start:0px;
 }
 .pageIcon{
     margin: 5px;
