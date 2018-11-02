@@ -17,7 +17,7 @@ Page({
     onLoad: function (options) {
         const stuid = options.stuid || '031630226'
         wx.request({
-            url: 'https://my.nuaa.edu.cn/xiaohongmao2/api/?s=Wechat.GetJoin',
+            url: '//my.nuaa.edu.cn/xiaohongmao2/api/?s=Wechat.GetJoin',
             data: {
                 stuid: stuid
             },
