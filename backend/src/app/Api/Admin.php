@@ -383,6 +383,7 @@ class Admin extends Api {
         
         //$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->rand);
 
+        $this->stuid = trim($this->stuid);
         $dxtest = $this->DXCode->valid($this->dx);
         if($dxtest != true){
             throw new Exception('验证码错误', 500);
@@ -582,6 +583,7 @@ class Admin extends Api {
      * @return void
      */
     public function bindUser(){//绑定用户
+        $this->stuid = trim($this->stuid);
         $ded = $this->Ded->verify($this->stuid, $this->passwd);
         if($ded == false){
             throw new Exception('密码错误', 403);
