@@ -29,8 +29,10 @@ class Ded {
     }
 
     public function usrverify($stuid, $password) {
+        $password = urlencode($password);
+        
         $url = "http://ded.nuaa.edu.cn/NetEAn/User/check.asp";
-        $post = "user=".$stuid."&pwd=".$password;
+        $post = "user=" . $stuid . "&pwd=" . $password;
         $cookie = @tempnam('/tmp', 'COOKIE_');
         
         $curl = curl_init();
