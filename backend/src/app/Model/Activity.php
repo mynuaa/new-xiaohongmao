@@ -32,6 +32,19 @@ class Activity{
     ];
 
     public function gets($from, $num, $all = false, $hid = -1){
+
+        $name = "act:multi:{$from}:{$num}:{$hid}:";
+        if($all){
+            $name .= 'notall';
+        }else{
+            $name .= 'all';
+        }
+
+        $re = di()->redis->get($name);
+        if($re){
+            return $re;
+        }
+
         $con =  [
             'LIMIT' => [$from, $num],
             'ORDER' => [
@@ -49,6 +62,7 @@ class Activity{
 
         $re= di()->db->select('activity', $this->unionRelation, $this->unionColumn, $con);
 
+        di()->redis->set($name, $re);
         return $re;
     }
 
