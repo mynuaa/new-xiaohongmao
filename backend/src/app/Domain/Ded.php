@@ -28,6 +28,7 @@ class Ded {
         }
     }
 
+    //TODO!! 研究生登录 参考sso
     public function usrverify($stuid, $password) {
         $password = urlencode($password);
         
