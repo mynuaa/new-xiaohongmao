@@ -53,19 +53,35 @@ class Activity{
     }
 
     public function get($id){
+        $name = 'act:' . $id;
+        $re = di()->redis->get($name);
+        if($re){
+            return $re;
+        }
+
         $this->unionColumn[] = 'activity.detail';
         $re= di()->db->get('activity', $this->unionRelation, $this->unionColumn, [
             'aid' => $id,
             'activity.status[>]' => 0
         ]);
 
+        di()->redis->set($name, $re);
         return $re;
+
     }
 
     public function getExpireTime($aid){
+        $name = 'actExpireTime:' . $aid;
+        $re = di()->redis->get($name);
+        if($re){
+            return $re;
+        }
+        
         $re = di()->db->get('activity', 'endtime', [
             'aid' => $aid
         ]);
+
+        di()->redis->set($name, $re);
         return $re;
     }
 
@@ -175,10 +191,16 @@ class Activity{
     }
 
     public function countNum(){
+        
+        $re = di()->redis->get('act:allNum');
+        if($re){
+            return $re;
+        }
+
         $re = di()->db->count('activity', [
             'status[>]' => 0
         ]);
-
+        di()->redis->set('act:allNum', $re);
         return $re;
     }
 }
