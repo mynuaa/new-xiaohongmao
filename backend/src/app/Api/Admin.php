@@ -523,7 +523,7 @@ class Admin extends Api {
             }
         }
         // 去重通过硬件写死数据库实现
-        $re = $this->Join->add($this->stuid, $this->aid, $this->timelong, trim($jwt['stuid']));
+        $re = $this->Join->add(trim($this->stuid), $this->aid, $this->timelong, $jwt['stuid']);
 
         if($re !== false){
             return $re;
