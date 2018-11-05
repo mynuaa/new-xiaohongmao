@@ -51,7 +51,7 @@ export default {
   },
   mounted() {
     this.getShowData();
-    console.log(this.$route.params);
+    // console.log(this.$route.params);
   }
 };
 </script>

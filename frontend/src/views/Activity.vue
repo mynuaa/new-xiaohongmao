@@ -7,28 +7,28 @@
                     <el-radio-button :label="item.hid" :key="item.hid" v-for="item in hosters" class="radioButton">{{item.hostname}}</el-radio-button>
                 </el-radio-group>
             </div>
-            <table class="activityTable">
-                <thead>
-                    <tr>
-                        <th>活动标题</th>
-                        <th>主办方</th>
-                        <th>志愿时长</th>
-                        <th>发布时间</th>
-                        <th>状态</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in activityList" :key="item.aid" class="activityLine">
-                        <router-link :to="'/detail/' + item.aid"><td width="52%" class="activityTitle"><div class="filter">{{item.title}}</div></td></router-link>
-                        <td width="12%" class="filter">{{item.hostname}}</td>
-                        <td width="12%" class="filter">{{item.volunteertimemax}}</td>
-                        <td width="12%" class="filter">{{formatDateTime(item.starttime)}}</td>
-                        <td width="12%" class="filter">{{item.lastupdate | status}}</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="5">
+            <div class="activityTable" style="width:90%;">
+                <div class="tableHeader">
+                        <div style="width:40%" class="filter">活动标题</div>
+                        <div style="width:24%" class="filter">主办方</div>
+                        <div style="width:12%" class="filter">志愿时长</div>
+                        <div style="width:12%" class="filter">发布时间</div>
+                        <div style="width:12%" class="filter">状态</div>
+                </div>
+                <div class="tableBody">
+                    <ul>
+                    <li v-for="item in activityList" :key="item.aid" class="activityLine">
+                        <router-link :to="'/detail/' + item.aid" style="width:40%"><div style="width:100%" class="activityTitle filter">{{item.title}}</div></router-link>
+                        <div style="width:24%" class="filter">{{item.hostname}}</div>
+                        <div style="width:12%" class="filter">{{item.volunteertimemax}}</div>
+                        <div style="width:12%" class="filter">{{formatDateTime(item.starttime)}}</div>
+                        <div style="width:12%" class="filter">{{item.lastupdate | status}}</div>
+                    </li>
+                    </ul>
+                </div>
+                <div class="table-footer">
+                    <div>
+                        <div colspan="5">
                             <div class="paginationPart">
                                 <ul class="pagination">
                                     <li><div class="pageIcon" @click="turn('-')">«</div></li>
@@ -36,10 +36,11 @@
                                     <li><div class="pageIcon" @click="turn('+')">»</div></li>
                                 </ul>
                             </div>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>    
        
         
@@ -305,6 +306,7 @@ export default {
 
 <style lang="scss">
 #app {
+  width:100%;
   text-align: center;
   color: #2c3e50;
 }
@@ -336,7 +338,7 @@ a{
     text-align: center;
     display: inline-block;
     background-color: white;
-    box-shadow: 2px 2px 5px grey;
+    box-shadow: 2px 0px 4px grey;
 
 
 }
@@ -353,19 +355,46 @@ a{
     border-radius: 4px;
 }
 .activityTable{
+    
     background-color: white;
-    display: inline-table;
     font-size: 18px;
     width: 90%;
-    padding: 10px 10px;
+    text-align: center;
+    // padding: 10px 10px;
     box-shadow: 2px 2px 5px grey;
+    margin-top: 2px;
     margin-bottom: 20px;
+    margin-left: 5%;
     border-spacing: 0px 5px;
     color: #1a3c40;
+    display: flex !important;
+    flex-direction: column;
+    .tableHeader{
+        margin-top: 4px;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 8px;
+    }
+    .tableBody{
+        width:100%;
+        ul{
+            padding: 0px;
+            margin: 0px;
+            .activityLine{
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                text-align: center;
+                margin-bottom: 6px;
+                border-radius: 2px;
+                line-height: 32px;
+            }
+        }
+        
+    }
+    
 }
-.activityLine{
-    width: 95%;
-}
+
 .activityLine:hover{
     background-color: #a6e3e9;
 }
@@ -381,12 +410,18 @@ a{
 }
 .paginationPart{
     text-align: center;
+    // ul{
+    //     padding: 0px;
+    //     margin: 0px;
+    // }
 }
 .pagination{
     list-style: none;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin: 24px 0px;
+    padding-inline-start:0px;
 }
 .pageIcon{
     margin: 5px;
