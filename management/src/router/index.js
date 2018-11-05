@@ -151,12 +151,13 @@ export default new Router({
 export const asyncRouterMap = [
   {
     path: '/create',
-    component: () => import('@/views/example/create'),
+    component: Layout,
     redirect: '/information/index',
     meta: { roles: ['admin']},
     children: [
       {
         path: 'index',
+        component: () => import('@/views/example/create'),
         name: 'CreateArticle',
         meta: {
           title: '发布活动',
@@ -168,12 +169,13 @@ export const asyncRouterMap = [
   },
   {
     path: '/table',
-    component: () => import('@/views/table/complexTable'),
+    component: Layout,
     redirect: '/table/complex-table',
     meta: { roles: ['admin']},
     children: [
       {
         path: 'complex-table',
+        component: () => import('@/views/table/complexTable'),
         name: 'ComplexTable',
         meta: { title: '活动列表', icon: 'list' }
       }
