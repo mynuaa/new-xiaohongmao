@@ -50,8 +50,8 @@ import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
-import LangSelect from '@/components/LangSelect'
 import ThemePicker from '@/components/ThemePicker'
+import { removeToken } from '@/utils/auth'
 
 export default {
   components: {
@@ -60,7 +60,6 @@ export default {
     ErrorLog,
     Screenfull,
     SizeSelect,
-    LangSelect,
     ThemePicker
   },
   computed: {
@@ -76,6 +75,7 @@ export default {
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
+        removeToken()//delete cookies
         location.reload()// In order to re-instantiate the vue-router object to avoid bugs
       })
     }
