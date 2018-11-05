@@ -93,7 +93,6 @@ const user = {
     // },
     LogOut() {
         removeToken()
-        console.log('666')
     },
 
     // 前端 登出
