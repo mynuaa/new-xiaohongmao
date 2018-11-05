@@ -8,7 +8,7 @@
       <template v-if="device!=='mobile'">
         <error-log class="errLog-container right-menu-item"/>
 
-        <el-tooltip :content="$t('navbar.screenfull')" effect="dark" placement="bottom">
+        <el-tooltip content=全屏显示 effect="dark" placement="bottom">
           <screenfull class="screenfull right-menu-item"/>
         </el-tooltip>
 
@@ -50,8 +50,8 @@ import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
-import LangSelect from '@/components/LangSelect'
 import ThemePicker from '@/components/ThemePicker'
+import { removeToken,getToken } from '@/utils/auth'
 
 export default {
   components: {
@@ -60,7 +60,6 @@ export default {
     ErrorLog,
     Screenfull,
     SizeSelect,
-    LangSelect,
     ThemePicker
   },
   computed: {

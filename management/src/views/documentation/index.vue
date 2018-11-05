@@ -79,12 +79,12 @@ export default {
         'jid':id
       })
       .then((response)=>{
-        console.log(response.data.ret)
         if(response.data.ret==200){
           this.$message({
-            message: '认证成功，请刷新后查看',
+            message: '认证成功',
             type: 'success'
         });
+          location.reload()
         }
         else{
           this.$message.error(response.data.data.message);
