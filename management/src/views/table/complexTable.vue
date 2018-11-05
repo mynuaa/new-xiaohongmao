@@ -159,6 +159,9 @@ export default {
              if(response.data.data[prop].status==2){
                this.list[prop].status = "审核关闭"
              }
+             if(response.data.data[prop].status==0){
+               this.list[prop].status = "已删除"
+             }
           }
         })
     },
