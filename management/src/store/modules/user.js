@@ -79,17 +79,21 @@ const user = {
     },
 
     // 登出
-    LogOut({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
-          removeToken()
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
+    // LogOut({ commit, state }) {
+    //   return new Promise((resolve, reject) => {
+    //     logout(state.token).then(() => {
+    //       commit('SET_TOKEN', '')
+    //       commit('SET_ROLES', [])
+    //       removeToken()
+    //       resolve()
+    //     }).catch(error => {
+    //       reject(error)
+    //     })
+    //   })
+    // },
+    LogOut() {
+        removeToken()
+        console.log('666')
     },
 
     // 前端 登出

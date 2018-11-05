@@ -51,7 +51,7 @@ import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import ThemePicker from '@/components/ThemePicker'
-import { removeToken } from '@/utils/auth'
+import { removeToken,getToken } from '@/utils/auth'
 
 export default {
   components: {
@@ -75,7 +75,7 @@ export default {
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
-        removeToken()//delete cookies
+        console.log('6666')
         location.reload()// In order to re-instantiate the vue-router object to avoid bugs
       })
     }
