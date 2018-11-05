@@ -143,7 +143,7 @@ export default {
     checkPermission,
     getList(from = 0) {
       let jwt = getToken()
-      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllActivity',{
+      this.axios.post('/xiaohongmao2/?service=App.Admin.AllActivity',{
         from:from,
         'jwt':jwt
       })
@@ -163,7 +163,7 @@ export default {
         })
     },
     getallnum(){
-      this.axios.post("//my.nuaa.edu.cn/xiaohongmao2/?service=App.Front.ShowData",)
+      this.axios.post("/xiaohongmao2/?service=App.Front.ShowData",)
       .then((response)=>{
         this.total = response.data.data.actNum
       })
@@ -174,7 +174,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.DelAct', {
+          this.axios.post('/xiaohongmao2/?service=App.Admin.DelAct', {
             aid: id,
             jwt: getToken()
           }).then(re => {
@@ -205,7 +205,7 @@ export default {
     showArticle(row){
       this.dialogFormVisible = true
       let jwt = getToken()
-      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
+      this.axios.post('/xiaohongmao2/?service=App.Admin.GetActivity',{
         'aid':row,
         'jwt': jwt
       })
