@@ -49,14 +49,6 @@
       <el-button class="thirdparty-button" type="primary" @click="showDialog=true">{{ $t('login.thirdparty') }}</el-button>-->
     </el-form>
 
-    <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog" append-to-body>
-      {{ $t('login.thirdpartyTips') }}
-      <br>
-      <br>
-      <br>
-      <social-sign />
-    </el-dialog>
-
   </div>
 </template>
 
@@ -202,6 +194,7 @@ export default {
         if(re.ret != 200 ){
           alert(re.msg)
           this._dx.reload()
+          this.loading = false
         }
         setToken(re.data)
         //getRole()
