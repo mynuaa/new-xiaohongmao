@@ -170,14 +170,14 @@ export default {
     }
   },
   created() {
-    this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AllType',{})
+    this.axios.post('/xiaohongmao2/?service=App.Admin.AllType',{})
     .then((response) => {
       this.options = response.data.data
     })
     if (this.$route.params.id!=null) {
       let jwt = getToken()
       isEdit = true
-      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.GetActivity',{
+      this.axios.post('/xiaohongmao2/?service=App.Admin.GetActivity',{
         'aid': this.$route.params.id,
         'jwt': jwt
       })
@@ -206,7 +206,7 @@ export default {
           endtime: params.endtime / 1e3,
           jwt: jwt
         }
-        this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.AddActivity', params)
+        this.axios.post('/xiaohongmao2/?service=App.Admin.AddActivity', params)
         .then(response => {
           this.loading = false
           if (response.data.ret == 200) {
@@ -235,7 +235,7 @@ export default {
           endtime: params.endtime / 1e3,
           jwt: jwt
         }
-        this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/?service=App.Admin.UpdateActivity', params)
+        this.axios.post('/xiaohongmao2/?service=App.Admin.UpdateActivity', params)
         .then(response => {
           this.loading = false
           if (response.data.ret == 200) {

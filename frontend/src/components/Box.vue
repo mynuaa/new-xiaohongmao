@@ -33,7 +33,7 @@ export default {
       this.$router.push('/activity');
     },
     getShowData(){
-      this.axios.post('//my.nuaa.edu.cn/xiaohongmao2/api/?s=App.Front.AllActivity',  {
+      this.axios.post('/xiaohongmao2/api/?s=App.Front.AllActivity',  {
           pagenum: 8
       }).then(re => {
         if(re.data.ret == 200){
@@ -86,6 +86,7 @@ export default {
     margin: 0px;
     padding: 0px;
     li {
+      line-height: 24px;
       border-bottom:1px dashed #cffdf8;
       margin-left: 4px;
       margin-bottom: 2px;
@@ -116,7 +117,7 @@ a{
   color: #2c3e50;
 }
 #footer {
-  height: 20px;
+  height: 28px;
   &:hover {
       background-color:#65c0ba; 
       color: white;
