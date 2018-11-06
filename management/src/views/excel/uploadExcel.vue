@@ -63,8 +63,8 @@ export default {
         this.axios.post('/xiaohongmao2/?service=App.Admin.AddJoin',{
           'jwt': jwt,
           'aid':this.$route.params.aid,
-          'stuid': Object.values(this.tableData[prop])[0],
-          'timelong': Object.values(this.tableData[prop])[1]
+          'stuid': Object.values(this.tableData[prop])[0].trim(),
+          'timelong': Object.values(this.tableData[prop])[1].trim()
       })
       .then((response) => {
         if(response.data.ret==200){
