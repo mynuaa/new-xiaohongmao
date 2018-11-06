@@ -30,12 +30,14 @@ class Ded {
 
     //TODO!! 研究生登录 参考sso
     public function usrverify($stuid, $password) {
-        $password = urlencode($password);
+        //TODO！ 换个接口！
+        
+        //$password = urlencode($password); 这个接口不支持 特殊符号
         
         $url = "http://ded.nuaa.edu.cn/NetEAn/User/check.asp";
         $post = "user=" . $stuid . "&pwd=" . $password;
         $cookie = @tempnam('/tmp', 'COOKIE_');
-        
+        //var_dump($post);
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => $url,
