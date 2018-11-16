@@ -1,14 +1,13 @@
 module.exports = {
     baseUrl: '/xiaohongmao2/',
     devServer: {
-        proxy: {
+        /*proxy: {
             '/xiaohongmao2':{
               target: 'http://my.nuaa.edu.cn/',
               changeOrigin: true,
-              pathRewrite: {
-                  '': ''
-              }
+              xfwd: false,
             },
-          },
+        },*/
+        proxy: 'http://my.nuaa.edu.cn'
     }
 }
