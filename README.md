@@ -54,4 +54,11 @@ ps: 因为需要 `webpack4`，所以可能与之前版本的表现有所不同�
 
 * 为了配合跨域 后端接口统一以 `/xiaohongmao2` 开头 *
 
+* 重要更新，因为学校缓存服务器更新的缘故，无法直接通过proxy连接后端，方法有2
+
+1. 增加hosts `211.65.101.15 my.nuaa.edu.cn`，使用内网访问（portal
+
+2. 访问 `view-source:http://my.nuaa.edu.cn/`，打开f12工具，application - cookie工具，清除所有，刷新，得到一个名字类似`TGseFIykuMZjI36`的cookie，添加到`localhost`的cookie中。这样可以暂时绕过cookie校验
+
+
 调试文档地址 <http://my.nuaa.edu.cn/xiaohongmao2/docs.php> ps:使用http调试，否则有一个不安全调用问题

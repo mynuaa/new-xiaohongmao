@@ -174,6 +174,8 @@ class Admin extends Api {
                     'format' => 'utf8',                    
                     'require' => true,
                     'type' => 'string',
+                    'min' => 9,
+                    'max' => 12
                 ],
                 'aid' => [
                     'name' => 'aid',
@@ -524,6 +526,13 @@ class Admin extends Api {
             }
         }
         // 去重通过硬件写死数据库实现
+
+        //防止写错格式
+        if($this->stuid)
+        if($this->timelong > 100){
+            throw new Exception("出错，时长不能大于100小时，请确定格式正确", 503);
+        }
+
         $re = $this->Join->add(trim($this->stuid), $this->aid, $this->timelong, $jwt['stuid']);
 
         if($re !== false){
