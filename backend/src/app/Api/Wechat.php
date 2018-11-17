@@ -36,6 +36,24 @@ class Wechat extends Api {
                     'max' => 9
                 ]
             ],
+            'setOpenid' => [
+                'id' => [
+                    'name' => 'stuid', 
+                    'desc' => '学号',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                    'min' => 9,
+                    'max' => 9
+                ],
+                'password' => [
+                    'name' => 'passwd', 
+                    'desc' => '密码',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string'
+                ]
+            ],
             '*' => [
                 'session' => [
                     'name' => 'session', 
@@ -71,25 +89,47 @@ class Wechat extends Api {
             throw new Exception('登录无效', 503);
         }
         
-        $ded = $this->Ded->verify($this->stuid, $this->passwd);
+        $checkOpenid = $this->Wechat->checkOpenid($openId);
+        if($checkOpenid === false){
+            return false;
+        }
+        else{
+            return true;
+        }
+            
+        
+        
+        
+
+        // $admin = $this->User->isAdmin($this->stuid);
+        // return $this->User->encode($ded['name'], $this->stuid, $admin);
+
+        // if($this->Ded->binded($this->stuid)){//已经绑定 老用户
+        //     //返回jwt
+        //     $admin = $this->User->isAdmin($this->stuid);
+        //     return $this->User->encode($ded['name'], $this->stuid, $admin);
+        // }else{
+        //     // ？是否要激活？
+        //     throw new Exception('请确认绑定', 200);
+        // }
+
+        //判断是否是新注册
+        //正常的业务逻辑
+    }
+
+
+    public function setOpenid(){
+        $openid = $this->Wechat->sessionGetOpenid($this->session);
+        if($openid === false){
+            throw new Exception('登录无效', 503);
+        }
+
+        $ded = $this->Ded->verify($this->stuid, $this->passwd); //保证学号、密码正确
         if($ded === false){
             throw new Exception('密码错误', 403);
         }
 
-        $admin = $this->User->isAdmin($this->stuid);
-        return $this->User->encode($ded['name'], $this->stuid, $admin);
-
-        if($this->Ded->binded($this->stuid)){//已经绑定 老用户
-            //返回jwt
-            $admin = $this->User->isAdmin($this->stuid);
-            return $this->User->encode($ded['name'], $this->stuid, $admin);
-        }else{
-            // ？是否要激活？
-            throw new Exception('请确认绑定', 200);
-        }
-
-        //判断是否是新注册
-        //正常的业务逻辑
+        return  $this->Wechat->setOpenid($this->stuid, $openid);
     }
 
 

@@ -2,10 +2,12 @@
 
 namespace App\Domain;
 
+use App\Model\Wechat as MWechat;
+
 class Wechat {
 
     function __construct() {
-
+        $this->Wechat = new MWechat();
     }
 
     public function sessionGetOpenid($session){
@@ -33,4 +35,15 @@ class Wechat {
             return $re['errmsg'];
         }
     }
+
+    public function checkOpenid($openId){
+        // 检查数据库是否有传入的openId，证明是否有人绑定此微信号
+        return $this->Wechat->checkOpenid($openId);
+    }
+
+    public function setOpenid($stuid, $openid){
+        // 把学号和openid绑定
+        return $this->Wechat->setOpenid($stuid, $openid);
+    }
+
 }
