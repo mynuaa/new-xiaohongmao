@@ -10,3 +10,7 @@
 .card-index--i-card-footer{
   display: none;
 }
+
+.hoster{
+  margin-left: 15rpx;
+}

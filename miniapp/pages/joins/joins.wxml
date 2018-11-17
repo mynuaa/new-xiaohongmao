@@ -9,6 +9,16 @@
       type="dot">
       已认证
     </i-tag>
+    <i-tag 
+      class="hoster"
+      name="hoster" 
+      color="blue"
+      type="border">
+      
+      <image src="./vip.png" style="height: 40rpx;width:40rpx; " mode='scaleToFill'></image>
+      {{item.hoster}}
+    </i-tag>
+    
   </view>
 </i-card>
 </view>

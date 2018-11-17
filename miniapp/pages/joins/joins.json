@@ -4,5 +4,6 @@
     "i-card": "../../iview/card/index",
     "i-tag": "../../iview/tag/index",
     "i-button": "../../iview/button/index"
-  }
+  },
+  "navigationBarTitleText": "我的志愿详情 - 小红帽"
 }
