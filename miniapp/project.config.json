@@ -9,10 +9,12 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"nodeModules": false
+		"nodeModules": false,
+		"autoAudits": false,
+		"uglifyFileName": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.3.0",
+	"libVersion": "2.4.0",
 	"appid": "wxb432e5868c65bb6a",
 	"projectname": "%E5%8D%97%E8%88%AA%E5%B0%8F%E7%BA%A2%E5%B8%BD",
 	"isGameTourist": false,
