@@ -86,8 +86,8 @@ export default {
         });
           location.reload()
         }
-        else{
-          this.$message.error(response.data.data.message);
+        else if(response.data.ret!=200){
+          this.$message.error(response.data.msg);
         }
       })
     }
