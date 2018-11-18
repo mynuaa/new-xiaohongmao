@@ -1,4 +1,4 @@
-package app.nuaa.flutterkotlin
+package app.nuaa.xiaohongmao
 
 import android.os.Bundle
 
