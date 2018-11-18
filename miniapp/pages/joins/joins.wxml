@@ -1,0 +1,58 @@
+<view wx:for="{{joins.done}}" wx:key="{{item.jid}}" class="card" >
+<i-card title="{{item.actName}}">
+    <view slot="content">
+    时长：{{item.timelong}} 小时 
+    <i-tag 
+      class="i-tags"
+      name="已认证" 
+      color="green"
+      type="dot">
+      已认证
+    </i-tag>
+    <i-tag 
+      class="hoster"
+      name="hoster" 
+      color="blue"
+      type="border">
+      
+      <image src="./vip.png" style="height: 40rpx;width:40rpx; " mode='scaleToFill'></image>
+      {{item.hoster}}
+    </i-tag>
+    
+  </view>
+</i-card>
+</view>
+
+<view wx:for="{{joins.new}}"  wx:key="{{item.jid}}"  class="card">
+<view bindtap="tapVerify" id="{{item.jid}}" ><!--todo-->
+<i-card title="{{item.actName}}">
+    <view slot="content">
+    时长：{{item.timelong}} 小时 
+    <i-tag 
+      class="i-tags"
+      name="待认证" 
+      color="green"
+      type="border">
+      待认证
+    </i-tag>
+  </view>
+</i-card>
+</view>
+</view>
+
+<view wx:for="{{joins.expire}}"  wx:key="{{item.jid}}" class="card">
+<i-card title="{{item.actName}}">
+    <view slot="content">
+    时长：{{item.timelong}} 小时 
+    <i-tag 
+      class="i-tags"
+      name="已过期" 
+      color=""
+      type="dot">
+      已过期
+    </i-tag>
+  </view>
+</i-card>
+</view>
+
+<i-load-more tip="飞机娘为你守护到底~" loading="{{ false }}" />

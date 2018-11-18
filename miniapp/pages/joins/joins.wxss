@@ -1,0 +1,16 @@
+.card {
+  margin-top: 10rpx;
+}
+
+.button-index--i-btn-small{
+  height: 50rpx!important;
+  line-height: 25rpx!important;
+}
+
+.card-index--i-card-footer{
+  display: none;
+}
+
+.hoster{
+  margin-left: 15rpx;
+}
