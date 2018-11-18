@@ -1,5 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+@JsonSerializable()
+class Join{
+  final int jid;
+  final int timelong;
+  final String actName;
+  final String hoster;
+  final int status;
+  
+  Join({this.jid, this.timelong, this.actName, this.hoster, this.status});
+  
+}
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -45,7 +58,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
+  void getJoins() async{
+    Dio dio = new Dio();
+    Response response = await dio.get("https://easy-mock.com/mock/5befba0900e8be7f5eaf903c/miniapp/allJoins");
+    print(response.data);
+  }
+  
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -59,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    getJoins();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
