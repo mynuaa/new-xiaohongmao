@@ -58,10 +58,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  List _joins;
   void getJoins() async{
     Dio dio = new Dio();
     Response response = await dio.get("https://easy-mock.com/mock/5befba0900e8be7f5eaf903c/miniapp/allJoins");
-    print(response.data);
+    print(response.data['data']);
+    _joins = response.data['data'];
   }
   
   void _incrementCounter() {
@@ -125,7 +127,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 )
               ],
             ),
-            
+            ListView.builder(
+              itemCount: _joins.length,
+              itemBuilder: (c, index){
+                return new ListTile(
+                  title: new Text(
+                    '${index}'
+                  ),
+                );
+              },
+            )
           ],
         ),
       ),
