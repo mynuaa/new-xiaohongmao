@@ -386,15 +386,16 @@ class Admin extends Api {
         //$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->rand);
 
         $this->stuid = trim($this->stuid);
-        $dxtest = $this->DXCode->valid($this->dx);
-        if($dxtest != true){
-            throw new Exception('验证码错误', 500);
-        }
+        // $dxtest = $this->DXCode->valid($this->dx);
+        // if($dxtest != true){
+        //     throw new Exception('验证码错误', 500);//验证码部分
+        // }
         
-        $ded = $this->Ded->verify($this->stuid, $this->passwd);
-        if($ded === false){
-            throw new Exception('密码错误', 403);
-        }
+        // $ded = $this->Ded->verify($this->stuid, $this->passwd);
+        // if($ded === false){
+        //     throw new Exception('密码错误', 403);//验证密码部分
+        // }
+
 
       //  $admin = $this->User->isAdmin($this->stuid);
        // return $this->User->encode($ded['name'], $this->stuid, $admin);//注释掉测试代码
@@ -414,7 +415,7 @@ class Admin extends Api {
 
         */
         if(!$this->Ded->binded($this->stuid)){//已经绑定 老用户  自动绑定
-            $re = $this->User->bindUser($this->stuid, $ded);
+            $re = $this->bindUser($this->stuid, $ded);
             if(!$re){
                 throw new Exception('数据库错误', 500);
             }
