@@ -234,7 +234,7 @@ class Admin extends Api {
                     'require' => true,
                     'type' => 'string',
                 ]  
-                ],
+            ],
             'updateActivity'=>[
                 'aid'=>[
                     'name'=>'aid',
@@ -344,6 +344,40 @@ class Admin extends Api {
                     'require' => true,
                 ],
             ],
+            'AddSstu' => [
+                'stuid' => [
+                    'name' => 'stuid', 
+                    'desc' => '学号',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                    'min' => 9,
+                    'max' => 9
+                ],
+                'passwd' => [
+                    'name' => 'passwd', 
+                    'desc' => '密码',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                    'min' => 5,
+                    'max' => 16
+                ],
+                'gender'=>[
+                    'name' => 'gender', 
+                    'desc' => '性别',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ],
+                'name'=>[
+                    'name' => 'name', 
+                    'desc' => '姓名',
+                    'format' => 'utf8',                    
+                    'require' => true,
+                    'type' => 'string',
+                ]
+            ],
             '*' => [
                 'jwt' => [
                     'name' => 'jwt', 
@@ -376,6 +410,14 @@ class Admin extends Api {
     }
     
     /**
+     * 
+     * 添加研究生信息
+     */
+
+     public function AddSstu(){
+         return $this->User->
+     }
+    /**
      * 登录
      *
      * @return void
@@ -391,10 +433,10 @@ class Admin extends Api {
         //     throw new Exception('验证码错误', 500);//验证码部分
         // }
         
-        // $ded = $this->Ded->verify($this->stuid, $this->passwd);
-        // if($ded === false){
-        //     throw new Exception('密码错误', 403);//验证密码部分
-        // }
+        $ded = $this->Ded->verify($this->stuid, $this->passwd);
+        if($ded === false){
+            throw new Exception('密码错误', 403);//验证密码部分
+        }
 
 
       //  $admin = $this->User->isAdmin($this->stuid);
@@ -415,7 +457,7 @@ class Admin extends Api {
 
         */
         if(!$this->Ded->binded($this->stuid)){//已经绑定 老用户  自动绑定
-            $re = $this->bindUser($this->stuid, $ded);
+            $re = $this->User->bindUser($this->stuid, $ded);
             if(!$re){
                 throw new Exception('数据库错误', 500);
             }

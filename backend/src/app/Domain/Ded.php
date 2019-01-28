@@ -3,6 +3,7 @@ namespace App\Domain;
 
 //use App\Model\Examples\CURD as ModelCURD;
 use App\Model\Ded as MDed;
+use App\Model\User as User;
 
 class Ded {
 
@@ -40,7 +41,18 @@ class Ded {
         //$password = urlencode($password); 这个接口不支持 特殊符号
         
         if(preg_match("/[a-zA-Z]{2}/",$this->stuid)){//判断是否为研究生
-            //throw new Exception('研究生', 199);
+            $re=$this->User->getSuser($this->stuid);
+            if(!re){
+                return false;//如果为空，即没找到
+            }
+            $name=$re['uname'];
+            $gender=$re['gender'];
+            $id=$re['sid'];
+            return [
+                'name' => $name,
+                'gender' => $gender,
+                'idN' => $id
+            ];
         }
         //
         else{//本科生
@@ -85,14 +97,14 @@ class Ded {
             $gender = $gender[1];
             preg_match('/id\=\"t_sfzh\"\>(.+)\&/', $re, $id);
             $id = $id[1];
-        }
         //
 
-        return [
-            'name' => $name,
-            'gender' => $gender,
-            'idN' => $id
-        ];
+            return [
+                'name' => $name,
+                'gender' => $gender,
+                'idN' => $id
+            ];
+        }
     }
 
 }

@@ -32,6 +32,12 @@ class User{
         return $re;
     }
 
+    public function getSUser($stuid){//获取研究生信息
+        $re=di()->db->get('suser','*',[
+            'stuid' => $stuid
+        ]);
+        return re;
+    }
     public function bindUser($stuid, $ded){
         $re = di()->db->insert('user',[
             "stuid" => $stuid,
