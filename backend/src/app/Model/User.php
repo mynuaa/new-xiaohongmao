@@ -53,4 +53,13 @@ class User{
             return false;
         }
     }
+    public function AddSstu($stuid,$password,$gender,$uname){
+        $re=di()->db->insert('suser',[
+            "stuid" => $stuid,
+            "uname" => $uname,
+            "gender"=> $gender,
+            "status"=> time(),
+            "updatetime" => time()
+        ])
+    }
 }

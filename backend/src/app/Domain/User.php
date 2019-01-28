@@ -39,7 +39,9 @@ class User {
     public function getInfo($id){
         return $this->User->getInfo($id);
     }
-
+    public function AddSstu($stuid,$password,$gender,$uname){
+        return $this->User->AddSstu($stuid,$password,$gender,$uname);
+    }
     public function countAll(){
         return $this->User->countAll();
     }

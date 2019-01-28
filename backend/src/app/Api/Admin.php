@@ -344,40 +344,40 @@ class Admin extends Api {
                     'require' => true,
                 ],
             ],
-            'AddSstu' => [
-                'stuid' => [
-                    'name' => 'stuid', 
-                    'desc' => '学号',
-                    'format' => 'utf8',                    
-                    'require' => true,
-                    'type' => 'string',
-                    'min' => 9,
-                    'max' => 9
-                ],
-                'passwd' => [
-                    'name' => 'passwd', 
-                    'desc' => '密码',
-                    'format' => 'utf8',                    
-                    'require' => true,
-                    'type' => 'string',
-                    'min' => 5,
-                    'max' => 16
-                ],
-                'gender'=>[
-                    'name' => 'gender', 
-                    'desc' => '性别',
-                    'format' => 'utf8',                    
-                    'require' => true,
-                    'type' => 'string',
-                ],
-                'name'=>[
-                    'name' => 'name', 
-                    'desc' => '姓名',
-                    'format' => 'utf8',                    
-                    'require' => true,
-                    'type' => 'string',
-                ]
-            ],
+            // 'AddSstu' => [
+            //     'stuid' => [
+            //         'name' => 'stuid', 
+            //         'desc' => '学号',
+            //         'format' => 'utf8',                    
+            //         'require' => true,
+            //         'type' => 'string',
+            //         'min' => 9,
+            //         'max' => 9
+            //     ],
+            //     'passwd' => [
+            //         'name' => 'passwd', 
+            //         'desc' => '密码',
+            //         'format' => 'utf8',                    
+            //         'require' => true,
+            //         'type' => 'string',
+            //         'min' => 5,
+            //         'max' => 16
+            //     ],
+            //     'gender'=>[
+            //         'name' => 'gender', 
+            //         'desc' => '性别',
+            //         'format' => 'utf8',                    
+            //         'require' => true,
+            //         'type' => 'string',
+            //     ],
+            //     'name'=>[
+            //         'name' => 'name', 
+            //         'desc' => '姓名',
+            //         'format' => 'utf8',                    
+            //         'require' => true,
+            //         'type' => 'string',
+            //     ]
+            // ],
             '*' => [
                 'jwt' => [
                     'name' => 'jwt', 
@@ -414,9 +414,13 @@ class Admin extends Api {
      * 添加研究生信息
      */
 
-     public function AddSstu(){
-         return $this->User->
-     }
+    //  public function AddSstu(){
+    //      $jwt=$this->checkJwt();
+    //      if($jwt['admin'] == false || $jwt['admin']->level == 0){
+    //         throw new Exception('无权限', 403);
+    //     }
+    //      return $this->User->AddSstu($this->stuid,$this->password,$this->gender,$this->uname);
+    //  }
     /**
      * 登录
      *
