@@ -436,12 +436,10 @@ class Admin extends Api {
         // if($dxtest != true){
         //     throw new Exception('验证码错误', 500);//验证码部分
         // }
-        
         $ded = $this->Ded->verify($this->stuid, $this->passwd);
         if($ded === false){
-            throw new Exception('密码错误', 403);//验证密码部分
+            throw new Exception('密码或用户名错误', 403);//验证密码部分
         }
-
 
       //  $admin = $this->User->isAdmin($this->stuid);
        // return $this->User->encode($ded['name'], $this->stuid, $admin);//注释掉测试代码

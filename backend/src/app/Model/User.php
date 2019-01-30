@@ -32,21 +32,21 @@ class User{
         return $re;
     }
 
-    public function getSUser($stuid){//获取研究生信息
+    public function getSuser($stuid){//获取研究生信息
         $re=di()->db->get('suser','*',[
             'stuid' => $stuid
         ]);
-        return re;
+        return $re;
     }
     public function bindUser($stuid, $ded){
         $re = di()->db->insert('user',[
-            "stuid" => $stuid,
-            "uname" => $ded['name'],
-            "gender"=> $ded['gender'],
-            "status"=> time(),
-            "updatetime" => time()
+            'stuid' => $stuid,
+            'uname' => $ded['name'],
+            'gender'=> $ded['gender'],
+            'status'=> time(),
+            'updatetime' => time()
         ]);
-
+        // var_dump(di()->db->error());
         if(di()->db->error()[0] == 0){
             return di()->db->id();
         }else{
@@ -60,6 +60,6 @@ class User{
             "gender"=> $gender,
             "status"=> time(),
             "updatetime" => time()
-        ])
+        ]);
     }
 }

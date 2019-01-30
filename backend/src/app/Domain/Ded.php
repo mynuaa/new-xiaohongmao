@@ -3,12 +3,13 @@ namespace App\Domain;
 
 //use App\Model\Examples\CURD as ModelCURD;
 use App\Model\Ded as MDed;
-use App\Model\User as User;
+use App\Model\User as MUser;
 
 class Ded {
 
     function __construct() {
         $this->MDed = new MDed();
+        $this->MUser = new MUser();
     }
 
     public function verify($id, $passwd){
@@ -40,9 +41,9 @@ class Ded {
         
         //$password = urlencode($password); 这个接口不支持 特殊符号
         
-        if(preg_match("/[a-zA-Z]{2}/",$this->stuid)){//判断是否为研究生
-            $re=$this->User->getSuser($this->stuid);
-            if(!re){
+        if(preg_match("/[a-zA-Z]{2}/",$stuid)){//判断是否为研究生
+            $re=$this->MUser->getSuser($stuid);
+            if(!$re||$re['password']!=$password){
                 return false;//如果为空，即没找到
             }
             $name=$re['uname'];
