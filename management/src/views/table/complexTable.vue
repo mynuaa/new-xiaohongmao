@@ -150,16 +150,16 @@ export default {
       .then((response) => {
           this.list = response.data.data
           for(var prop in response.data.data){
-             if(response.data.data[prop].status==1){
+             if(response.data.data[prop].status=='1'){
                this.list[prop].status = "进行中"
              }
-             if(response.data.data[prop].status>1e9){
+             if(response.data.data[prop].status.length>9){
                this.list[prop].status = "审核中"
              }
-             if(response.data.data[prop].status==2){
+             if(response.data.data[prop].status=='2'){
                this.list[prop].status = "审核关闭"
              }
-             if(response.data.data[prop].status==0){
+             if(response.data.data[prop].status=='0'){
                this.list[prop].status = "已删除"
              }
           }
@@ -218,10 +218,9 @@ export default {
           let notcertified = []
           let certified = []
           for(let join of joins){
-            console.log(join)
-            if(join.status == 1){
+            if(join.status.length == 1){
               notcertified.push(join)
-            }else if(join.status > 1e10){
+            }else if(join.status.length >= 10){
               certified.push(join)
             }
           }
