@@ -17,9 +17,9 @@
     </div>
     <div class="mainPage">
       <router-view style="margin-bottom:20px;"/>
-      <div class="carouselBox">
+      <!-- <div class="carouselBox">
           <AdCarousel></AdCarousel>
-      </div>
+      </div> -->
     </div>
     <div id="footer">
       <div class="copyright">
