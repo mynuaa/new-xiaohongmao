@@ -432,10 +432,10 @@ class Admin extends Api {
         //$geetest = $this->GTCode->verifyLoginServlet($this->challenge, $this->validate, $this->seccode, $this->rand);
 
         $this->stuid = trim($this->stuid);
-        // $dxtest = $this->DXCode->valid($this->dx);
-        // if($dxtest != true){
-        //     throw new Exception('验证码错误', 500);//验证码部分
-        // }
+        $dxtest = $this->DXCode->valid($this->dx);
+        if($dxtest != true){
+            throw new Exception('验证码错误', 500);//验证码部分
+        }
         $ded = $this->Ded->verify($this->stuid, $this->passwd);
         if($ded === false){
             throw new Exception('密码或用户名错误', 403);//验证密码部分

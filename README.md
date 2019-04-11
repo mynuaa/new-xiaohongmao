@@ -60,5 +60,9 @@ ps: 因为需要 `webpack4`，所以可能与之前版本的表现有所不同�
 
 2. 访问 `view-source:http://my.nuaa.edu.cn/`，打开f12工具，application - cookie工具，清除所有，刷新，得到一个名字类似`TGseFIykuMZjI36`的cookie，添加到`localhost`的cookie中。这样可以暂时绕过cookie校验
 
-
+##研究生登陆方面
+1.研究生信息通过直接改数据库（“Suser”表）的方式修改
+2.通过判断学号中是否有两个字母来判断是否为研究生登陆
+3.判断是研究生登陆后，在（“Suser”）表中查找，如果找到了则登陆成功
+4.其它操作同本科生
 调试文档地址 <http://my.nuaa.edu.cn/xiaohongmao2/docs.php> ps:使用http调试，否则有一个不安全调用问题
