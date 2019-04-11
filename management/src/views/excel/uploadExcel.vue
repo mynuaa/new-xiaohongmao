@@ -59,29 +59,32 @@ export default {
     },
     upload(){
       const jwt = getToken()
+      var this1=this
       for (var prop in this.tableData) {
-        this.axios.post('/xiaohongmao2/?service=App.Admin.AddJoin',{
-          'jwt': jwt,
-          'aid':this.$route.params.aid,
-          'stuid': Object.values(this.tableData[prop])[0].trim(),
-          'timelong': Object.values(this.tableData[prop])[1].trim()
-      })
-      .then((response) => {
-        if(response.data.ret==200){
-          this.$message({
-            message: Object.values(this.tableData[prop])[0] + '上传成功',
-            type: 'success',
-            duration: 500
+        setTimeout(function(prop) {
+          this1.axios.post('/xiaohongmao2/?service=App.Admin.AddJoin',{
+            'jwt': jwt,
+            'aid':this1.$route.params.aid,
+            'stuid': Object.values(this1.tableData[prop])[0].trim(),
+            'timelong': Object.values(this1.tableData[prop])[1].trim()
           })
-        }
-        else{
-          this.$notify.error({
-            title: '上传错误',
-            message: Object.values(this.tableData[prop])[0] + '上传错误',
-            duration: 0
+          .then((response) => {
+            if(response.data.ret==200){
+              this1.$message({
+                message: Object.values(this1.tableData[prop])[0] + '上传成功',
+                type: 'success',
+                duration: 500
+              })
+            }
+            else{
+              this1.$notify.error({
+                title: '上传错误',
+                message: Object.values(this1.tableData[prop])[0] + response.data.msg,
+                duration: 0
+              })
+            }
           })
-        }
-      })
+        },200*prop,prop);
       }
     },
   }
