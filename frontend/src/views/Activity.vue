@@ -22,7 +22,7 @@
                         <div style="width:24%" class="filter">{{item.hostname}}</div>
                         <div style="width:12%" class="filter">{{item.volunteertimemax}}</div>
                         <div style="width:12%" class="filter">{{formatDateTime(item.starttime)}}</div>
-                        <div style="width:12%" class="filter">{{item.lastupdate | status}}</div>
+                        <div style="width:12%" class="filter">{{item.endtime | status}}</div>
                     </li>
                     </ul>
                 </div>
@@ -172,7 +172,8 @@ export default {
   },
   filters: {
     status (value) {
-        var nowDate = Date.parse(new Date()); 
+        const nowDate = Date.parse(new Date()) / 1000 //毫秒转换
+        // console.log(value, nowDate)
         if(nowDate > value){
             return "已结束"
         }
