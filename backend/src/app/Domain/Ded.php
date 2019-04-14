@@ -60,7 +60,7 @@ class Ded {
         curl_exec($curl);
         
         if(curl_errno($curl) != 0){
-			return false;
+            return false;
         }
         
         curl_setopt_array($curl, [
@@ -71,7 +71,7 @@ class Ded {
         $response = curl_exec($curl);
         
         if(curl_errno($curl) != 0){
-			return false;
+            return false;
         }
         
         if (strstr($response, 'switch (0){') == false){
@@ -85,7 +85,7 @@ class Ded {
         $re = curl_exec($curl);
         
         if(curl_errno($curl) != 0){
-			return false;
+            return false;
         }
         
         curl_close($curl);
@@ -105,36 +105,36 @@ class Ded {
     }
 
     private function casLogin($id, $password){
-		$id = urlencode($id);
-		$password = urlencode($password);
+        $id = urlencode($id);
+        $password = urlencode($password);
         $url = "http://weixin.nuaa.edu.cn/authapi/?token=5aaf524af486c781cca727a588c5d3bf&username=$id&password=$password";
         
-		$curl = curl_init();
-		curl_setopt_array($curl, [
-			CURLOPT_URL => $url,
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_TIMEOUT => 2 //2s超时
-		]);
+        ]);
 
         $response = curl_exec($curl);
         if(curl_errno($curl) != 0){
-			return false;
-		}
+            return false;
+        }
         curl_close($curl);
         
 
-		$response = '{' . $response . '}';
-		$response = json_decode($response);
+        $response = '{' . $response . '}';
+        $response = json_decode($response);
 
-		if($response->code !== 0){
-			return false;
-		}else{
-			return [
+        if($response->code !== 0){
+            return false;
+        }else{
+        return [
                 'name' => $response->xm,
                 'gender' => '男',
                 'idN' => $id
             ];
-		}
-	}
+        }
+    }
 
 }
