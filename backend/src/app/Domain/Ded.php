@@ -11,7 +11,16 @@ class Ded {
     }
 
     public function verify($id, $passwd){
-        return $this->usrverify($id, $passwd);
+        $ded = $this->dedLogin($id, $passwd);
+        if($ded !== false){
+            return $ded;
+        }
+        $cas = $this->casLogin($id, $passwd);
+        if($cas !== false){
+            return $cas;
+        }
+        return false;
+
     }
 
     public function getInfo(){
@@ -28,8 +37,8 @@ class Ded {
         }
     }
 
-    //TODO!! 研究生登录 参考sso
-    public function usrverify($stuid, $password) {
+    //TODO: 研究生登录 参考sso
+    private function dedLogin($stuid, $password) {
         //TODO！ 换个接口！
         
         //$password = urlencode($password); 这个接口不支持 特殊符号
@@ -45,9 +54,14 @@ class Ded {
             CURLOPT_POSTFIELDS => $post,
             CURLOPT_COOKIEJAR => $cookie,
             CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_TIMEOUT => 2 //2s超时
         ]);
         
         curl_exec($curl);
+        
+        if(curl_errno($curl) != 0){
+            return false;
+        }
         
         curl_setopt_array($curl, [
             CURLOPT_COOKIEFILE => $cookie,
@@ -56,6 +70,9 @@ class Ded {
         
         $response = curl_exec($curl);
         
+        if(curl_errno($curl) != 0){
+            return false;
+        }
         
         if (strstr($response, 'switch (0){') == false){
             return false;
@@ -66,6 +83,10 @@ class Ded {
         ]);
         
         $re = curl_exec($curl);
+        
+        if(curl_errno($curl) != 0){
+            return false;
+        }
         
         curl_close($curl);
         $re = iconv('GBK', 'UTF-8', $re);
@@ -81,6 +102,39 @@ class Ded {
             'gender' => $gender,
             'idN' => $id
         ];
+    }
+
+    private function casLogin($id, $password){
+        $id = urlencode($id);
+        $password = urlencode($password);
+        $url = "http://weixin.nuaa.edu.cn/authapi/?token=5aaf524af486c781cca727a588c5d3bf&username=$id&password=$password";
+        
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_TIMEOUT => 2 //2s超时
+        ]);
+
+        $response = curl_exec($curl);
+        if(curl_errno($curl) != 0){
+            return false;
+        }
+        curl_close($curl);
+        
+
+        $response = '{' . $response . '}';
+        $response = json_decode($response);
+
+        if($response->code !== 0){
+            return false;
+        }else{
+        return [
+                'name' => $response->xm,
+                'gender' => '男',
+                'idN' => $id
+            ];
+        }
     }
 
 }
