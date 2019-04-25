@@ -36,6 +36,7 @@ module.exports = {
   externals: {
     'element-ui':'ELEMENT',
     vue: 'Vue',
+    "echarts": "echarts"
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
