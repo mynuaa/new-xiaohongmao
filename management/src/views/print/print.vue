@@ -56,7 +56,7 @@ export default{
       'jwt':jwt,
     })
     .then((response)=>{
-      this.times = Object.keys(response.data.data.done).length
+      this.times = Object.keys(response.data.data.done || []).length
       this.time = 0;
       for(var a = 0;a < this.times;a++){
         this.time+=parseInt(response.data.data.done[a].timelong)
