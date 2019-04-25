@@ -36,7 +36,8 @@ module.exports = {
   externals: {
     'element-ui':'ELEMENT',
     vue: 'Vue',
-    "echarts": "echarts"
+    "echarts": "echarts",
+    jspdf: 'jsPDF'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
